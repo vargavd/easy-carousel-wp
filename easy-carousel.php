@@ -400,7 +400,25 @@ function ec_admin_menu_page() {
     <div class="wrap">
       <h2>Easy Carousel settings</h2>
       
-        <form method="post" action="options.php">          
+        <form method="post" action="options.php">
+            
+            <p>
+                <button class="select-image" type="button">Get Image</button>
+            </p>
+            
+            <div>
+                <strong>Image Title: </strong>
+                <span class="image-title"></span>
+            </div>
+            <div>
+                <strong>Image URL: </strong>
+                <span class="image-url"></span>
+            </div>
+            <div>
+                <strong>Image ID: </strong>
+                <span class="image-id"></span>
+            </div>
+            
             <?php settings_fields('ec-parameter-settings'); ?>
             
             <h2 class="nav-tab-wrapper">
@@ -434,6 +452,8 @@ function ec_admin_script( $hook ) {
     if ( strpos($hook, 'easy-carousel-settings') === false) {
         return;
     }
+    
+    wp_enqueue_media();
     wp_enqueue_script( 'ec_admin_script', plugin_dir_url( __FILE__ ) . 'js/ec-admin.js', array(), '1.0' );
 }
 add_action( 'admin_enqueue_scripts', 'ec_admin_script' );
