@@ -397,10 +397,12 @@ function ec_admin_menu_page() {
     
     ?>
     
-    <div class="wrap">
-      <h2>Easy Carousel settings</h2>
+    <div class="wrap gallery-admin">
+      <h1>Easy Carousel settings</h1>
       
         <form method="post" action="options.php">
+            
+            <?php submit_button(null, 'primary', null, false, 'style="float: right;"'); ?>
             
             <p>
                 <button class="select-image" type="button">Get Image</button>
@@ -425,8 +427,6 @@ function ec_admin_menu_page() {
                 <a href="#general-settings-tab" class="nav-tab nav-tab-active">General Settings</a>
                 <a href="#slider-styles-tab" class="nav-tab">Slider Styles</a>
                 <a href="#modal-styles-tab" class="nav-tab">Modal Styles</a>
-
-                <?php submit_button(null, 'primary', null, false, 'style="float: right;"'); ?>
             </h2>
             
             <div id="general-settings-tab" class="tab-content">
@@ -442,18 +442,37 @@ function ec_admin_menu_page() {
             </div>
 
         </form>
+      
+      <h2>Galleries</h2>
+      
+      <p class="description">Here, you can define galleries, which are collections of images. When you insert a slideshow (with shortcode, php or widget), you must define the id of the shown gallery. </p>
+      
+      <button class="add gallery-button"> + Add Gallery </button>
+      <div class="gallery-template">
+          <div class="gallery-header">
+              <button class="add gallery-button"> + Add Image </button>
+              <button class="delete gallery-button" type="button"> X Delete Gallery </button>
+              ID: <input type="text" class="header-id" placeholder="gallery-1" /> 
+          </div>
+          <div class="gallery-images">
+              
+          </div>
+      </div>
     </div>
     
     <?php
 }
 
 
-function ec_admin_script( $hook ) {    
+function ec_admin_scripts_and_styles( $hook ) {    
     if ( strpos($hook, 'easy-carousel-settings') === false) {
         return;
     }
     
     wp_enqueue_media();
-    wp_enqueue_script( 'ec_admin_script', plugin_dir_url( __FILE__ ) . 'js/ec-admin.js', array(), '1.0' );
+    
+    wp_enqueue_script( 'ec_admin_scripts', plugin_dir_url( __FILE__ ) . 'js/ec-admin.js', array(), '1.0' );
+    
+    wp_enqueue_style( 'ec_admin_styles', plugin_dir_url( __FILE__ ) . 'css/ec-admin.css', array(), '1.0' );
 }
-add_action( 'admin_enqueue_scripts', 'ec_admin_script' );
+add_action( 'admin_enqueue_scripts', 'ec_admin_scripts_and_styles' );

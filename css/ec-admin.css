@@ -1,0 +1,44 @@
+.gallery-admin h2 {
+  margin-bottom: 0;
+}
+.gallery-admin p {
+  margin-bottom: 15px;
+}
+.gallery-admin input[type=submit] {
+  margin-top: -46px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.gallery-admin .gallery-button {
+  font-weight: bold;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+}
+.gallery-admin .gallery-button.add {
+  background-color: #006a00;
+}
+.gallery-admin .gallery-button.delete {
+  background-color: #cc0033;
+}
+.gallery-admin .gallery-template {
+  border: 1px solid #aaa;
+  margin-top: 20px;
+}
+.gallery-admin .gallery-template .gallery-header {
+  border-bottom: 1px solid #666;
+  background-color: #ddd;
+  padding: 5px;
+}
+.gallery-admin .gallery-template .gallery-header button.delete {
+  float: right;
+}
+.gallery-admin .gallery-template .gallery-header button.add {
+  margin-right: 10px;
+}
+.gallery-admin .gallery-images {
+  height: 100px;
+}
+/*# sourceMappingURL=ec-admin.css.map */
