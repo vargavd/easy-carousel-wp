@@ -16,6 +16,7 @@
   font-size: 12px;
   border-radius: 2px;
   border: 1px solid #ddd;
+  cursor: pointer;
 }
 .gallery-admin .gallery-button.add {
   background-color: #006a00;
@@ -26,6 +27,8 @@
 .gallery-admin .gallery-template {
   border: 1px solid #aaa;
   margin-top: 20px;
+  overflow: hidden;
+  background: white;
 }
 .gallery-admin .gallery-template .gallery-header {
   border-bottom: 1px solid #666;
@@ -38,7 +41,27 @@
 .gallery-admin .gallery-template .gallery-header button.add {
   margin-right: 10px;
 }
-.gallery-admin .gallery-images {
-  height: 100px;
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper {
+  text-align: center;
+  position: relative;
+  float: left;
+  padding: 10px;
+}
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper img {
+  max-width: 300px;
+  max-height: 100px;
+  border: 10px solid #333;
+}
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .img-button-wrapper {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+}
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .img-button-wrapper button {
+  opacity: 0.3;
+}
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .img-button-wrapper button:hover {
+  opacity: 1;
 }
 /*# sourceMappingURL=ec-admin.css.map */

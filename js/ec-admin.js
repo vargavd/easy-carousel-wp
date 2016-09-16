@@ -20,7 +20,7 @@ jQuery(document).ready(function ($) {
         $tabs.first().click();
     }
     
-    function handleImages() {
+    function handleGalleries() {
         var $getImgButton = $(".select-image"),
             $imgTitle     = $(".image-title"),
             $imgUrl       = $(".image-url"),
@@ -55,5 +55,5 @@ jQuery(document).ready(function ($) {
     }
     
     handleTabs();
-    handleImages();
+    handleGalleries();
 });
