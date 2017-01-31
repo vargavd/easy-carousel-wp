@@ -2,7 +2,7 @@
 
 add_action('admin_init', 'ec_options_init');
 function ec_options_init() {
-    register_setting('ec-parameter-settings', 'ec_parameter_settings', 'validate_ec_parameters');
+    register_setting('ec-parameter-settings', 'ec_parameter_settings');
 
     add_settings_section('ec_general_section', '', 'ec_general_section', 'easy-carousel-settings-general');
 
