@@ -13,8 +13,6 @@
  *  - Lehet shortcode-dal és widget szerűen is berakni.
  *  - Shortcode-dal ügye lehet a paramétereket is állitani.
  *  - A paraméterek megegyeznek a jQuery plugin paramétereivel.
- * v0.2 (ez lehet kimarad)
- *  - Post contentbe ügye shortcode-dal lehet berakni: na itt kéne megcsinálni, hogy épűljön be wysiwyg editor-ba, az nagyon fasza lenne.
  */
 
 // API

@@ -3,7 +3,7 @@
 ?>
 
 <div class="wrap gallery-admin">
-    <h1>Galleries which you can choose in the widget to show.</h1>
+    <h1>Galleries which you can choose in the widget to be shown.</h1>
     
     <p>
         <button class="select-image" type="button">Get Image</button>
@@ -24,9 +24,11 @@
 
     <p class="description">Here, you can define galleries, which are collections of images. When you insert a slideshow (with shortcode, php or widget), you must define the id of the shown gallery. </p>
 
-    <button class="add gallery-button"> + Add Gallery </button>
+    <button class="add gallery-button"> 
+        <span>+</span> Add Gallery 
+    </button>
 
-    <div class="gallery-elem gallery-template" data-id="0">
+    <div class="gallery gallery-template" data-id="0">
         <div class="gallery-header">
             <button class="add image-button"> + Add Image </button>
             <button class="delete gallery-button" type="button"> X Delete Gallery </button>
@@ -41,82 +43,13 @@
                     </div>
                 </div>
             </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">
-                    <div class="img-button-wrapper">
-                        <button class="delete">X</button>                  
-                    </div>
+
+            <?php for ($i = 0; $i < 10; $i++): ?>
+                <div class="gallery-image-wrapper">
+                    <img src="http://placehold.it/<?php print rand(100, 300); ?>x100" />
+                    <button class="delete">X</button>
                 </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">
-                    <div class="img-button-wrapper">
-                        <button class="delete">X</button>                  
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">                      
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">                      
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">                      
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">                      
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">                      
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">                      
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">                      
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
-            <div class="gallery-image-wrapper">
-                <img src="http://localhost/sandbox/wp-content/uploads/2017/01/459527-this-is-sparta.jpg" />
-                <div class="img-button-wrapper">                      
-                    <button class="delete">X</button>                  
-                </div>
-            </div>
+            <?php endfor; ?>
         </div>
     </div>
     

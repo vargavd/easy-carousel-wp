@@ -1,0 +1,34 @@
+{
+  "name": "easy-carousel-wp",
+  "version": "1.0.0",
+  "description": "Carousel plugin for WordPress.",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jslint": "^1.0.10",
+    "gulp-less": "^3.3.0",
+    "gulp-plumber": "^1.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vargavd/easy-carousel-wp.git"
+  },
+  "keywords": [
+    "Carousel",
+    "Slideshow",
+    "Plugin",
+    "WordPress"
+  ],
+  "author": "Varga Dániel",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/vargavd/easy-carousel-wp/issues"
+  },
+  "homepage": "https://github.com/vargavd/easy-carousel-wp#readme"
+}

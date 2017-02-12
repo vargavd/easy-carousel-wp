@@ -1,18 +1,23 @@
 jQuery(document).ready(function ($) {
-    
+    "use strict";
+
     function handleGalleries() {
-        var 
+        var
             // $elems
             $addGalleryButton = $("button.add.gallery"),
             $galleryTemplate  = $(".gallery-template"),
+            $getImage         = $(".select-image"),
+            $imgTitle         = $(".image-title"),
+            $imgUrl         = $(".image-url"),
+            $imgId          = $(".image-id"),
             $currGallery,
-            
+
             // misc
             galleriesCount = 0,
-            
+
             // wp media modal window
             frame = wp.media({
-                title: 'Select or Upload Media Of Your Chosen Persuasion',
+                title: 'Select or Upload Media',
                 multiple: false,
                 button: {
                     text: 'Use this image'
@@ -21,39 +26,41 @@ jQuery(document).ready(function ($) {
                     type: 'image'
                 }
             });
-    
+
         function $getGallery(info) {
             var $gallery;
-            
+
             // helper functions
             function getGallery() {
-                
+
                 // if info is the id
                 if (typeof info === 'number') {
                     $gallery = $('.gallery[data-id="' + info + '"]');
                 } else if (info instanceof jQuery) { // if info is a DOM element
-                    
+
                     if (!info.hasClass('gallery')) {
-                        
+
                         $gallery = $gallery.closest('.gallery'); // info must be a child of the .gallery
-                        
+
                         if ($gallery.length === 0) {
                             // no .gallery found in parents tree
                             throw new Exception('No gallery found.');
                         }
+                    } else {
+                        $gallery = info;
                     }
                 } else { // otherwise we make a new gallery
                     $gallery = $galleryTemplate.clone().removeClass('gallery-template');
                 }
-                
+
             }
             function getImages() {
                  return $gallery.find('.gallery-image-template:not(.gallery-image)');
             }
-            
+
             // get $gallery based in info parameter
             getGallery();
-            
+
             return {
                 id: $gallery.attr('data-id'),
                 gallery: $gallery,
@@ -62,12 +69,12 @@ jQuery(document).ready(function ($) {
                 deleteGalleryButton: $gallery.find('button.delete.gallery-button'),
                 imgTemplate: $gallery.find('.gallery-image-template'),
                 getImgs: getImages
-                
+
             };
         }
         function $getImage(id) {
             var $imgWrapper = $('.gallery-image-wrapper[data-id="' + id + '"]');
-            
+
             return {
                 id: id,
                 imgWrapper: $imgWrapper,
@@ -75,26 +82,25 @@ jQuery(document).ready(function ($) {
                 deleteButton: $imgWrapper.find('button.delete')
             };
         }
-    
+
         function getImageClicked() {
             frame.open();
         }
-        
+
         function imageSelected() {
             var image = frame.state().get('selection').first().toJSON();
-            
+
             $imgTitle.text(image.title);
             $imgUrl.text(image.url);
             $imgId.text(image.id);
         }
-        
+
         // set events on the gallery template
         $currGallery = $getGallery($galleryTemplate);
-        
-        
+
         frame.on('select', imageSelected);
-        
-        
+
+        $getImage.click(getImageClicked);
    }
     
     handleGalleries();

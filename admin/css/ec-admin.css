@@ -13,20 +13,26 @@
 .gallery-admin input[type=submit]:hover {
   background: #005374;
 }
-.gallery-admin .button {
+.gallery-admin button {
   font-weight: bold;
-  color: white;
-  padding: 5px 10px;
-  font-size: 12px;
-  border-radius: 2px;
-  border: 1px solid #ddd;
+  padding: 3px 10px;
+  border: 1px solid lightgray;
   cursor: pointer;
+  outline: none;
 }
-.gallery-admin .button.add {
-  background-color: #006a00;
+.gallery-admin button.add {
+  background-color: #477147;
+  color: white;
 }
-.gallery-admin .button.delete {
-  background-color: #cc0033;
+.gallery-admin button.add:hover {
+  background-color: #366036;
+}
+.gallery-admin button.delete {
+  background-color: #8e2020;
+  color: white;
+}
+.gallery-admin button.delete:hover {
+  background-color: #7d1010;
 }
 .gallery-admin .gallery-template {
   border: 1px solid #aaa;
@@ -51,21 +57,23 @@
   float: left;
   padding: 10px;
 }
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper.gallery-image-template {
+  display: none;
+}
 .gallery-admin .gallery-template .gallery-images .gallery-image-wrapper img {
   max-width: 300px;
   max-height: 100px;
-  border: 10px solid #333;
+  border: 5px solid #333;
 }
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .img-button-wrapper {
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper button {
+  opacity: 0.2;
   position: absolute;
-  top: 0;
-  width: 100%;
-  text-align: center;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  width: 50px;
+  height: 50px;
 }
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .img-button-wrapper button {
-  opacity: 0.3;
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper:hover button {
+  opacity: 0.8;
 }
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .img-button-wrapper button:hover {
-  opacity: 1;
-}
-/*# sourceMappingURL=ec-admin.css.map */
