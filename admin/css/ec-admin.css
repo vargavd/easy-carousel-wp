@@ -21,18 +21,34 @@
   outline: none;
 }
 .gallery-admin button.add {
-  background-color: #477147;
+  background-color: #68a04f;
   color: white;
 }
 .gallery-admin button.add:hover {
   background-color: #366036;
 }
+.gallery-admin button.add.image-button {
+  float: right;
+}
 .gallery-admin button.delete {
-  background-color: #8e2020;
+  background-color: #cc6161;
   color: white;
 }
 .gallery-admin button.delete:hover {
   background-color: #7d1010;
+}
+.gallery-admin button.save {
+  background-color: #4d75da;
+  color: white;
+}
+.gallery-admin button.save:hover {
+  background-color: #0c1a5f;
+}
+.gallery-admin button.save#save-galleries {
+  float: right;
+}
+.gallery-admin button:hover {
+  background: #ccc;
 }
 .gallery-admin .gallery-template {
   border: 1px solid #aaa;
@@ -42,7 +58,7 @@
 }
 .gallery-admin .gallery-template .gallery-header {
   border-bottom: 1px solid #666;
-  background-color: #ddd;
+  background-color: #ededed;
   padding: 5px;
 }
 .gallery-admin .gallery-template .gallery-header button.delete {
@@ -51,29 +67,41 @@
 .gallery-admin .gallery-template .gallery-header button.add {
   margin-right: 10px;
 }
+.gallery-admin .gallery-template .gallery-header button.expand-close {
+  padding: 0 10px 3px;
+  margin-right: 10px;
+}
+.gallery-admin .gallery-template .gallery-header button.expand-close span {
+  font-weight: bold;
+  font-size: 2em;
+  line-height: 0.8em;
+}
+.gallery-admin .gallery-template .gallery-header button.expand-close.expanded .plus {
+  display: none;
+}
+.gallery-admin .gallery-template .gallery-header button.expand-close.closed .minus {
+  display: none;
+}
 .gallery-admin .gallery-template .gallery-images .gallery-image-wrapper {
-  text-align: center;
-  position: relative;
-  float: left;
-  padding: 10px;
+  margin: 10px;
+  padding: 10px 0;
+  display: block;
+  clear: both;
+  min-height: 60px;
+  border-bottom: 1px dashed gray;
+  overflow: hidden;
 }
 .gallery-admin .gallery-template .gallery-images .gallery-image-wrapper.gallery-image-template {
   display: none;
 }
 .gallery-admin .gallery-template .gallery-images .gallery-image-wrapper img {
-  max-width: 300px;
-  max-height: 100px;
-  border: 5px solid #333;
+  width: 100px;
+  float: left;
+  border: 2px solid #666;
 }
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper button {
-  opacity: 0.2;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -25px 0 0 -25px;
-  width: 50px;
-  height: 50px;
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .gallery-image-infos {
+  margin-left: 120px;
 }
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper:hover button {
-  opacity: 0.8;
+.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .gallery-image-infos input {
+  width: 300px;
 }

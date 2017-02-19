@@ -1,7 +1,9 @@
-@green: #477147;
+@green: #68a04f;
 @darkGreen: #366036;
-@red: #8e2020;
+@red: #cc6161;
 @darkRed: #7d1010;
+@blue: #4d75da;
+@darkBlue: #0c1a5f;
 
 .gallery-admin {
     h2 {
@@ -37,6 +39,10 @@
             &:hover {
                 background-color: @darkGreen;
             }
+
+            &.image-button {
+                float: right;
+            }
         }
         
         &.delete {
@@ -46,6 +52,23 @@
             &:hover {
                 background-color: @darkRed;
             }
+        }
+
+        &.save {
+            background-color: @blue;
+            color: white;
+
+            &:hover {
+                background-color: @darkBlue;
+            }
+
+            &#save-galleries {
+                float: right;
+            }
+        }
+
+        &:hover {
+            background: #ccc;
         }
     }
     
@@ -57,7 +80,7 @@
 
         .gallery-header {
             border-bottom: 1px solid #666;
-            background-color: #ddd;
+            background-color: #ededed;
             padding: 5px;
 
             button {
@@ -68,39 +91,57 @@
                 &.add {
                     margin-right: 10px;
                 }
+
+                &.expand-close {
+                    padding: 0 10px 3px;
+                    margin-right: 10px;
+
+                    span {
+                        font-weight: bold;
+                        font-size: 2em;
+                        line-height: 0.8em;
+                    }
+
+                    &.expanded .plus {
+                        display: none;
+                    }
+
+                    &.closed .minus {
+                        display: none;
+                    }
+                }
             }
         }
         
         .gallery-images {
             .gallery-image-wrapper {
-                text-align: center;
-                position: relative;
-                float: left;
-                padding: 10px;
+                margin: 10px;
+                padding: 10px 0;
+                display: block;
+                clear: both;
+                min-height: 60px;
+                border-bottom: 1px dashed gray;
+                overflow: hidden;
 
                 &.gallery-image-template {
                     display: none;
                 }
                 
                 img {
-                    max-width: 300px;
-                    max-height: 100px;
-                    border: 5px solid #333;
-                }
-                
-                button {
-                    opacity: 0.2;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    margin: -25px 0 0 -25px;
-                    width: 50px;
-                    height: 50px;
+                    width: 100px;
+                    float: left;
+                    border: 2px solid #666;
                 }
 
-                &:hover {
+                .gallery-image-infos {
+                    margin-left: 120px;
+
+                    input {
+                        width: 300px;
+                    }
+
                     button {
-                        opacity: 0.8;
+
                     }
                 }
             }

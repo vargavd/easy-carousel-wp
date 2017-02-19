@@ -1,6 +1,70 @@
 jQuery(document).ready(function ($) {
     "use strict";
 
+    var 
+        // DOM
+        $expandCloseButtons = $("button.expand-close"),
+
+        // events
+        expandCloseGallery = function () {
+            var 
+                // DOM
+                $button = $(this),
+                $gallery = $button.closest(".gallery"),
+                $galleryImages = $gallery.find(".gallery-images"),
+
+                // helper functions
+                expand = function () {
+                    var
+                        // DOM
+                        $galleryImgWrappers = $gallery.find(".gallery-image-wrapper"),,
+                        
+                        // misc
+                        galleryWrapperHeight = 0;
+
+                    $button
+                        .removeClass("closed")
+                        .addClass("expanded")
+                        .attr("title", "Close");
+
+                    // calculate the height of the gallery wrapper
+                    $galleryImgWrappers.each(function (index, elem) {
+                        var
+                            // DOM
+                            $galleryImgWrapper = $(elem),
+                            $img = $galleryImgWrapper.find("img"),
+
+                            // misc
+                            imgHeight = $img.height(),
+                            wrapperHeight = 30; // padding (20) + margin (10)
+
+                        if (imgHeight > 60) {
+                            wrapperHeight = wrapperHeight + imgHeight;
+                        } else {
+                            wrapperHeight = wrapperHeight + 60;
+                        }
+
+                        galleryWrapperHeight = galleryWrapperHeight + wrapperHeight;
+                    });
+
+                    
+                    $gallery.style("height", 0).show().animate({
+                        height: galleryWrapperHeight
+                    }, 500,  "swing");
+                },
+                close = function () {
+                    $button
+                        .removeClass("expanded")
+                        .addClass("closed")
+                        .attr("title", "Expand");
+
+                    $gallery.animate({
+                        height: 0
+                    }, 500, function () { $gallery.hide(); })
+                };
+
+        };
+
     function handleGalleries() {
         var
             // $elems
@@ -55,7 +119,7 @@ jQuery(document).ready(function ($) {
 
             }
             function getImages() {
-                 return $gallery.find('.gallery-image-template:not(.gallery-image)');
+                 return $gallery.find('.gallery-image:not(.gallery-image-template)');
             }
 
             // get $gallery based in info parameter
