@@ -13,6 +13,7 @@ var initEcAdminGalleries = function (galleriesString) {
         $galleryTemplate = $(".gallery-template"),
         $imageTemplate = $(".gallery-image-template"),
         $addGalleryBtn = $(".add.gallery-button"),
+        $actualGallery,
 
         // helper functions
         $getGallery = function (elem) {
@@ -153,6 +154,20 @@ var initEcAdminGalleries = function (galleriesString) {
         captionChanged = function () {
             
         },
+        addImageClicked = function () {
+            var $button = $(this);
+
+            $actualGallery = $getGallery($button);
+
+            frame.open();
+        },
+        addImage = function () {
+            var image = frame.state().get('selection').first().toJSON();
+
+            $(".image-title").text(image.title);
+            $(".image-url").text(image.url);
+            $(".image-id").text(image.id);
+        },
         deleteImage = function () {
 
         },
@@ -163,11 +178,15 @@ var initEcAdminGalleries = function (galleriesString) {
             // set gallery events
             $galleryTemplate.find("button.expand-close").click(expandCloseGallery);
             $galleryTemplate.find("button.delete").click(deleteGallery);
+            $galleryTemplate.find("button.add").click(addImageClicked);
             $("button.add.gallery-button").click(addGallery);
 
             // set image events
             $imageTemplate.find("input").keyup(captionChanged);
             $imageTemplate.find("button").click(deleteImage);
+
+            // frame event
+            frame.on('select', addImage);
 
             if (galleriesString) {
                 galleries = QU.String.SplitByDelimiters(galleriesString,
@@ -183,7 +202,7 @@ var initEcAdminGalleries = function (galleriesString) {
             title: 'Select or Upload Media',
             multiple: false,
             button: {
-                text: 'Use this image'
+                text: 'Select Image'
             },
             library: {
                 type: 'image'
@@ -191,16 +210,4 @@ var initEcAdminGalleries = function (galleriesString) {
         });
 
     init();
-
-    // get image example
-    frame.on('select', function () {
-        var image = frame.state().get('selection').first().toJSON();
-
-        $(".img-title").text(image.title);
-        $("img-url").text(image.url);
-        $("img-id").text(image.id);
-    });
-    $(".select-image").click(function () {
-        frame.open();
-    });
 };

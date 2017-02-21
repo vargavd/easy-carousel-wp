@@ -98,6 +98,7 @@
 .gallery-admin .gallery .gallery-body .gallery-image-wrapper .gallery-image-infos input {
   width: 300px;
 }
-.gallery-admin .gallery-image-template {
+.gallery-admin .gallery-image-template,
+.gallery-admin .gallery-template {
   display: none;
 }
