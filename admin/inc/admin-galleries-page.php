@@ -41,8 +41,9 @@ jQuery(document).ready(function ($) {
     <div class="gallery-image-wrapper gallery-image-template" data-id="">
         <img src="" />
         <div class="gallery-image-infos">
-            <strong>Lightbox Caption:</strong> <input /> <br />
+            <strong>Lightbox Caption:</strong> <input type="text" /> <br />
             <button class="delete">X</button> <br />
+            <input type="hidden" />
         </div>
     </div>
 

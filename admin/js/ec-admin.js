@@ -11,7 +11,7 @@ var initEcAdminGalleries = function (galleriesString) {
 
         // DOM
         $galleryTemplate = $(".gallery-template"),
-        $imageTemplate = $(".gallery-image-template"),
+        $imageWrapperTemplate = $(".gallery-image-template"),
         $addGalleryBtn = $(".add.gallery-button"),
         $actualGallery,
 
@@ -162,11 +162,20 @@ var initEcAdminGalleries = function (galleriesString) {
             frame.open();
         },
         addImage = function () {
-            var image = frame.state().get('selection').first().toJSON();
+            var 
+                // DOM
+                $imgWrapper = $imageWrapperTemplate.clone(true).removeClass("gallery-image-template"),
+                image = frame.state().get('selection').first().toJSON();
 
-            $(".image-title").text(image.title);
-            $(".image-url").text(image.url);
-            $(".image-id").text(image.id);
+            // $(".image-title").text(image.title);
+            // $(".image-url").text(image.url);
+            // $(".image-id").text(image.id);
+
+            $imgWrapper.find("img").attr("src", image.url);
+            $imgWrapper.find("input[type=text]").val(image.title);
+            $imgWrapper.find("input[type=hidden]").val(image.id);
+
+            $actualGallery.find(".gallery-body").prepend($imgWrapper);
         },
         deleteImage = function () {
 
@@ -182,8 +191,8 @@ var initEcAdminGalleries = function (galleriesString) {
             $("button.add.gallery-button").click(addGallery);
 
             // set image events
-            $imageTemplate.find("input").keyup(captionChanged);
-            $imageTemplate.find("button").click(deleteImage);
+            $imageWrapperTemplate.find("input").keyup(captionChanged);
+            $imageWrapperTemplate.find("button").click(deleteImage);
 
             // frame event
             frame.on('select', addImage);
