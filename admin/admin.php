@@ -19,6 +19,7 @@ function ec_admin_menu_page() {
 }
 function ec_galleries_page() {
     wp_enqueue_script('ec_admin_scripts');
+    wp_enqueue_script('ec_qu_string');
     
     include plugin_dir_path(__FILE__) . "inc/admin-galleries-page.php";
 }
@@ -34,6 +35,7 @@ function ec_admin_scripts_and_styles($hook) {
     wp_enqueue_media();
 
     wp_register_script( 'ec_admin_scripts', plugin_dir_url( __FILE__ ) . 'js/ec-admin.js', false, '1.0');
+    wp_register_script( 'ec_qu_string', plugin_dir_url( __FILE__ ) . '../js/qu-string.js', false, '1.0');
 
     wp_enqueue_style('ec_admin_styles', plugin_dir_url(__FILE__) . 'css/ec-admin.css', array(), '1.0');
 }

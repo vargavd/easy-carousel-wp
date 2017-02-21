@@ -27,9 +27,6 @@
 .gallery-admin button.add:hover {
   background-color: #366036;
 }
-.gallery-admin button.add.image-button {
-  float: right;
-}
 .gallery-admin button.delete {
   background-color: #cc6161;
   color: white;
@@ -50,39 +47,38 @@
 .gallery-admin button:hover {
   background: #ccc;
 }
-.gallery-admin .gallery-template {
+.gallery-admin .gallery {
   border: 1px solid #aaa;
   margin-top: 20px;
   overflow: hidden;
   background: white;
 }
-.gallery-admin .gallery-template .gallery-header {
+.gallery-admin .gallery .gallery-header {
   border-bottom: 1px solid #666;
   background-color: #ededed;
   padding: 5px;
 }
-.gallery-admin .gallery-template .gallery-header button.delete {
+.gallery-admin .gallery .gallery-header button.delete,
+.gallery-admin .gallery .gallery-header button.add {
   float: right;
+  margin: 3px 0 0 10px;
 }
-.gallery-admin .gallery-template .gallery-header button.add {
-  margin-right: 10px;
-}
-.gallery-admin .gallery-template .gallery-header button.expand-close {
+.gallery-admin .gallery .gallery-header button.expand-close {
   padding: 0 10px 3px;
   margin-right: 10px;
 }
-.gallery-admin .gallery-template .gallery-header button.expand-close span {
+.gallery-admin .gallery .gallery-header button.expand-close span {
   font-weight: bold;
   font-size: 2em;
   line-height: 0.8em;
 }
-.gallery-admin .gallery-template .gallery-header button.expand-close.expanded .plus {
+.gallery-admin .gallery .gallery-header button.expand-close.expanded .plus {
   display: none;
 }
-.gallery-admin .gallery-template .gallery-header button.expand-close.closed .minus {
+.gallery-admin .gallery .gallery-header button.expand-close.closed .minus {
   display: none;
 }
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper {
+.gallery-admin .gallery .gallery-body .gallery-image-wrapper {
   margin: 10px;
   padding: 10px 0;
   display: block;
@@ -91,17 +87,17 @@
   border-bottom: 1px dashed gray;
   overflow: hidden;
 }
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper.gallery-image-template {
-  display: none;
-}
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper img {
+.gallery-admin .gallery .gallery-body .gallery-image-wrapper img {
   width: 100px;
   float: left;
   border: 2px solid #666;
 }
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .gallery-image-infos {
+.gallery-admin .gallery .gallery-body .gallery-image-wrapper .gallery-image-infos {
   margin-left: 120px;
 }
-.gallery-admin .gallery-template .gallery-images .gallery-image-wrapper .gallery-image-infos input {
+.gallery-admin .gallery .gallery-body .gallery-image-wrapper .gallery-image-infos input {
   width: 300px;
+}
+.gallery-admin .gallery-image-template {
+  display: none;
 }

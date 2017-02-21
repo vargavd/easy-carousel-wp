@@ -2,6 +2,12 @@
 
 ?>
 
+<script>
+jQuery(document).ready(function ($) {
+    initEcAdminGalleries();
+});
+</script>
+
 <div class="wrap gallery-admin">
     <h1>Galleries that can be shown in the widget</h1>
     
@@ -32,6 +38,14 @@
         <span>+</span> Add Gallery 
     </button>
 
+    <div class="gallery-image-wrapper gallery-image-template" data-id="">
+        <img src="" />
+        <div class="gallery-image-infos">
+            <strong>Lightbox Caption:</strong> <input /> <br />
+            <button class="delete">X</button> <br />
+        </div>
+    </div>
+
     <div class="gallery gallery-template" data-id="0">
         <div class="gallery-header">
             <button class="expand-close expanded" title="Close">
@@ -42,26 +56,20 @@
             <button class="add image-button"> + Add Image </button>
             ID: <input type="text" class="header-id" placeholder="gallery-1" /> 
         </div>
-        <div class="gallery-images">
-            <div class="gallery-image-wrapper gallery-image-template" data-id="">
-                <img src="" />
-                <div class="img-button-wrapper">
-                    <div class="img-button-wrapper">
-                        <button class="delete">X</button>                  
-                    </div>
-                </div>
-            </div>
+        <div class="gallery-body">
 
             <?php for ($i = 0; $i < 10; $i++): ?>
-                <div class="gallery-image-wrapper">
+                <!--<div class="gallery-image-wrapper">
                     <img src="http://placehold.it/<?php print rand(100, 300); ?>x100" />
                     <div class="gallery-image-infos">
                         <strong>Lightbox Caption:</strong> <input /> <br />
                         <button class="delete">X</button> <br />
                     </div>
-                </div>
+                </div>-->
             <?php endfor; ?>
         </div>
     </div>
+
+    
     
 </div>

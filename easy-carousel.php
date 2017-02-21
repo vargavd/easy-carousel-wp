@@ -20,3 +20,7 @@ include plugin_dir_path(__FILE__) . "inc/helper.php";
 
 // ADMIN
 include plugin_dir_path(__FILE__) . "admin/admin.php";
+
+// INSTALL
+include plugin_dir_path(__FILE__) . "install.php";
+register_activation_hook(__FILE__, 'ec_install');

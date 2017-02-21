@@ -1,26 +1,46 @@
-jQuery(document).ready(function ($) {
+var initEcAdminGalleries = function (galleriesString) {
     "use strict";
 
-    var 
+    var
+        $ = jQuery,
+
+        // constants,
+        GALLERIES_DELIMITER = "|||",
+        GALLERY_DELIMITER = "||",
+        IMAGES_DELIMITER = "|",
+
         // DOM
-        $expandCloseButtons = $("button.expand-close"),
+        $galleryTemplate = $(".gallery-template"),
+        $imageTemplate = $(".gallery-image-template"),
+        $addGalleryBtn = $(".add.gallery-button"),
+
+        // helper functions
+        $getGallery = function (elem) {
+            // DOM
+            var $elem = $(elem);
+
+            return $elem.closest(".gallery");
+        },
+        $getGalleries = function () {
+            return $(".gallery:not(.gallery-template)");
+        },
 
         // events
         expandCloseGallery = function () {
-            var 
+            var
                 // DOM
                 $button = $(this),
                 $gallery = $button.closest(".gallery"),
-                $galleryImages = $gallery.find(".gallery-images"),
+                $galleryBody = $gallery.find(".gallery-body"),
 
                 // helper functions
                 expand = function () {
                     var
                         // DOM
-                        $galleryImgWrappers = $gallery.find(".gallery-image-wrapper"),,
-                        
+                        $galleryImgWrappers = $gallery.find(".gallery-image-wrapper"),
+
                         // misc
-                        galleryWrapperHeight = 0;
+                        galleryImagesHeight = 0;
 
                     $button
                         .removeClass("closed")
@@ -28,15 +48,37 @@ jQuery(document).ready(function ($) {
                         .attr("title", "Close");
 
                     // calculate the height of the gallery wrapper
-                    $galleryImgWrappers.each(function (index, elem) {
+                    $galleryImgWrappers.each(function () {
                         var
                             // DOM
-                            $galleryImgWrapper = $(elem),
-                            $img = $galleryImgWrapper.find("img"),
+                            $galleryImgWrapper = $(this),
+
+                            // helper functions
+                            getImgHeight = function () {
+                                var
+                                    // DOM
+                                    $imgClone = $galleryImgWrapper.find("img").clone(),
+
+                                    // misc
+                                    imgHeight = 0;
+
+                                $imgClone.css({
+                                    display: "block",
+                                    position: "absolute",
+                                    visibility: "hidden"
+                                });
+                                $galleryImgWrapper.append($imgClone);
+
+                                imgHeight = $imgClone.height();
+
+                                $imgClone.remove();
+
+                                return imgHeight;
+                            },
 
                             // misc
-                            imgHeight = $img.height(),
-                            wrapperHeight = 30; // padding (20) + margin (10)
+                            imgHeight = getImgHeight(),
+                            wrapperHeight = 31; // padding (20) + margin (10) + border (1)
 
                         if (imgHeight > 60) {
                             wrapperHeight = wrapperHeight + imgHeight;
@@ -44,13 +86,13 @@ jQuery(document).ready(function ($) {
                             wrapperHeight = wrapperHeight + 60;
                         }
 
-                        galleryWrapperHeight = galleryWrapperHeight + wrapperHeight;
+                        galleryImagesHeight = galleryImagesHeight + wrapperHeight;
                     });
 
-                    
-                    $gallery.style("height", 0).show().animate({
-                        height: galleryWrapperHeight
-                    }, 500,  "swing");
+
+                    $galleryBody.css("height", 0).show().animate({
+                        height: galleryImagesHeight - 10
+                    }, 500, "swing");
                 },
                 close = function () {
                     $button
@@ -58,114 +100,107 @@ jQuery(document).ready(function ($) {
                         .addClass("closed")
                         .attr("title", "Expand");
 
-                    $gallery.animate({
+                    $galleryBody.animate({
                         height: 0
-                    }, 500, function () { $gallery.hide(); })
+                    }, 500, "swing", function () {
+                        $galleryBody.hide();
+                    });
                 };
 
-        };
-
-    function handleGalleries() {
-        var
-            // $elems
-            $addGalleryButton = $("button.add.gallery"),
-            $galleryTemplate  = $(".gallery-template"),
-            $getImage         = $(".select-image"),
-            $imgTitle         = $(".image-title"),
-            $imgUrl         = $(".image-url"),
-            $imgId          = $(".image-id"),
-            $currGallery,
-
-            // misc
-            galleriesCount = 0,
-
-            // wp media modal window
-            frame = wp.media({
-                title: 'Select or Upload Media',
-                multiple: false,
-                button: {
-                    text: 'Use this image'
-                },
-                library: {
-                    type: 'image'
-                }
-            });
-
-        function $getGallery(info) {
-            var $gallery;
-
-            // helper functions
-            function getGallery() {
-
-                // if info is the id
-                if (typeof info === 'number') {
-                    $gallery = $('.gallery[data-id="' + info + '"]');
-                } else if (info instanceof jQuery) { // if info is a DOM element
-
-                    if (!info.hasClass('gallery')) {
-
-                        $gallery = $gallery.closest('.gallery'); // info must be a child of the .gallery
-
-                        if ($gallery.length === 0) {
-                            // no .gallery found in parents tree
-                            throw new Exception('No gallery found.');
-                        }
-                    } else {
-                        $gallery = info;
-                    }
-                } else { // otherwise we make a new gallery
-                    $gallery = $galleryTemplate.clone().removeClass('gallery-template');
-                }
-
+            if ($button.hasClass("expanded")) {
+                close();
+            } else {
+                expand();
             }
-            function getImages() {
-                 return $gallery.find('.gallery-image:not(.gallery-image-template)');
+        },
+        addGallery = function () {
+            var
+                // DOM
+                $gallery = $galleryTemplate.clone(true).removeClass("gallery-template"),
+                $galleries = $getGalleries();
+
+            $gallery.find(".gallery-header input").attr("placeholder", "gallery-" + ($galleries.size() + 1));
+
+            $gallery.insertAfter($galleryTemplate);
+        },
+        deleteGallery = function () {
+            var
+                // DOM
+                $galleryToDelete = $getGallery(this),
+                $galleries,
+
+                // misc
+                galleryCount,
+
+                // funcs
+                indexGallery = function (index, elem) {
+                    var
+                        // DOM
+                        $gallery = $(elem),
+
+                        // misc
+                        placeholderString = "gallery-" + (galleryCount - index);
+
+                    $gallery.find(".gallery-header input").attr("placeholder", placeholderString);
+                };
+
+            $galleryToDelete.remove();
+            $galleries = $getGalleries();
+            galleryCount = $galleries.size();
+
+            $galleries.each(indexGallery);
+        },
+        captionChanged = function () {
+            
+        },
+        deleteImage = function () {
+
+        },
+
+        init = function () {
+            var galleries;
+
+            // set gallery events
+            $galleryTemplate.find("button.expand-close").click(expandCloseGallery);
+            $galleryTemplate.find("button.delete").click(deleteGallery);
+            $("button.add.gallery-button").click(addGallery);
+
+            // set image events
+            $imageTemplate.find("input").keyup(captionChanged);
+            $imageTemplate.find("button").click(deleteImage);
+
+            if (galleriesString) {
+                galleries = QU.String.SplitByDelimiters(galleriesString,
+                        [GALLERIES_DELIMITER, GALLERY_DELIMITER, IMAGES_DELIMITER],
+                        ["galleries", "gallery_infos", "images"]);
+
+                console.log(galleries);
             }
+        },
 
-            // get $gallery based in info parameter
-            getGallery();
+        // wp media modal window
+        frame = wp.media({
+            title: 'Select or Upload Media',
+            multiple: false,
+            button: {
+                text: 'Use this image'
+            },
+            library: {
+                type: 'image'
+            }
+        });
 
-            return {
-                id: $gallery.attr('data-id'),
-                gallery: $gallery,
-                addImgButton: $gallery.find('button.add.image-button'),
-                deleteImgButton: $gallery.find('button.delete.image-button'),
-                deleteGalleryButton: $gallery.find('button.delete.gallery-button'),
-                imgTemplate: $gallery.find('.gallery-image-template'),
-                getImgs: getImages
+    init();
 
-            };
-        }
-        function $getImage(id) {
-            var $imgWrapper = $('.gallery-image-wrapper[data-id="' + id + '"]');
+    // get image example
+    frame.on('select', function () {
+        var image = frame.state().get('selection').first().toJSON();
 
-            return {
-                id: id,
-                imgWrapper: $imgWrapper,
-                img: $imgWrapper.find('img'),
-                deleteButton: $imgWrapper.find('button.delete')
-            };
-        }
-
-        function getImageClicked() {
-            frame.open();
-        }
-
-        function imageSelected() {
-            var image = frame.state().get('selection').first().toJSON();
-
-            $imgTitle.text(image.title);
-            $imgUrl.text(image.url);
-            $imgId.text(image.id);
-        }
-
-        // set events on the gallery template
-        $currGallery = $getGallery($galleryTemplate);
-
-        frame.on('select', imageSelected);
-
-        $getImage.click(getImageClicked);
-   }
-    
-    handleGalleries();
-});
+        $(".img-title").text(image.title);
+        $("img-url").text(image.url);
+        $("img-id").text(image.id);
+    });
+    $(".select-image").click(function () {
+        frame.open();
+    });
+};

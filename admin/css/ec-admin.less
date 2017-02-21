@@ -39,10 +39,6 @@
             &:hover {
                 background-color: @darkGreen;
             }
-
-            &.image-button {
-                float: right;
-            }
         }
         
         &.delete {
@@ -72,7 +68,7 @@
         }
     }
     
-    .gallery-template {
+    .gallery {
         border: 1px solid #aaa;
         margin-top: 20px;
         overflow: hidden;
@@ -84,12 +80,9 @@
             padding: 5px;
 
             button {
-                &.delete {
+                &.delete, &.add {
                     float: right;
-                }
-
-                &.add {
-                    margin-right: 10px;
+                    margin: 3px 0 0 10px;
                 }
 
                 &.expand-close {
@@ -113,7 +106,7 @@
             }
         }
         
-        .gallery-images {
+        .gallery-body {
             .gallery-image-wrapper {
                 margin: 10px;
                 padding: 10px 0;
@@ -122,10 +115,6 @@
                 min-height: 60px;
                 border-bottom: 1px dashed gray;
                 overflow: hidden;
-
-                &.gallery-image-template {
-                    display: none;
-                }
                 
                 img {
                     width: 100px;
@@ -147,4 +136,8 @@
             }
         }
     }
+
+    .gallery-image-template {
+            display: none;
+        }
 }
