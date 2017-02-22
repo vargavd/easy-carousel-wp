@@ -10,7 +10,7 @@ var adminCssDest    = 'admin/css';
 var jsFiles         = ['admin/js/*.js'];
 var isItProduction  = false;
 var jsLintConfig    = { 
-    global : ['jQuery', 'window', 'Modernizr', 'wp', 'Exception', 'QU'], 
+    global : ['jQuery', 'window', 'Modernizr', 'wp', 'Exception', 'QU', 'console'], 
     browser: true,
     devel  : isItProduction,
     maxerr : 5,

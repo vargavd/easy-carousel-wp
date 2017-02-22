@@ -10,23 +10,6 @@ jQuery(document).ready(function ($) {
 
 <div class="wrap gallery-admin">
     <h1>Galleries that can be shown in the widget</h1>
-    
-    <p>
-        <button class="select-image" type="button">Get Image</button>
-    </p>
-
-    <div>
-        <strong>Image Title: </strong>
-        <span class="image-title"></span>
-    </div>
-    <div>
-        <strong>Image URL: </strong>
-        <span class="image-url"></span>
-    </div>
-    <div>
-        <strong>Image ID: </strong>
-        <span class="image-id"></span>
-    </div>
 
     <p class="description">Here, you can define galleries, which are collections of images. When you insert a slideshow (with shortcode, php or widget), you must define the id of the shown gallery. </p>
 
@@ -58,7 +41,7 @@ jQuery(document).ready(function ($) {
             ID: <input type="text" class="header-id" placeholder="gallery-1" /> 
         </div>
         <div class="gallery-body">
-
+            <input type="hidden" name="gallery_infos[]" />
             <?php for ($i = 0; $i < 10; $i++): ?>
                 <!--<div class="gallery-image-wrapper">
                     <img src="http://placehold.it/<?php print rand(100, 300); ?>x100" />

@@ -5,15 +5,28 @@ var initEcAdminGalleries = function (galleriesString) {
         $ = jQuery,
 
         // constants,
-        GALLERIES_DELIMITER = "|||",
-        GALLERY_DELIMITER = "||",
-        IMAGES_DELIMITER = "|",
+        GALLERIES_DELIMITER = "||||",
+        GALLERY_DELIMITER = "|||",
+        IMAGES_DELIMITER = "||",
+        IMAGEINFOS_DELIMITER = "|",
 
         // DOM
         $galleryTemplate = $(".gallery-template"),
         $imageWrapperTemplate = $(".gallery-image-template"),
         $addGalleryBtn = $(".add.gallery-button"),
         $actualGallery,
+
+        // wp media modal window
+        frame = wp.media({
+            title: 'Select or Upload Media',
+            multiple: false,
+            button: {
+                text: 'Select Image'
+            },
+            library: {
+                type: 'image'
+            }
+        }),
 
         // helper functions
         $getGallery = function (elem) {
@@ -114,6 +127,55 @@ var initEcAdminGalleries = function (galleriesString) {
                 expand();
             }
         },
+        refreshGalleryInput = function ($elem) {
+            var
+                // DOM
+                $galleryWrapper = $elem.hasClass("gallery")
+                    ? $elem
+                    : $getGallery($elem),
+                $galleryName = $galleryWrapper.find("input.header-id"),
+                $hiddenInput = $galleryWrapper.find("input[type=hidden]"),
+                $imageWrappers = $galleryWrapper.find(".gallery-image-wrapper:not(.gallery-image-template)"),
+
+                // misc
+                value = $galleryName.val() !== ""
+                    ? $galleryName.val()
+                    : $galleryName.attr("placeholder"),
+                imagesString = "",
+
+                // helper functions
+                getImageString = function ($imageWrapper) {
+                    var
+                        // DOM
+                        $img = $imageWrapper.find("img"),
+                        $idInput = $imageWrapper.find("input[type=hidden]"),
+                        $captionInput = $imageWrapper.find("input[type=text]"),
+
+                        // misc
+                        imgSrc = $img.attr("src"),
+                        id = $idInput.val(),
+                        caption = $captionInput.val(),
+
+                        // return value
+                        imageInfos;
+
+                    imageInfos = QU.String.AddToString(imageInfos, imgSrc, IMAGEINFOS_DELIMITER);
+                    imageInfos = QU.String.AddToString(imageInfos, id, IMAGEINFOS_DELIMITER);
+                    imageInfos = QU.String.AddToString(imageInfos, caption, IMAGEINFOS_DELIMITER);
+
+                    return imageInfos;
+                };
+
+            $imageWrappers.each(function () {
+
+                imagesString = QU.String.AddToString(imagesString, getImageString($(this)), IMAGES_DELIMITER);
+
+            });
+
+            value = QU.String.AddToString(value, imagesString, GALLERY_DELIMITER);
+
+            $hiddenInput.val(value);
+        },
         addGallery = function () {
             var
                 // DOM
@@ -151,8 +213,15 @@ var initEcAdminGalleries = function (galleriesString) {
 
             $galleries.each(indexGallery);
         },
-        captionChanged = function () {
-            
+        captionInputKeyDown = function (event) {
+            var
+                // DOM
+                $input = $(this),
+
+                // misc
+                value = $input.val();
+
+            return value.length <= 200 && event.which !== 220;
         },
         addImageClicked = function () {
             var $button = $(this);
@@ -162,25 +231,31 @@ var initEcAdminGalleries = function (galleriesString) {
             frame.open();
         },
         addImage = function () {
-            var 
+            var
                 // DOM
                 $imgWrapper = $imageWrapperTemplate.clone(true).removeClass("gallery-image-template"),
                 image = frame.state().get('selection').first().toJSON();
-
-            // $(".image-title").text(image.title);
-            // $(".image-url").text(image.url);
-            // $(".image-id").text(image.id);
 
             $imgWrapper.find("img").attr("src", image.url);
             $imgWrapper.find("input[type=text]").val(image.title);
             $imgWrapper.find("input[type=hidden]").val(image.id);
 
             $actualGallery.find(".gallery-body").prepend($imgWrapper);
+
+            refreshGalleryInput($imgWrapper);
         },
         deleteImage = function () {
+            var
+                // DOM
+                $button = $(this),
+                $imageWrapper = $getGallery($button);
 
+            $imageWrapper.remove();
+
+            refreshGalleryInput($imageWrapper);
         },
 
+        // main functions
         init = function () {
             var galleries;
 
@@ -191,7 +266,7 @@ var initEcAdminGalleries = function (galleriesString) {
             $("button.add.gallery-button").click(addGallery);
 
             // set image events
-            $imageWrapperTemplate.find("input").keyup(captionChanged);
+            $imageWrapperTemplate.find("input").keydown(captionInputKeyDown).keyup(refreshGalleryInput);
             $imageWrapperTemplate.find("button").click(deleteImage);
 
             // frame event
@@ -204,19 +279,10 @@ var initEcAdminGalleries = function (galleriesString) {
 
                 console.log(galleries);
             }
-        },
-
-        // wp media modal window
-        frame = wp.media({
-            title: 'Select or Upload Media',
-            multiple: false,
-            button: {
-                text: 'Select Image'
-            },
-            library: {
-                type: 'image'
-            }
-        });
+        };
 
     init();
+
+    // TEST
+    $addGalleryBtn.click();
 };
