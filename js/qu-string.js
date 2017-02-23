@@ -20,7 +20,7 @@ QU.String.Contains = function (container, what) {
  * Ekkor 4x hivtuk meg az AddToString fgv-t: result = AddToString(result, 10, "-"); ...   result = AddToString(result, "34", "-"); ... stb
  */
 QU.String.AddToString = function (result, what, delimiter) {
-    if (typeof result !== "string") {
+    if (typeof result !== "string" || !result) {
         return what;
     }
 

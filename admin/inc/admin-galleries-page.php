@@ -41,7 +41,7 @@ jQuery(document).ready(function ($) {
             ID: <input type="text" class="header-id" placeholder="gallery-1" /> 
         </div>
         <div class="gallery-body">
-            <input type="hidden" name="gallery_infos[]" />
+            <input type="hidden" class="gallery-infos" name="gallery_infos[]" />
             <?php for ($i = 0; $i < 10; $i++): ?>
                 <!--<div class="gallery-image-wrapper">
                     <img src="http://placehold.it/<?php print rand(100, 300); ?>x100" />

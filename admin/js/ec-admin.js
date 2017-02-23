@@ -134,7 +134,7 @@ var initEcAdminGalleries = function (galleriesString) {
                     ? $elem
                     : $getGallery($elem),
                 $galleryName = $galleryWrapper.find("input.header-id"),
-                $hiddenInput = $galleryWrapper.find("input[type=hidden]"),
+                $hiddenInput = $galleryWrapper.find("input.gallery-infos"),
                 $imageWrappers = $galleryWrapper.find(".gallery-image-wrapper:not(.gallery-image-template)"),
 
                 // misc
@@ -248,11 +248,12 @@ var initEcAdminGalleries = function (galleriesString) {
             var
                 // DOM
                 $button = $(this),
-                $imageWrapper = $getGallery($button);
+                $imageWrapper = $button.closest(".gallery-image-wrapper"),
+                $galleryWrapper = $imageWrapper.closest(".gallery");
 
             $imageWrapper.remove();
 
-            refreshGalleryInput($imageWrapper);
+            refreshGalleryInput($galleryWrapper);
         },
 
         // main functions
