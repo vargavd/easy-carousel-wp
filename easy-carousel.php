@@ -16,7 +16,8 @@
  */
 
 // API
-include plugin_dir_path(__FILE__) . "inc/helper.php";
+include plugin_dir_path(__FILE__) . "api/galleries_db.php";
+include plugin_dir_path(__FILE__) . "api/helper.php";
 
 // ADMIN
 include plugin_dir_path(__FILE__) . "admin/admin.php";

@@ -13,7 +13,7 @@ var jsLintConfig    = {
     global : ['jQuery', 'window', 'Modernizr', 'wp', 'Exception', 'QU', 'console'], 
     browser: true,
     devel  : isItProduction,
-    maxerr : 5,
+    maxerr : 10,
     this: true
 };
 

@@ -20,7 +20,19 @@ function ec_admin_menu_page() {
 function ec_galleries_page() {
     wp_enqueue_script('ec_admin_scripts');
     wp_enqueue_script('ec_qu_string');
-    
+
+    if (isset($_POST['gallery_strings']) && is_array($_POST["gallery_strings"])) {
+        vd1($_POST['gallery_strings']);
+
+        foreach ($_POST["gallery_strings"] as $gallery_string) {
+            vd1($gallery_string);
+            $gallery_info = explode("|||", $gallery_string);
+            vd1($gallery_info);
+
+            save_gallery($gallery_info[0], $gallery_info[1]);
+        }
+    }
+
     include plugin_dir_path(__FILE__) . "inc/admin-galleries-page.php";
 }
 

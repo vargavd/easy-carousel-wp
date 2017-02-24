@@ -1,3 +1,7 @@
+/*
+ * TODO: check on submit if there is more gallery with the same name
+ */
+
 var initEcAdminGalleries = function (galleriesString) {
     "use strict";
 
@@ -134,7 +138,7 @@ var initEcAdminGalleries = function (galleriesString) {
                     ? $elem
                     : $getGallery($elem),
                 $galleryName = $galleryWrapper.find("input.header-id"),
-                $hiddenInput = $galleryWrapper.find("input.gallery-infos"),
+                $hiddenInput = $galleryWrapper.find("input.gallery-string"),
                 $imageWrappers = $galleryWrapper.find(".gallery-image-wrapper:not(.gallery-image-template)"),
 
                 // misc
@@ -180,9 +184,12 @@ var initEcAdminGalleries = function (galleriesString) {
             var
                 // DOM
                 $gallery = $galleryTemplate.clone(true).removeClass("gallery-template"),
-                $galleries = $getGalleries();
+                $galleries = $getGalleries(),
+                $hiddenInput = $gallery.find("input.gallery-string");
 
             $gallery.find(".gallery-header input").attr("placeholder", "gallery-" + ($galleries.size() + 1));
+
+            $hiddenInput.attr("name", $hiddenInput.attr("data-name"));
 
             $gallery.insertAfter($galleryTemplate);
         },
