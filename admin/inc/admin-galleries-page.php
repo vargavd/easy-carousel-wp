@@ -1,12 +1,28 @@
 <?php
-
-    vd1($_POST);
-
+    $galleries = get_galleries();
 ?>
 
 <script>
 jQuery(document).ready(function ($) {
-    initEcAdminGalleries();
+    var delimiters = {
+        GALLERIES:  "<?php print constant("GALLERIES_DELIMITER"); ?>",
+        GALLERY:    "<?php print constant("GALLERY_DELIMIETER"); ?>",
+        IMAGES:     "<?php print constant("IMAGES_DELIMITER"); ?>",
+        IMAGEINFOS: "<?php print constant("IMAGEINFOS_DELIMITER"); ?>",
+        IDS:        "<?php print constant("IDS_DELIMITER"); ?>"
+    };
+
+    var galleries = [];
+
+    <?php foreach ($galleries as $gallery): ?>
+        galleries.push({
+            id: "<?php print $gallery->id; ?>",
+            name: "<?php print $gallery->name; ?>",
+            data: "<?php print $gallery->data; ?>",
+        });
+    <?php endforeach; ?>
+
+    initEcAdminGalleries(galleries, delimiters);
 });
 </script>
 
@@ -16,6 +32,8 @@ jQuery(document).ready(function ($) {
     <p class="description">Here, you can define galleries, which are collections of images. When you insert a slideshow (with shortcode, php or widget), you must define the id of the shown gallery. </p>
 
     <form method="POST">
+
+        <input type="hidden" class="deleted-gallery-ids" name="deleted_gallery_ids">
 
         <div class="alert" id="same-name-alert">
             <span class="icon"> ! </span>
@@ -46,7 +64,7 @@ jQuery(document).ready(function ($) {
     
         <div class="gallery gallery-template" data-id="0">
             <div class="gallery-header">
-                <button class="expand-close expanded" title="Close">
+                <button type="button" class="expand-close expanded" title="Close">
                     <span class="plus">+</span>
                     <span class="minus">-</span>
                 </button>

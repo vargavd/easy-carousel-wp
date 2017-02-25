@@ -1,14 +1,8 @@
-var initEcAdminGalleries = function (galleriesString) {
+var initEcAdminGalleries = function (galleries, delimiters) {
     "use strict";
 
     var
         $ = jQuery,
-
-        // constants,
-        GALLERIES_DELIMITER = "||||",
-        GALLERY_DELIMITER = "|||",
-        IMAGES_DELIMITER = "||",
-        IMAGEINFOS_DELIMITER = "|",
 
         // DOM
         $galleryTemplate = $(".gallery-template"),
@@ -17,6 +11,7 @@ var initEcAdminGalleries = function (galleriesString) {
         $form = $("form"),
         $sameNameAlert = $("#same-name-alert"),
         $emptyNameAlert = $("#empty-name-alert"),
+        $deletedGalleryIds = $("input.deleted-gallery-ids"),
         $actualGallery,
 
         // wp media modal window
@@ -38,9 +33,6 @@ var initEcAdminGalleries = function (galleriesString) {
 
             return $elem.closest(".gallery");
         },
-        $getGalleries = function () {
-            return $(".gallery:not(.gallery-template)");
-        },
 
         // events
         expandCloseGallery = function () {
@@ -57,7 +49,7 @@ var initEcAdminGalleries = function (galleriesString) {
                         $galleryImgWrappers = $gallery.find(".gallery-image-wrapper"),
 
                         // misc
-                        galleryImagesHeight = 0;
+                        galleryImagesHeight = 30;
 
                     $button
                         .removeClass("closed")
@@ -176,13 +168,12 @@ var initEcAdminGalleries = function (galleriesString) {
                     ? $elem
                     : $getGallery($elem),
                 $galleryName = $galleryWrapper.find("input.gallery-name"),
-                $hiddenInput = $galleryWrapper.find("input.gallery-string"),
+                $galleryString = $galleryWrapper.find("input.gallery-string"),
+                $galleryId = $galleryWrapper.find("input.gallery-id"),
                 $imageWrappers = $galleryWrapper.find(".gallery-image-wrapper:not(.gallery-image-template)"),
 
                 // misc
-                value = $galleryName.val() !== ""
-                    ? $galleryName.val()
-                    : $galleryName.attr("placeholder"),
+                value = QU.String.AddToString($galleryId.val(), $galleryName.val(), delimiters.GALLERY),
                 imagesString = "",
 
                 // helper functions
@@ -201,22 +192,22 @@ var initEcAdminGalleries = function (galleriesString) {
                         // return value
                         imageInfos;
 
-                    imageInfos = QU.String.AddToString(imageInfos, imgSrc, IMAGEINFOS_DELIMITER);
-                    imageInfos = QU.String.AddToString(imageInfos, id, IMAGEINFOS_DELIMITER);
-                    imageInfos = QU.String.AddToString(imageInfos, caption, IMAGEINFOS_DELIMITER);
+                    imageInfos = QU.String.AddToString(imageInfos, imgSrc, delimiters.IMAGEINFOS);
+                    imageInfos = QU.String.AddToString(imageInfos, id, delimiters.IMAGEINFOS);
+                    imageInfos = QU.String.AddToString(imageInfos, caption, delimiters.IMAGEINFOS);
 
                     return imageInfos;
                 };
 
             $imageWrappers.each(function () {
 
-                imagesString = QU.String.AddToString(imagesString, getImageString($(this)), IMAGES_DELIMITER);
+                imagesString = QU.String.AddToString(imagesString, getImageString($(this)), delimiters.IMAGES);
 
             });
 
-            value = QU.String.AddToString(value, imagesString, GALLERY_DELIMITER);
+            value = QU.String.AddToString(value, imagesString, delimiters.GALLERY);
 
-            $hiddenInput.val(value);
+            $galleryString.val(value);
         },
         addGallery = function () {
             var
@@ -232,28 +223,21 @@ var initEcAdminGalleries = function (galleriesString) {
             var
                 // DOM
                 $galleryToDelete = $getGallery(this),
-                $galleries,
+                $galleryIdInput = $galleryToDelete.find("input.gallery-id"),
 
                 // misc
-                galleryCount,
-
-                // funcs
-                indexGallery = function (index, elem) {
-                    var
-                        // DOM
-                        $gallery = $(elem),
-
-                        // misc
-                        placeholderString = "gallery-" + (galleryCount - index);
-
-                    $gallery.find(".gallery-header input").attr("placeholder", placeholderString);
-                };
+                galleryId = $galleryIdInput.val(),
+                deletedIdsString = $deletedGalleryIds.val();
 
             $galleryToDelete.remove();
-            $galleries = $getGalleries();
-            galleryCount = $galleries.size();
 
-            $galleries.each(indexGallery);
+            if (!galleryId) {
+                return;
+            }
+
+            deletedIdsString = QU.String.AddToString(deletedIdsString, galleryId, delimiters.IDS);
+
+            $deletedGalleryIds.val(deletedIdsString);
         },
         captionInputKeyDown = function (event) {
             var
@@ -300,8 +284,6 @@ var initEcAdminGalleries = function (galleriesString) {
 
         // main functions
         init = function () {
-            var galleries;
-
             // set form submit event
             $form.submit(saveGalleriesSubmit);
 
@@ -318,13 +300,7 @@ var initEcAdminGalleries = function (galleriesString) {
             // frame event
             frame.on('select', addImage);
 
-            if (galleriesString) {
-                galleries = QU.String.SplitByDelimiters(galleriesString,
-                        [GALLERIES_DELIMITER, GALLERY_DELIMITER, IMAGES_DELIMITER],
-                        ["galleries", "gallery_infos", "images"]);
-
-                console.log(galleries);
-            }
+            console.log(galleries);
         };
 
     init();

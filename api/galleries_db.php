@@ -1,12 +1,15 @@
 <?php 
 
-    $gallery_table_suffix = "ec_galleries";
+    function get_table_name() {
+        global $wpdb;
+
+        return $wpdb->prefix . "ec_galleries";
+    }
 
     function create_gallery_table() {
         global $wpdb;
-        global $gallery_table_suffix;
 
-        $gallery_table_name = $wpdb->prefix . $gallery_table_suffix;
+        $gallery_table_name = get_table_name();
 
         $charset_collate = $wpdb->get_charset_collate();
 
@@ -21,19 +24,39 @@
         dbDelta($sql);
     }
 
-    function save_gallery($gallery_name, $gallery_string) {
+    function save_gallery($gallery_id, $gallery_name, $gallery_string) {
         global $wpdb;
-        global $gallery_table_suffix;
 
-        $gallery_table_name = $wpdb->prefix . $gallery_table_suffix;
+        $gallery_table_name = get_table_name();
 
-        $wpdb->insert(
-            $gallery_table_name,
-            array(
-                "name" => $gallery_name,
-                "data" => $gallery_string
-            )
-        );
+        if ($gallery_id === "") {
+            $wpdb->insert(
+                $gallery_table_name,
+                array(
+                    "name" => $gallery_name,
+                    "data" => $gallery_string
+                )
+            );
+        } else {
+            $wpdb->update(
+                $gallery_table_name,
+                array(
+                    "name" => $gallery_name,
+                    "data" => $gallery_string
+                ),
+                array (
+                    "id" => $gallery_id
+                )
+            );
+        }
+    }
+
+    function get_galleries() {
+        global $wpdb;
+
+        $gallery_table_name = get_table_name();
+
+        return $wpdb->get_results("SELECT id, name, data FROM $gallery_table_name");
     }
 
 ?>

@@ -25,11 +25,9 @@ function ec_galleries_page() {
         vd1($_POST['gallery_strings']);
 
         foreach ($_POST["gallery_strings"] as $gallery_string) {
-            vd1($gallery_string);
             $gallery_info = explode("|||", $gallery_string);
-            vd1($gallery_info);
 
-            save_gallery($gallery_info[0], $gallery_info[1]);
+            save_gallery($gallery_info[0], $gallery_info[1], $gallery_info[2]);
         }
     }
 
