@@ -13,6 +13,23 @@
 .gallery-admin input[type=submit]:hover {
   background: #005374;
 }
+.gallery-admin .alert {
+  border: 1px solid #f3ae97;
+  background: #f8e1e1;
+  padding: 2px 7px;
+  font-weight: bold;
+  color: #b26d6d;
+  margin-bottom: 10px;
+  display: none;
+}
+.gallery-admin .alert .icon {
+  font-size: 0.9em;
+  border-radius: 30px;
+  border: 1px solid #f3ae97;
+  padding: 0 3px 1px 7px;
+  margin-right: 5px;
+  color: #f3ae97;
+}
 .gallery-admin button {
   font-weight: bold;
   padding: 3px 10px;

@@ -1,7 +1,3 @@
-/*
- * TODO: check on submit if there is more gallery with the same name
- */
-
 var initEcAdminGalleries = function (galleriesString) {
     "use strict";
 
@@ -18,6 +14,9 @@ var initEcAdminGalleries = function (galleriesString) {
         $galleryTemplate = $(".gallery-template"),
         $imageWrapperTemplate = $(".gallery-image-template"),
         $addGalleryBtn = $(".add.gallery-button"),
+        $form = $("form"),
+        $sameNameAlert = $("#same-name-alert"),
+        $emptyNameAlert = $("#empty-name-alert"),
         $actualGallery,
 
         // wp media modal window
@@ -131,13 +130,52 @@ var initEcAdminGalleries = function (galleriesString) {
                 expand();
             }
         },
+        saveGalleriesSubmit = function (e) {
+            var
+                // DOM
+                $galleryNames = $(".gallery:not(.gallery-template) input.gallery-name"),
+
+                // misc
+                numberOfNames = $galleryNames.length,
+                sameName = false,
+                emptyName = false,
+                i,
+                j;
+
+            for (i = 0; i < numberOfNames; i += 1) {
+                if (!$galleryNames[i].value) {
+                    emptyName = true;
+                }
+
+                for (j = i + 1; j < numberOfNames; j += 1) {
+                    if ($galleryNames[i].value === $galleryNames[j].value) {
+                        sameName = true;
+                        break;
+                    }
+                }
+            }
+
+            if (emptyName) {
+                $emptyNameAlert.show();
+                e.preventDefault();
+            } else {
+                $emptyNameAlert.hide();
+            }
+
+            if (sameName) {
+                $sameNameAlert.show();
+                e.preventDefault();
+            } else {
+                $sameNameAlert.hide();
+            }
+        },
         refreshGalleryInput = function ($elem) {
             var
                 // DOM
                 $galleryWrapper = $elem.hasClass("gallery")
                     ? $elem
                     : $getGallery($elem),
-                $galleryName = $galleryWrapper.find("input.header-id"),
+                $galleryName = $galleryWrapper.find("input.gallery-name"),
                 $hiddenInput = $galleryWrapper.find("input.gallery-string"),
                 $imageWrappers = $galleryWrapper.find(".gallery-image-wrapper:not(.gallery-image-template)"),
 
@@ -184,10 +222,7 @@ var initEcAdminGalleries = function (galleriesString) {
             var
                 // DOM
                 $gallery = $galleryTemplate.clone(true).removeClass("gallery-template"),
-                $galleries = $getGalleries(),
                 $hiddenInput = $gallery.find("input.gallery-string");
-
-            $gallery.find(".gallery-header input").attr("placeholder", "gallery-" + ($galleries.size() + 1));
 
             $hiddenInput.attr("name", $hiddenInput.attr("data-name"));
 
@@ -266,6 +301,9 @@ var initEcAdminGalleries = function (galleriesString) {
         // main functions
         init = function () {
             var galleries;
+
+            // set form submit event
+            $form.submit(saveGalleriesSubmit);
 
             // set gallery events
             $galleryTemplate.find("button.expand-close").click(expandCloseGallery);

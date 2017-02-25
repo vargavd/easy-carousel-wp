@@ -27,7 +27,6 @@
 
         $gallery_table_name = $wpdb->prefix . $gallery_table_suffix;
 
-        // TODO: check if there is already a gallery with the same name
         $wpdb->insert(
             $gallery_table_name,
             array(

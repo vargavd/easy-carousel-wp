@@ -14,7 +14,8 @@ var jsLintConfig    = {
     browser: true,
     devel  : isItProduction,
     maxerr : 10,
-    this: true
+    this: true,
+    for: true
 };
 
 // HELPER FUNCTIONS

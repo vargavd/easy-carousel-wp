@@ -17,6 +17,16 @@ jQuery(document).ready(function ($) {
 
     <form method="POST">
 
+        <div class="alert" id="same-name-alert">
+            <span class="icon"> ! </span>
+            Every gallery needs a unique name.
+        </div>
+
+        <div class="alert" id="empty-name-alert">
+            <span class="icon"> ! </span>
+            You must define name for every gallery.
+        </div>
+
         <button class="save gallery-button" id="save-galleries">
             Save Changes
         </button>
@@ -42,10 +52,11 @@ jQuery(document).ready(function ($) {
                 </button>
                 <button class="delete gallery-button" type="button"> X Delete Gallery </button>
                 <button class="add image-button" type="button"> + Add Image </button>
-                ID: <input type="text" class="header-id" placeholder="gallery-1" /> 
+                ID: <input type="text" class="gallery-name" placeholder="Gallery Name" /> 
             </div>
             <div class="gallery-body">
                 <input type="hidden" class="gallery-string" data-name="gallery_strings[]" />
+                <input type="hidden" class="gallery-id" name="gallery_id" />
                 <?php for ($i = 0; $i < 10; $i++): ?>
                     <!--<div class="gallery-image-wrapper">
                         <img src="http://placehold.it/<?php print rand(100, 300); ?>x100" />
