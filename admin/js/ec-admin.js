@@ -209,15 +209,55 @@ var initEcAdminGalleries = function (galleries, delimiters) {
 
             $galleryString.val(value);
         },
-        addGallery = function () {
+        addGallery = function (galleryName, galleryId, imageString) {
             var
                 // DOM
                 $gallery = $galleryTemplate.clone(true).removeClass("gallery-template"),
-                $hiddenInput = $gallery.find("input.gallery-string");
+                $hiddenInput = $gallery.find("input.gallery-string"),
+                $galleryName = $gallery.find("input.gallery-name"),
+                $galleryId = $gallery.find("input.gallery-id"),
+                $galleryBody = $gallery.find(".gallery-body"),
+                $imageWrapper,
+
+                // misc
+                imagesData,
+                imageDelimiters = [
+                    delimiters.IMAGES,
+                    delimiters.IMAGEINFOS
+                ],
+                levelNames = ['images', 'imageParts'],
+                i;
 
             $hiddenInput.attr("name", $hiddenInput.attr("data-name"));
 
             $gallery.insertAfter($galleryTemplate);
+
+            if (galleryName === undefined || typeof galleryName === "object") {
+                return;
+            }
+
+            if (galleryId === undefined) {
+                throw "Gallery name is defined but gallery id is not.";
+            }
+
+            if (imageString === undefined) {
+                throw "Gallery name and id is defined but imageString parameter not.";
+            }
+
+            $galleryName.val(galleryName);
+            $galleryId.val(galleryId);
+
+            imagesData = QU.String.SplitByDelimiters(imageString, imageDelimiters, levelNames);
+
+            for (i = 0; i < imagesData.images.length; i += 1) {
+                $imageWrapper = $imageWrapperTemplate.clone(true);
+
+                $imageWrapper.find("img").attr("src", imagesData.images[i].imageParts[0]);
+                $imageWrapper.find("input[type=hidden]").val(imagesData.images[i].imageParts[1]);
+                $imageWrapper.find("input[type=text]").val(imagesData.images[i].imageParts[2]);
+
+                $galleryBody.append($imageWrapper);
+            }
         },
         deleteGallery = function () {
             var
@@ -284,6 +324,8 @@ var initEcAdminGalleries = function (galleries, delimiters) {
 
         // main functions
         init = function () {
+            var i;
+
             // set form submit event
             $form.submit(saveGalleriesSubmit);
 
@@ -291,7 +333,7 @@ var initEcAdminGalleries = function (galleries, delimiters) {
             $galleryTemplate.find("button.expand-close").click(expandCloseGallery);
             $galleryTemplate.find("button.delete").click(deleteGallery);
             $galleryTemplate.find("button.add").click(addImageClicked);
-            $("button.add.gallery-button").click(addGallery);
+            $addGalleryBtn.click(addGallery);
 
             // set image events
             $imageWrapperTemplate.find("input").keydown(captionInputKeyDown).keyup(refreshGalleryInput);
@@ -300,11 +342,10 @@ var initEcAdminGalleries = function (galleries, delimiters) {
             // frame event
             frame.on('select', addImage);
 
-            console.log(galleries);
+            for (i = 0; i < galleries.length; i += 1) {
+                addGallery(galleries[i].name, galleries[i].id, galleries[i].data);
+            }
         };
 
     init();
-
-    // TEST
-    $addGalleryBtn.click();
 };
