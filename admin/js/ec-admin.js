@@ -161,9 +161,12 @@ var initEcAdminGalleries = function (galleries, delimiters) {
                 $sameNameAlert.hide();
             }
         },
-        refreshGalleryInput = function ($elem) {
+        refreshGalleryInput = function (param) {
             var
                 // DOM
+                $elem = (param instanceof jQuery)
+                    ? param
+                    : $(this),
                 $galleryWrapper = $elem.hasClass("gallery")
                     ? $elem
                     : $getGallery($elem),
@@ -250,7 +253,7 @@ var initEcAdminGalleries = function (galleries, delimiters) {
             imagesData = QU.String.SplitByDelimiters(imageString, imageDelimiters, levelNames);
 
             for (i = 0; i < imagesData.images.length; i += 1) {
-                $imageWrapper = $imageWrapperTemplate.clone(true);
+                $imageWrapper = $imageWrapperTemplate.clone(true).removeClass("gallery-image-template");
 
                 $imageWrapper.find("img").attr("src", imagesData.images[i].imageParts[0]);
                 $imageWrapper.find("input[type=hidden]").val(imagesData.images[i].imageParts[1]);
@@ -258,6 +261,8 @@ var initEcAdminGalleries = function (galleries, delimiters) {
 
                 $galleryBody.append($imageWrapper);
             }
+
+            refreshGalleryInput($gallery);
         },
         deleteGallery = function () {
             var
@@ -333,6 +338,7 @@ var initEcAdminGalleries = function (galleries, delimiters) {
             $galleryTemplate.find("button.expand-close").click(expandCloseGallery);
             $galleryTemplate.find("button.delete").click(deleteGallery);
             $galleryTemplate.find("button.add").click(addImageClicked);
+            $galleryTemplate.find("input.gallery-name").keyup(refreshGalleryInput);
             $addGalleryBtn.click(addGallery);
 
             // set image events

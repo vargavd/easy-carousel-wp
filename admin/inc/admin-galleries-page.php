@@ -1,4 +1,6 @@
 <?php
+    vd1($_POST);
+
     $galleries = get_galleries();
 ?>
 
@@ -75,7 +77,8 @@ jQuery(document).ready(function ($) {
             <div class="gallery-body">
                 <input type="hidden" class="gallery-string" data-name="gallery_strings[]" />
                 <input type="hidden" class="gallery-id" name="gallery_id" />
-                <?php for ($i = 0; $i < 10; $i++): ?>
+                
+                <?php // for ($i = 0; $i < 10; $i++): ?>
                     <!--<div class="gallery-image-wrapper">
                         <img src="http://placehold.it/<?php print rand(100, 300); ?>x100" />
                         <div class="gallery-image-infos">
@@ -83,7 +86,8 @@ jQuery(document).ready(function ($) {
                             <button class="delete">X</button> <br />
                         </div>
                     </div>-->
-                <?php endfor; ?>
+                <?php // endfor; ?>
+
             </div>
         </div>
     </form>
