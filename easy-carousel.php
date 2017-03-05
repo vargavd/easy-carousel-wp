@@ -28,7 +28,14 @@ include plugin_dir_path(__FILE__) . "install.php";
 register_activation_hook(__FILE__, 'ec_install');
 
 
+// actions
 function ec_register_widgets() {
     register_widget('EC_Gallery_Widget');
 }
 add_action('widgets_init', 'ec_register_widgets');
+
+
+function ec_enqueue_script() {
+	wp_register_script('ec-gallery-component', 'js/easy-carousel.js', false );
+}
+add_action( 'wp_enqueue_scripts', 'ec_enqueue_script' );

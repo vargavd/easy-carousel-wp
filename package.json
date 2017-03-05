@@ -7,7 +7,10 @@
     "gulp": "^3.9.1"
   },
   "devDependencies": {
+    "eslint-config-strict": "^13.0.0",
     "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-html-src": "^1.0.0",
     "gulp-jslint": "^1.0.10",
     "gulp-less": "^3.3.0",
     "gulp-plumber": "^1.1.0"

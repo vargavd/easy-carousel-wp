@@ -1,22 +1,14 @@
 // REQUIRES
 var gulp        = require('gulp');
-var jsLint      = require('gulp-jslint');
 var plumber     = require('gulp-plumber');
 var less        = require('gulp-less');
+var eslint      = require('gulp-eslint');
 
 // VARIABLES
 var adminLessFiles  = 'admin/css/*.less';
 var adminCssDest    = 'admin/css';
-var jsFiles         = ['js/*.js', 'admin/js/*.js', '!js/qu-string.js', '!js/easy-carousel.js'];
+var jsFiles         = ['js/*.js', 'admin/js/*.js'];
 var isItProduction  = false;
-var jsLintConfig    = { 
-    global : ['jQuery', 'window', 'Modernizr', 'wp', 'Exception', 'QU', 'console'], 
-    browser: true,
-    devel  : isItProduction,
-    maxerr : 10,
-    this: true,
-    for: true
-};
 
 // HELPER FUNCTIONS
 var handleError   = function (error) {
@@ -32,9 +24,12 @@ gulp.task('admin-less', function () {
 });
 gulp.task('js', function () {
     return gulp.src(jsFiles)
-        .pipe(plumber({ errorHandler: handleError }))
-        .pipe(jsLint(jsLintConfig))
-        .pipe(jsLint.reporter('default'));
+        .pipe(eslint({ config: '.eslintrc' }))
+        .pipe(eslint.format());
+    // return gulp.src(jsFiles)
+    //     .pipe(plumber({ errorHandler: handleError }))
+    //     .pipe(jsLint(jsLintConfig))
+    //     .pipe(jsLint.reporter('default'));
 });
 gulp.task('start-dev', ['admin-less', 'js'], function () {
     // watch for admin less changes
