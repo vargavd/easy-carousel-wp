@@ -1,6 +1,4 @@
 <?php
-    vd1($_POST);
-
     $galleries = get_galleries();
 ?>
 
@@ -47,6 +45,11 @@ jQuery(document).ready(function ($) {
             You must define name for every gallery.
         </div>
 
+        <div class="alert" id="empty-gallery-alert">
+            <span class="icon"> ! </span>
+            You cannot save an empty gallery.
+        </div>
+
         <button class="save gallery-button" id="save-galleries">
             Save Changes
         </button>
@@ -76,7 +79,7 @@ jQuery(document).ready(function ($) {
             </div>
             <div class="gallery-body">
                 <input type="hidden" class="gallery-string" data-name="gallery_strings[]" />
-                <input type="hidden" class="gallery-id" name="gallery_id" />
+                <input type="hidden" class="gallery-id" name="gallery_id" value="-1" />
                 
                 <?php // for ($i = 0; $i < 10; $i++): ?>
                     <!--<div class="gallery-image-wrapper">

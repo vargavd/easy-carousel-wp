@@ -22,12 +22,18 @@ function ec_galleries_page() {
     wp_enqueue_script('ec_qu_string');
 
     if (isset($_POST['gallery_strings']) && is_array($_POST["gallery_strings"])) {
-        vd1($_POST['gallery_strings']);
-
         foreach ($_POST["gallery_strings"] as $gallery_string) {
             $gallery_info = explode("|||", $gallery_string);
 
             save_gallery($gallery_info[0], $gallery_info[1], $gallery_info[2]);
+        }
+    }
+
+    if (isset($_POST['deleted_gallery_ids'])) {
+        $deleted_gallery_ids = explode(constant("IDS_DELIMITER"), $_POST['deleted_gallery_ids']);
+        
+        foreach ($deleted_gallery_ids as $gallery_id) {
+            delete_gallery($gallery_id);
         }
     }
 

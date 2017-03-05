@@ -29,7 +29,7 @@
 
         $gallery_table_name = get_table_name();
 
-        if ($gallery_id === "") {
+        if ($gallery_id === "" || $gallery_id == -1) {
             $wpdb->insert(
                 $gallery_table_name,
                 array(
@@ -49,6 +49,14 @@
                 )
             );
         }
+    }
+
+    function delete_gallery($gallery_id) {
+        global $wpdb;
+
+        $gallery_table_name = get_table_name();
+
+        $wpdb->delete($gallery_table_name, array( 'id' => $gallery_id ) );
     }
 
     function get_galleries() {

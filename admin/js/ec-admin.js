@@ -11,6 +11,7 @@ var initEcAdminGalleries = function (galleries, delimiters) {
         $form = $("form"),
         $sameNameAlert = $("#same-name-alert"),
         $emptyNameAlert = $("#empty-name-alert"),
+        $emptyGalleryAlert = $("#empty-gallery-alert"),
         $deletedGalleryIds = $("input.deleted-gallery-ids"),
         $actualGallery,
 
@@ -126,6 +127,7 @@ var initEcAdminGalleries = function (galleries, delimiters) {
             var
                 // DOM
                 $galleryNames = $(".gallery:not(.gallery-template) input.gallery-name"),
+                $galleries = $(".gallery:not(.gallery-template"),
 
                 // misc
                 numberOfNames = $galleryNames.length,
@@ -134,7 +136,15 @@ var initEcAdminGalleries = function (galleries, delimiters) {
                 i,
                 j;
 
+            $emptyGalleryAlert.hide();
+            $emptyNameAlert.hide();
+
             for (i = 0; i < numberOfNames; i += 1) {
+                if ($galleries.eq(i).find(".gallery-image-wrapper:not(.gallery-image-template)").length === 0) {
+                    $emptyGalleryAlert.show();
+                    e.preventDefault();
+                }
+
                 if (!$galleryNames[i].value) {
                     emptyName = true;
                 }
@@ -150,15 +160,11 @@ var initEcAdminGalleries = function (galleries, delimiters) {
             if (emptyName) {
                 $emptyNameAlert.show();
                 e.preventDefault();
-            } else {
-                $emptyNameAlert.hide();
             }
 
             if (sameName) {
                 $sameNameAlert.show();
                 e.preventDefault();
-            } else {
-                $sameNameAlert.hide();
             }
         },
         refreshGalleryInput = function (param) {
