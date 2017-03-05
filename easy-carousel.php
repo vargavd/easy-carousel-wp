@@ -18,6 +18,7 @@
 // API
 include plugin_dir_path(__FILE__) . "api/galleries_db.php";
 include plugin_dir_path(__FILE__) . "api/helper.php";
+include plugin_dir_path(__FILE__) . "api/ec_gallery_widget.php";
 
 // ADMIN
 include plugin_dir_path(__FILE__) . "admin/admin.php";
@@ -25,3 +26,9 @@ include plugin_dir_path(__FILE__) . "admin/admin.php";
 // INSTALL
 include plugin_dir_path(__FILE__) . "install.php";
 register_activation_hook(__FILE__, 'ec_install');
+
+
+function ec_register_widgets() {
+    register_widget('EC_Gallery_Widget');
+}
+add_action('widgets_init', 'ec_register_widgets');
