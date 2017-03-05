@@ -7,7 +7,7 @@ var less        = require('gulp-less');
 // VARIABLES
 var adminLessFiles  = 'admin/css/*.less';
 var adminCssDest    = 'admin/css';
-var jsFiles         = ['admin/js/*.js'];
+var jsFiles         = ['js/*.js', 'admin/js/*.js', '!js/qu-string.js', '!js/easy-carousel.js'];
 var isItProduction  = false;
 var jsLintConfig    = { 
     global : ['jQuery', 'window', 'Modernizr', 'wp', 'Exception', 'QU', 'console'], 
