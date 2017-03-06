@@ -67,5 +67,13 @@
         return $wpdb->get_results("SELECT id, name, data FROM $gallery_table_name");
     }
 
+    function get_gallery($gallery_id) {
+        global $wpdb;
+
+        $gallery_table_name = get_table_name();
+
+        return $wpdb->get_row("SELECT * FROM $gallery_table_name WHERE ID = $gallery_id");
+    }
+
 ?>
 

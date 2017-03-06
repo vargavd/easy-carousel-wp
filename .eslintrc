@@ -1,4 +1,7 @@
 {
+    "plugins": [
+        "html"
+    ],
     "extends": ["strict/es5", "strict/browser"],
 
     "globals": {
@@ -34,7 +37,11 @@
         "no-throw-literal": 0,
         "operator-linebreak": ["error", "after", { "overrides": { "?": "before", ":": "before" } }],
         "no-inline-comments": 0,
-        "line-comment-position": 0
+        "line-comment-position": 0,
+        "no-console": 0,
+        "filenames/match-regex": 0,
+        "lines-around-directive": ["error", { "before": "never", "after": "always" }],
+        "key-spacing": 0
    }
 }
 

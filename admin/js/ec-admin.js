@@ -1,5 +1,4 @@
 /* global wp, QU*/
-
 'use strict';
 
 window.initEcAdminGalleries = function (galleries, delimiters) {

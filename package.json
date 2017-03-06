@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "eslint-config-strict": "^13.0.0",
+    "eslint-plugin-html": "^2.0.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-html-src": "^1.0.0",

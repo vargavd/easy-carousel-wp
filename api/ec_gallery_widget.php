@@ -11,6 +11,8 @@ class EC_Gallery_Widget extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
+        wp_enqueue_script('ec-gallery-component');
+
 		echo $args['before_widget'];
 
         include(plugin_dir_path(__FILE__) . "../inc/ec_gallery_widget.php");

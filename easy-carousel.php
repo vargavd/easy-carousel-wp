@@ -36,6 +36,9 @@ add_action('widgets_init', 'ec_register_widgets');
 
 
 function ec_enqueue_script() {
-	wp_register_script('ec-gallery-component', 'js/easy-carousel.js', false );
+    // registering
+	wp_register_script('ec-gallery-component', plugin_dir_url(__FILE__) . '/js/easy-carousel.js', false );
+
+    // enquing
 }
 add_action( 'wp_enqueue_scripts', 'ec_enqueue_script' );

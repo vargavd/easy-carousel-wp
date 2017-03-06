@@ -5,7 +5,6 @@
  * License: GPL2
  * made by VargaVD
  */
-
 'use strict';
 
 (function ($, factory) {
