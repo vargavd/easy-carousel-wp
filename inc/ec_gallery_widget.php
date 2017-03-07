@@ -8,16 +8,12 @@
 'use strict';
 
 jQuery(document).ready(function ($) {
-    $('.ec-gallery-widget').first().easyCarousel({
-        imgWidth:           '200px',
-        visibleImgCount:     1,
-        secondsBetweenSlide: 5
-    });
+    $('#<?php echo $args["widget_id"]; ?>').first().easyCarousel();
 });
 
 </script>
 
-<div class="ec-gallery-widget">
+<div class="ec-gallery-widget" id="#<?php echo $args["widget_id"]; ?>">
     <?php foreach ($images as $image): ?>
         <?php 
             $image_infos = explode(constant("IMAGEINFOS_DELIMITER"), $image);

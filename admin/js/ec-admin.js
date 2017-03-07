@@ -269,6 +269,13 @@ window.initEcAdminGalleries = function (galleries, delimiters) {
                 $galleryBody.append($imageWrapper);
             }
 
+            $galleryBody.sortable({
+                items: '.gallery-image-wrapper',
+                handle: 'button.sort',
+                cancel: '',
+                update: function () { refreshGalleryInput($gallery); },
+            });
+
             refreshGalleryInput($gallery);
         },
         deleteGallery = function () {
@@ -350,7 +357,7 @@ window.initEcAdminGalleries = function (galleries, delimiters) {
 
             // set image events
             $imageWrapperTemplate.find('input').keydown(captionInputKeyDown).keyup(refreshGalleryInput);
-            $imageWrapperTemplate.find('button').click(deleteImage);
+            $imageWrapperTemplate.find('button.delete').click(deleteImage);
 
             // frame event
             frame.on('select', addImage);

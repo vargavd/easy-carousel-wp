@@ -37,8 +37,9 @@ add_action('widgets_init', 'ec_register_widgets');
 
 function ec_enqueue_script() {
     // registering
-	wp_register_script('ec-gallery-component', plugin_dir_url(__FILE__) . '/js/easy-carousel.js', false );
+	wp_register_script('ec-gallery-component', plugin_dir_url(__FILE__) . '/js/easy-carousel.js', false, "0.1" );
 
     // enquing
+    wp_enqueue_style('easy-carousel-wp', plugin_dir_url(__FILE__) . '/css/easy-carousel-wp.css', false, "0.1");
 }
 add_action( 'wp_enqueue_scripts', 'ec_enqueue_script' );

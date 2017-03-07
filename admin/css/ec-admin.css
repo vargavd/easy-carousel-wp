@@ -1,8 +1,13 @@
 .gallery-admin h2 {
   margin-bottom: 0;
 }
-.gallery-admin p {
+.gallery-admin p.description {
   margin-bottom: 15px;
+  padding: 5px 10px;
+  border: 1px solid #999;
+  background: white;
+  font-size: 1.2em;
+  font-style: normal;
 }
 .gallery-admin input[type=submit] {
   font-size: 16px;
@@ -114,6 +119,16 @@
 }
 .gallery-admin .gallery .gallery-body .gallery-image-wrapper .gallery-image-infos input {
   width: 300px;
+}
+.gallery-admin .gallery .gallery-body .gallery-image-wrapper .gallery-image-infos button {
+  float: left;
+}
+.gallery-admin .gallery .gallery-body .gallery-image-wrapper .gallery-image-infos button.sort {
+  margin-right: 5px;
+  padding: 0;
+  width: 30px;
+  height: 25px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUBAMAAAB/pwA+AAAAIVBMVEUAAACenp6enp6enp6enp6enp6enp6enp6enp6enp6enp6k5AaNAAAACnRSTlMAAgQGdHuyucXtsb9rZwAAAEdJREFUCFtjYAACdwUGKGBd1QRjRq1aoQATXAUTjgIyIcIgQaiwF5i5QgDIzAIzVxowkAaQtCEZhmQFksXIzkFyJLLToR4CAMNLK5dd5fOkAAAAAElFTkSuQmCC") no-repeat center center;
 }
 .gallery-admin .gallery-image-template,
 .gallery-admin .gallery-template {

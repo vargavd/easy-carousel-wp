@@ -29,7 +29,9 @@ jQuery(document).ready(function ($) {
 <div class="wrap gallery-admin">
     <h1>Galleries that can be shown in the widget</h1>
 
-    <p class="description">Here, you can define galleries, which are collections of images. When you insert a slideshow (with shortcode, php or widget), you must define the id of the shown gallery. </p>
+    <p class="description">Here, you can define galleries, which are collections of images. One of these galleries can be used in the widget you insert in the widgets menu.</p>
+
+    <p class="description">You can reorder/sort the images by drag them with the arrow button.</p>
 
     <form method="POST">
 
@@ -62,7 +64,8 @@ jQuery(document).ready(function ($) {
             <img src="" />
             <div class="gallery-image-infos">
                 <strong>Lightbox Caption:</strong> <input type="text" /> <br />
-                <button type="button" class="delete">X</button> <br />
+                <button type="button" class="sort"></button>
+                <button type="button" class="delete">X</button>
                 <input type="hidden" />
             </div>
         </div>
