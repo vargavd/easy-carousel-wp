@@ -14,7 +14,7 @@ function ec_options_init() {
     add_settings_field('ec_wrapper_border', 'Wrapper Border', 'ec_wrapper_border', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_wrapper_padding', 'Wrapper Padding', 'ec_wrapper_padding', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_wrapper_background', 'Wrapper Background', 'ec_wrapper_background', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
-    add_settings_field('ec_img_width', 'Image Border', 'ec_img_width', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
+    add_settings_field('ec_img_width', 'Image Width', 'ec_img_width', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_img_border', 'Image Border', 'ec_img_border', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_button_width', 'Button Width', 'ec_button_width', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_button_height', 'Button Height', 'ec_button_height', 'easy-carousel-settings-slider', 'ec_slider_styles_section');

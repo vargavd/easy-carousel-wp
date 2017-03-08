@@ -8,7 +8,19 @@
 'use strict';
 
 jQuery(document).ready(function ($) {
-    $('#<?php echo $args["widget_id"]; ?>').first().easyCarousel();
+    var settings = {
+
+    };
+
+    <?php foreach ($this->settings as $rule_name => $rule_value): ?>
+        <?php if (is_string($rule_value) && $rule_value !== ""): ?>
+            settings.<?php print $rule_name; ?> = "<?php print $rule_value;?>";
+        <?php endif; ?>
+    <?php endforeach; ?>
+
+    console.log(settings);
+
+    $('#<?php echo $args["widget_id"]; ?>').first().easyCarousel(settings);
 });
 
 </script>

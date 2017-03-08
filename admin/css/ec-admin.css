@@ -1,14 +1,6 @@
 .gallery-admin h2 {
   margin-bottom: 0;
 }
-.gallery-admin p.description {
-  margin-bottom: 15px;
-  padding: 5px 10px;
-  border: 1px solid #999;
-  background: white;
-  font-size: 1.2em;
-  font-style: normal;
-}
 .gallery-admin input[type=submit] {
   font-size: 16px;
   font-weight: bold;
