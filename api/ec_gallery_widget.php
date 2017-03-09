@@ -20,6 +20,8 @@ class EC_Gallery_Widget extends WP_Widget {
             'wrapperPadding' => $options["ec_wrapper_padding"],
             'wrapperBackground' => $options["ec_wrapper_background"],
             'imgWidth' => $options["ec_img_width"],
+            'imgMaxHeight' => $options["ec_img_max_height"],
+            'imgSpace' => $options["ec_img_space"],
             'imgBorder' => $options["ec_img_border"],
             'buttonWidth' => $options["ec_button_width"],
             'buttonHeight' => $options["ec_button_height"],
@@ -27,6 +29,8 @@ class EC_Gallery_Widget extends WP_Widget {
             'buttonBackground' => $options["ec_button_background"],
             'buttonHoverBackground' => $options["ec_button_hover_background"],
             'buttonHoverBorder' => $options["ec_button_hover_border"],
+            'buttonColor' => $options["ec_button_color"],
+            'buttonFontWeight' => $options["ec_button_font-weight"],
             'modalBackground' => $options["ec_modal_background"],
             'modalWindowBackground' => $options["ec_modal_window_background"],
             'modalWindowBorder' => $options["ec_modal_window_border"],
@@ -50,8 +54,6 @@ class EC_Gallery_Widget extends WP_Widget {
 
 	public function widget( $args, $instance ) {
         wp_enqueue_script('ec-gallery-component');
-
-        vd1($this->settings);
 
 		echo $args['before_widget'];
 

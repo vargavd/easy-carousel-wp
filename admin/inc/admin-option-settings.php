@@ -15,11 +15,15 @@ function ec_options_init() {
     add_settings_field('ec_wrapper_padding', 'Wrapper Padding', 'ec_wrapper_padding', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_wrapper_background', 'Wrapper Background', 'ec_wrapper_background', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_img_width', 'Image Width', 'ec_img_width', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
+    add_settings_field('ec_img_max_height', 'Image Max Height', 'ec_img_max_height', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
+    add_settings_field('ec_img_space', 'Space Between Images', 'ec_img_space', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_img_border', 'Image Border', 'ec_img_border', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_button_width', 'Button Width', 'ec_button_width', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_button_height', 'Button Height', 'ec_button_height', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_button_border', 'Button Border', 'ec_button_border', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_button_background', 'Button Background', 'ec_button_background', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
+    add_settings_field('ec_button_color', 'Button Color', 'ec_button_color', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
+    add_settings_field('ec_button_font_weight', 'Button Font Weight', 'ec_button_font_weight', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_button_hover_background', 'Button Hover Background', 'ec_button_hover_background', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
     add_settings_field('ec_button_hover_border', 'Button Hover Border', 'ec_button_hover_border', 'easy-carousel-settings-slider', 'ec_slider_styles_section');
 
@@ -123,6 +127,24 @@ function ec_img_width() {
 
     <?php
 }
+function ec_img_max_height() {
+    $cssRules = get_option('ec_parameter_settings');
+    ?>
+
+    <input type='text' id='img-max-height' name='ec_parameter_settings[ec_img_max_height]' value='<?php echo (isset($cssRules['ec_img_max_height']) ? $cssRules['ec_img_max_height'] : ''); ?>' />
+    <p class="description">Default: <strong>300px</strong></p>
+
+    <?php
+}
+function ec_img_space() {
+    $cssRules = get_option('ec_parameter_settings');
+    ?>
+
+    <input type='text' id='img-space' name='ec_parameter_settings[ec_img_space]' value='<?php echo (isset($cssRules['ec_img_space']) ? $cssRules['ec_img_space'] : ''); ?>' />
+    <p class="description">Default: <strong>300px</strong></p>
+
+    <?php
+}
 function ec_img_border() {
     $cssRules = get_option('ec_parameter_settings');
     ?>
@@ -164,6 +186,24 @@ function ec_button_background() {
     ?>
 
     <input type='text' id='button-background' name='ec_parameter_settings[ec_button_background]' value='<?php echo (isset($cssRules['ec_button_background']) ? $cssRules['ec_button_background'] : ''); ?>' />
+    <p class="description">Default: <strong>rgba(255, 255, 255, 0.6)</strong></p>
+
+    <?php
+}
+function ec_button_color() {
+    $cssRules = get_option('ec_parameter_settings');
+    ?>
+
+    <input type='text' id='button-color' name='ec_parameter_settings[ec_button_color]' value='<?php echo (isset($cssRules['ec_button_color']) ? $cssRules['ec_button_color'] : ''); ?>' />
+    <p class="description">Default: <strong>rgba(255, 255, 255, 0.6)</strong></p>
+
+    <?php
+}
+function ec_button_font_weight() {
+    $cssRules = get_option('ec_parameter_settings');
+    ?>
+
+    <input type='text' id='button-font-weight' name='ec_parameter_settings[ec_button_font_weight]' value='<?php echo (isset($cssRules['ec_button_font_weight']) ? $cssRules['ec_button_font_weight'] : ''); ?>' />
     <p class="description">Default: <strong>rgba(255, 255, 255, 0.6)</strong></p>
 
     <?php

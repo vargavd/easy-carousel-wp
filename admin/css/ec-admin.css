@@ -33,6 +33,7 @@
   border: 1px solid lightgray;
   cursor: pointer;
   outline: none;
+  font-size: 16px;
 }
 .gallery-admin button.add {
   background-color: #68a04f;
@@ -66,6 +67,9 @@
   margin-top: 20px;
   overflow: hidden;
   background: white;
+}
+.gallery-admin .gallery button {
+  font-size: 13px;
 }
 .gallery-admin .gallery .gallery-header {
   border-bottom: 1px solid #666;
