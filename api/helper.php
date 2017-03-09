@@ -7,6 +7,82 @@ define("IMAGES_DELIMITER",     "||");
 define("IMAGEINFOS_DELIMITER", "|");
 define("IDS_DELIMITER",        "@");
 
+// GALLERY STUFFS
+function ec_get_all_options() {
+    $options = get_option('ec_parameter_settings');
+
+    return array(
+        'visibleImgCount' => $options["ec_visible_img_count"],
+        'secondsBetweenSlide' => $options["ec_seconds_between_slide"],
+        'wrapperBorder' => $options["ec_wrapper_border"],
+        'wrapperPadding' => $options["ec_wrapper_padding"],
+        'wrapperBackground' => $options["ec_wrapper_background"],
+        'imgWidth' => $options["ec_img_width"],
+        'imgMaxHeight' => $options["ec_img_max_height"],
+        'imgSpace' => $options["ec_img_space"],
+        'imgBorder' => $options["ec_img_border"],
+        'buttonWidth' => $options["ec_button_width"],
+        'buttonHeight' => $options["ec_button_height"],
+        'buttonBorder' => $options["ec_button_border"],
+        'buttonBackground' => $options["ec_button_background"],
+        'buttonHoverBackground' => $options["ec_button_hover_background"],
+        'buttonHoverBorder' => $options["ec_button_hover_border"],
+        'buttonColor' => $options["ec_button_color"],
+        'buttonFontWeight' => $options["ec_button_font-weight"],
+        'modalBackground' => $options["ec_modal_background"],
+        'modalWindowBackground' => $options["ec_modal_window_background"],
+        'modalWindowBorder' => $options["ec_modal_window_border"],
+        'modalNumberFontSize' => $options["ec_modal_number_font_size"],
+        'modalNumberColor' => $options["ec_modal_number_color"],
+        'modalCaptionFontSize' => $options["ec_modal_caption_font_size"],
+        'modalCaptionColor' => $options["ec_modal_caption_color"],
+        'modalCaptionFontWeight' => $options["ec_modal_caption_font_weight"],
+        'modalCaptionLineHeight' => $options["ec_modal_caption_line_height"],
+        'modalButtonBackground' => $options["ec_modal_button_background"],
+        'modalButtonHoverBackground' => $options["ec_modal_button_hover_background"],
+        'modalButtonColor' => $options["ec_modal_button_color"],
+        'modalButtonHoverColor' => $options["ec_modal_button_hover_color"],
+        'modalButtonBorder' => $options["ec_modal_button_border"],
+        'modalButtonHoverBorder' => $options["ec_modal_button_hover_border"],
+        'modalButtonPadding' => $options["ec_modal_button_padding"],
+        'modalButtonMargin' => $options["ec_modal_button_margin"],
+        'modalButtonFontWeight' => $options["ec_modal_button_font_weight"],
+    );
+}
+function ec_get_gallery_html($gallery_id, $wrapper_id) {
+
+    $settings = ec_get_all_options();
+
+    $output =  "<script>\n";
+    $output .= "jQuery(document).ready(function ($) {\n";
+    $output .= "    var settings = {};\n";
+
+    foreach ($settings as $rule_name => $rule_value) {
+        if (is_string($rule_value) && $rule_value !== "") {
+            $output .= "    settings.$rule_name = '$rule_value';\n";
+        }
+    }
+
+    $output .= "$('#$wrapper_id').first().easyCarousel(settings).removeClass('initial');\n";
+    $output .= "});\n";
+    $output .= "</script>\n";
+
+    $gallery = get_gallery($gallery_id);
+    $images = explode(constant("IMAGES_DELIMITER"), $gallery->data);
+
+    $output .= "<div class='ec-gallery-widget initial' id='$wrapper_id'>";
+    foreach ($images as $image) {
+        $image_infos = explode(constant("IMAGEINFOS_DELIMITER"), $image);
+        $image_url = $image_infos[0];
+        $image_caption = $image_infos[2];
+
+        $output .= "    <img src='$image_url' alt='$image_caption' />\n";
+    }
+    $output .= "</div>\n";
+
+    return $output;
+    }
+
 // DEBUG
 function vd1($var) {
     echo "\n<pre style=\"background: #FFFF99; font-size: 14px;\">\n";

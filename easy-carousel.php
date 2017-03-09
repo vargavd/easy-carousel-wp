@@ -43,3 +43,14 @@ function ec_enqueue_script() {
     wp_enqueue_style('easy-carousel-wp', plugin_dir_url(__FILE__) . '/css/easy-carousel-wp.css', false, "0.1");
 }
 add_action( 'wp_enqueue_scripts', 'ec_enqueue_script' );
+
+// shortcode
+function ec_gallery_shortcode($atts) {
+    $default_options = ec_get_all_options();
+
+    $options = shortcode_atts($default_options, $atts );
+    
+    $random_id = "ec-gallery-" . rand();
+    return ec_get_gallery_html(10, $random_id);
+}
+add_shortcode('ec_gallery', 'ec_gallery_shortcode' );

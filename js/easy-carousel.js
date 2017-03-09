@@ -321,12 +321,14 @@
                     sm.reset();
                     sm.addStyle('float',         'left');
                     sm.addStyle('padding-right', settings.imgSpace);
+                    sm.addStyle('padding',       '0 ' + settings.imgSpace + ' 0 0');
                     $li.attr('style', sm.getStyle());
 
                     sm.reset();
                     sm.addStyle('border',     settings.imgBorder);
                     sm.addStyle('box-sizing', 'border-box');
                     sm.addStyle('cursor',     'pointer');
+                    sm.addStyle('position',   'relative');
                     $img.attr('style', sm.getStyle());
 
                     $imgList.append($li);
@@ -802,6 +804,8 @@
 
             setUpSliderAndModal();
         });
+
+        return $wrapper;
     };
 
     // ONLY FOR TEST
