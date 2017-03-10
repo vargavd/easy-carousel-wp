@@ -54,3 +54,33 @@ function ec_gallery_shortcode($atts) {
     return ec_get_gallery_html(10, $random_id);
 }
 add_shortcode('ec_gallery', 'ec_gallery_shortcode' );
+
+// extend tinymce
+add_action('admin_head', 'ec_add_tinymce_button');
+function ec_add_tinymce_button() {
+    global $typenow;
+
+    // check user permissions
+    if ( !current_user_can('edit_posts') && !current_user_can('edit_pages') ) {
+        return;
+    }
+
+    // verify the post type
+    if( ! in_array( $typenow, array( 'post', 'page' ) ) )
+        return;
+
+    // check if WYSIWYG is enabled
+    if (get_user_option('rich_editing') == 'true') {
+        add_filter("mce_external_plugins", "ec_add_tinymce_plugin");
+        add_filter('mce_buttons', 'ec_register_tc_button');
+    }
+}
+function ec_add_tinymce_plugin($plugin_array) {
+    $plugin_array['tinymce_ec_button'] = plugins_url( '/js/tinymce_ec_button.js', __FILE__ );
+    return $plugin_array;
+}
+function ec_register_tc_button($buttons) {
+    array_push($buttons, "|");
+    array_push($buttons, "tinymce_ec_button");
+    return $buttons;
+}

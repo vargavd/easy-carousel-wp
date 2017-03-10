@@ -9,6 +9,7 @@
         "debugger": true,
         "$": true,
         "jQuery": true,
+        "tinymce": true,
     },
   
     "rules": {
