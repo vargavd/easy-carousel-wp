@@ -28,7 +28,8 @@ include plugin_dir_path(__FILE__) . "install.php";
 register_activation_hook(__FILE__, 'ec_install');
 
 
-// actions
+
+// ACTIONS
 function ec_register_widgets() {
     register_widget('EC_Gallery_Widget');
 }
@@ -44,18 +45,23 @@ function ec_enqueue_script() {
 }
 add_action( 'wp_enqueue_scripts', 'ec_enqueue_script' );
 
-// shortcode
+
+
+// SHORTCODE
 function ec_gallery_shortcode($atts) {
     $default_options = ec_get_all_options();
 
-    $options = shortcode_atts($default_options, $atts );
+    $options = shortcode_atts($default_options, $atts);
     
     $random_id = "ec-gallery-" . rand();
-    return ec_get_gallery_html(10, $random_id);
+
+    return ec_get_gallery_html($atts["gallery-id"], $random_id);
 }
 add_shortcode('ec_gallery', 'ec_gallery_shortcode' );
 
-// extend tinymce
+
+
+// EXTEND TINYMCE
 add_action('admin_head', 'ec_add_tinymce_button');
 function ec_add_tinymce_button() {
     global $typenow;
@@ -84,3 +90,14 @@ function ec_register_tc_button($buttons) {
     array_push($buttons, "tinymce_ec_button");
     return $buttons;
 }
+
+// REST ENDPONT FOR TINYMCE
+function get_galleries_rest($number) {
+    return get_galleries();
+}
+add_action( 'rest_api_init', function () {
+  register_rest_route( 'ecgallery/v1', '/get_galleries', array(
+    'methods' => 'GET',
+    'callback' => 'get_galleries_rest',
+  ));
+});
