@@ -92,12 +92,18 @@ function ec_register_tc_button($buttons) {
 }
 
 // REST ENDPONT FOR TINYMCE
-function get_galleries_rest($number) {
-    return get_galleries();
+function get_ec_infos($number) {
+    $galleries = get_galleries();
+
+    $infos = ec_get_all_options();
+
+    $infos['galleries'] = get_galleries();
+
+    return $infos;
 }
 add_action( 'rest_api_init', function () {
-  register_rest_route( 'ecgallery/v1', '/get_galleries', array(
+  register_rest_route( 'ecgallery/v1', '/get_ec_infos', array(
     'methods' => 'GET',
-    'callback' => 'get_galleries_rest',
+    'callback' => 'get_ec_infos',
   ));
 });
