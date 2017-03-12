@@ -14,8 +14,8 @@ tinymce.PluginManager.add('tinymce_ec_button', function (editor, url) {
                 i,
 
                 // helper functions
-                getListboxNumberValues = function (param1, param2) {
-                    var values = [];
+                getListboxNumberValues = function (param1, param2, firstElemText) {
+                    var values = [{ text: firstElemText, value: -1 }];
 
                     for (; param1 <= param2; param1++) {
                         values.push({ value: param1, text: param1.toString() });
@@ -26,22 +26,22 @@ tinymce.PluginManager.add('tinymce_ec_button', function (editor, url) {
                 getDialogBody = function () {
                     return [
                         {
-                            type:  'listbox',
-                            name:  'ec_gallery_id',
-                            label: 'Gallery',
+                            type:   'listbox',
+                            name:   'ec_gallery_id',
+                            label:  'Gallery',
                             values: galleryOptions,
                         },
                         {
                             type:   'listbox',
                             name:   'visibleImgCount',
                             label:  'Number of visible images',
-                            values: getListboxNumberValues(1, 10),
+                            values: getListboxNumberValues(1, 20, 'Choose a number'),
                         },
                         {
-                            type:  'listbox',
-                            name:  'secondsBetweenSlide',
-                            label: 'Seconds between slides',
-                            values: getListboxNumberValues(1, 10),
+                            type:   'listbox',
+                            name:   'secondsBetweenSlide',
+                            label:  'Seconds between slides',
+                            values: getListboxNumberValues(1, 10, 'Choose a number'),
                         },
                     ];
                 };
@@ -56,15 +56,36 @@ tinymce.PluginManager.add('tinymce_ec_button', function (editor, url) {
             editor.setProgressState(0);
 
             editor.windowManager.open({
-                title: 'Choose a gallery',
+                title: 'Carousel settings',
                 body: getDialogBody(),
                 onsubmit: function (e) {
+                    var shortcodeString;
+
                     if (e.data.ec_gallery_id === -1) {
                         e.preventDefault();
+                        editor.windowManager.alert('You have to select the gallery!');
                         return;
                     }
 
-                    editor.insertContent('[ec_gallery gallery-id="' + e.data.ec_gallery_id + '"]');
+                    if (e.data.visibleImgCount === -1) {
+                        e.preventDefault();
+                        editor.windowManager.alert('You have to select how many image should be visible az once!!');
+                        return;
+                    }
+
+                    if (e.data.secondsBetweenSlide === -1) {
+                        e.preventDefault();
+                        editor.windowManager.alert('You have to select how many seconds should be between slides!');
+                        return;
+                    }
+
+                    shortcodeString =  '[ec_gallery';
+                    shortcodeString += ' gallery-id="' + e.data.ec_gallery_id + '"';
+                    shortcodeString += ' visibleImgCount="' + e.data.visibleImgCount + '"';
+                    shortcodeString += ' secondsBetweenSlide="' + e.data.secondsBetweenSlide + '"';
+                    shortcodeString += ']';
+
+                    editor.insertContent(shortcodeString);
                 },
             });
         };
