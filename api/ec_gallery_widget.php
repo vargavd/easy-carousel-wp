@@ -12,10 +12,11 @@ class EC_Gallery_Widget extends WP_Widget {
 
 	public function widget( $args, $instance ) {
         wp_enqueue_script('ec-gallery-component');
+        $options = ec_get_all_options();
 
 		echo $args['before_widget'];
 
-        print ec_get_gallery_html($instance["ec_gallery"], $args["id"]);
+        print ec_get_gallery_html($options, $instance["ec_gallery"], $args["id"]);
 
 		echo $args['after_widget'];
 	}

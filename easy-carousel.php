@@ -49,13 +49,19 @@ add_action( 'wp_enqueue_scripts', 'ec_enqueue_script' );
 
 // SHORTCODE
 function ec_gallery_shortcode($atts) {
-    $default_options = ec_get_all_options();
+    $options = ec_get_all_options();
 
-    $options = shortcode_atts($default_options, $atts);
+    foreach ($atts as $att_key => $att_value) {
+        foreach ($options as $option_key => &$option_value) {
+            if (strtolower($option_key) === strtolower($att_key)) {
+                $option_value = $att_value;
+            }
+        }
+    }
     
     $random_id = "ec-gallery-" . rand();
 
-    return ec_get_gallery_html($atts["gallery-id"], $random_id);
+    return ec_get_gallery_html($options, $atts["gallery-id"], $random_id);
 }
 add_shortcode('ec_gallery', 'ec_gallery_shortcode' );
 

@@ -49,15 +49,13 @@ function ec_get_all_options() {
         'modalButtonFontWeight' => $options["ec_modal_button_font_weight"],
     );
 }
-function ec_get_gallery_html($gallery_id, $wrapper_id) {
-
-    $settings = ec_get_all_options();
+function ec_get_gallery_html($options, $gallery_id, $wrapper_id) {
 
     $output =  "<script>\n";
     $output .= "jQuery(document).ready(function ($) {\n";
     $output .= "    var settings = {};\n";
 
-    foreach ($settings as $rule_name => $rule_value) {
+    foreach ($options as $rule_name => $rule_value) {
         if (is_string($rule_value) && $rule_value !== "") {
             $output .= "    settings.$rule_name = '$rule_value';\n";
         }
