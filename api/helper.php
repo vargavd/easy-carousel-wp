@@ -65,6 +65,8 @@ function ec_get_gallery_html($options, $gallery_id, $wrapper_id) {
     $output .= "});\n";
     $output .= "</script>\n";
 
+    wp_enqueue_script( "ec-gallery-component");
+
     $gallery = get_gallery($gallery_id);
     $images = explode(constant("IMAGES_DELIMITER"), $gallery->data);
 

@@ -322,6 +322,7 @@
                     sm.addStyle('float',         'left');
                     sm.addStyle('padding-right', settings.imgSpace);
                     sm.addStyle('padding',       '0 ' + settings.imgSpace + ' 0 0');
+                    sm.addStyle('border-bottom', 'none');
                     $li.attr('style', sm.getStyle());
 
                     sm.reset();

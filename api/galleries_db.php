@@ -75,5 +75,4 @@
         return $wpdb->get_row("SELECT * FROM $gallery_table_name WHERE ID = $gallery_id");
     }
 
-?>
 
