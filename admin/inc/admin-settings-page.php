@@ -1,31 +1,32 @@
 <?php
+    wp_enqueue_script('ec_admin_options_scripts');
+    wp_enqueue_script('color-picker');
 
+    $options = ec_get_all_options();
 ?>
 
 <script>
-jQuery(document).ready(function ($) {
-    var $tabs = $('.nav-tab'),
-        $tabContents = $('.tab-content');
+    jQuery(document).ready(function ($) {
+        var options = {};
 
-    $tabs.click(function (event) {
-        var $tab = $(this),
-            tabContentId = $tab.attr('href');
+        <?php foreach ($options as $name => $value): ?>
+            <?php print "options.$name = '$value';"; ?>
+        <?php endforeach; ?>
 
-        $tabContents.hide();
-        $(tabContentId).show();
-
-        $tabs.removeClass('nav-tab-active');
-        $tab.addClass('nav-tab-active');
-
-        event.preventDefault();
+        window.initEcOptionsPage($, options);
     });
-
-    $tabs.first().click();
-});  
 </script>
 
 <div class="wrap gallery-admin">
     <h1>Easy Carousel settings</h1>
+
+    <!--<div id="live-preview-panel" class="notice notice-info">
+        <h2>Live Preview (with example images)</h2>
+
+        <div id="live-preview-carousel-wrapper">
+
+        </div>
+    </div>-->
 
     <form method="post" action="options.php">
 
@@ -52,5 +53,6 @@ jQuery(document).ready(function ($) {
         <?php submit_button(null, 'primary', null, false, ''); ?>
         
     </form>
+
 </div>
 

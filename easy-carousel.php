@@ -13,6 +13,9 @@
  *  - Lehet shortcode-dal és widget szerűen is berakni.
  *  - Shortcode-dal ügye lehet a paramétereket is állitani.
  *  - A paraméterek megegyeznek a jQuery plugin paramétereivel.
+ *  TODOS
+ *  - admin felület kifejezőbb legyen: color pickerek, number inputok, CSS kód NE
+ *  - legyen egy gyors nézet a design-ra ugyanitt.
  */
 
 // API
