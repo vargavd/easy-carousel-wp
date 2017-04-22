@@ -130,3 +130,6 @@
 .gallery-admin .gallery-template {
   display: none;
 }
+.gallery-admin #live-preview-panel #live-preview-carousel {
+  margin: 30px 30px 30px 0 !important;
+}

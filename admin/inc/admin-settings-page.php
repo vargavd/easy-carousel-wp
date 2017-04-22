@@ -15,9 +15,13 @@
         var options = {};
         var pluginDir = '<?php print plugin_dir_url(__FILE__); ?>';
 
-        <?php foreach ($options as $name => $value): ?>
-            <?php print "options.$name = '$value';"; ?>
-        <?php endforeach; ?>
+        <?php 
+        foreach ($options as $name => $value):
+            if (is_string($value) && $value !== ""):
+                print "options.$name = '$value';";
+            endif;
+        endforeach; 
+        ?>
 
         window.initEcOptionsPage($, options, "<?php print $carousel_wrapper_id; ?>");
     });
@@ -27,7 +31,7 @@
     <h1>Easy Carousel settings</h1>
 
     <div id="live-preview-panel" class="notice notice-info">
-        <h2>Live Preview (with example images)</h2>
+        <h2>Live style preview </h2>
 
         <div id="<?php print $carousel_wrapper_id; ?>">
             <img src="<?php print $test_img_src; ?>" alt="Image">
