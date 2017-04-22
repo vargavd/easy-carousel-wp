@@ -1,32 +1,43 @@
 <?php
-    wp_enqueue_script('ec_admin_options_scripts');
     wp_enqueue_script('color-picker');
+    wp_enqueue_script('ec_admin_options_scripts');
+    wp_enqueue_script('ec-gallery-component');
 
     $options = ec_get_all_options();
+
+    $test_img_src = plugin_dir_url(__FILE__) . "../imgs/test_pic.jpg";
+
+    $carousel_wrapper_id = "live-preview-carousel";
 ?>
 
 <script>
     jQuery(document).ready(function ($) {
         var options = {};
+        var pluginDir = '<?php print plugin_dir_url(__FILE__); ?>';
 
         <?php foreach ($options as $name => $value): ?>
             <?php print "options.$name = '$value';"; ?>
         <?php endforeach; ?>
 
-        window.initEcOptionsPage($, options);
+        window.initEcOptionsPage($, options, "<?php print $carousel_wrapper_id; ?>");
     });
 </script>
 
 <div class="wrap gallery-admin">
     <h1>Easy Carousel settings</h1>
 
-    <!--<div id="live-preview-panel" class="notice notice-info">
+    <div id="live-preview-panel" class="notice notice-info">
         <h2>Live Preview (with example images)</h2>
 
-        <div id="live-preview-carousel-wrapper">
-
+        <div id="<?php print $carousel_wrapper_id; ?>">
+            <img src="<?php print $test_img_src; ?>" alt="Image">
+            <img src="<?php print $test_img_src; ?>" alt="Image">
+            <img src="<?php print $test_img_src; ?>" alt="Image">
+            <img src="<?php print $test_img_src; ?>" alt="Image">
+            <img src="<?php print $test_img_src; ?>" alt="Image">
+            <img src="<?php print $test_img_src; ?>" alt="Image">
         </div>
-    </div>-->
+    </div>
 
     <form method="post" action="options.php">
 

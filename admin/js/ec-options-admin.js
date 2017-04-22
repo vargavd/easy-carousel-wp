@@ -1,7 +1,12 @@
 'use strict';
 
-window.initEcOptionsPage = function ($, options) {
+window.initEcOptionsPage = function ($, options, wrapperId) {
     var
+        // DOM
+        $livePreviewPanel = $('#live-preview-panel'),
+        $carouselWrapper  = $('#' + wrapperId),
+        $testImg          = $carouselWrapper.find('img'),
+
         // functions
         handlingTabs = function () {
             var $tabs = $('.nav-tab'),
@@ -21,16 +26,45 @@ window.initEcOptionsPage = function ($, options) {
             });
 
             $tabs.last().click();
+        },
+        initColorPickerInput = function ($input, value, defaultValue, changeEvent) {
+            $input.spectrum({
+                color: (value !== '' ? value : defaultValue),
+                showAlpha: true,
+                showInput: true,
+                showInitial: true,
+                allowEmpty: false,
+                preferredFormat: 'rgb',
+                change: changeEvent,
+            });
+        },
+        createNewCarousel = function () {
+            var
+                // misc
+                i;
+
+            // // remove the old carousel
+            // $oldLivePreviewCar.remove();
+
+            // // build the new carousel initialization html
+            // $livePreviewCarousel.attr('id', carouselWrapperID);
+            // for (i = 0; i < options.visibleImgCount + 3; i++) {
+            //     $livePreviewCarousel.append(
+            //         $('<img>')
+            //             .attr('src', pluginDir + '../imgs/test_pic.jpg')
+            //             .attr('alt', 'Image ' + i));
+            // }
+            // $livePreviewPanel.append($livePreviewCarousel);
+
+            // start carousel
+            $carouselWrapper.easyCarousel(options);
         };
 
     handlingTabs();
 
-    $("#modal-background").spectrum({
-        color: (options.modalBackground !== "" ? options.modalBackground : "rgba(0, 0, 0, 0.8)"),
-        showAlpha: true,
-        showInput: true,
-        showInitial: true,
-        allowEmpty: false,
-        preferredFormat: "rgb",
-    });
+    // init color pickers
+    initColorPickerInput($('#modal-background'), options.modalBackground, 'rgba(0, 0, 0, 0.8)', null);
+
+    // start preview carousel
+    createNewCarousel();
 };

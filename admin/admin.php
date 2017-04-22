@@ -56,6 +56,7 @@ function ec_admin_scripts_and_styles($hook) {
     wp_register_script('ec_qu_string', plugin_dir_url( __FILE__ ) . '../js/qu-string.js', false, '1.0');
     wp_register_script('jquery-sortable', plugin_dir_url(__FILE__) . 'js/jquery-ui.min.js', false, "0.1");
     wp_register_script('color-picker', plugin_dir_url(__FILE__) . 'js/spectrum.js', false, "0.1");
+    wp_register_script('ec-gallery-component', plugin_dir_url(__FILE__) . '../js/easy-carousel.js', false, "0.1" );
 
     wp_enqueue_style('ec_admin_styles', plugin_dir_url(__FILE__) . 'css/ec-admin.css', array(), '1.0');
     wp_enqueue_style('color-picker', plugin_dir_url(__FILE__) . 'css/spectrum.css', array(), '1.0');

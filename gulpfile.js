@@ -7,7 +7,7 @@ var eslint      = require('gulp-eslint');
 // VARIABLES
 var adminLessFiles  = 'admin/css/*.less';
 var adminCssDest    = 'admin/css';
-var jsFiles         = ['js/*.js', 'admin/js/*.js', 'inc/*.php', '!admin/js/jquery-ui.min.js'];
+var jsFiles         = ['js/*.js', 'admin/js/*.js', 'inc/*.php', '!admin/js/jquery-ui.min.js', '!admin/js/spectrum.js'];
 var isItProduction  = false;
 
 // HELPER FUNCTIONS
