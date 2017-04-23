@@ -23,22 +23,17 @@
         endforeach; 
         ?>
 
-        window.initEcOptionsPage($, options, "<?php print $carousel_wrapper_id; ?>");
+        window.initEcOptionsPage($, "<?php print $carousel_wrapper_id; ?>");
     });
 </script>
 
-<div class="wrap gallery-admin">
+<div class="wrap gallery-admin" id="easy-carousel-settings">
     <h1>Easy Carousel settings</h1>
 
     <div id="live-preview-panel" class="notice notice-info">
         <h2>Live style preview </h2>
 
         <div id="<?php print $carousel_wrapper_id; ?>">
-            <img src="<?php print $test_img_src; ?>" alt="Image">
-            <img src="<?php print $test_img_src; ?>" alt="Image">
-            <img src="<?php print $test_img_src; ?>" alt="Image">
-            <img src="<?php print $test_img_src; ?>" alt="Image">
-            <img src="<?php print $test_img_src; ?>" alt="Image">
             <img src="<?php print $test_img_src; ?>" alt="Image">
         </div>
     </div>
@@ -66,6 +61,8 @@
         </div>
 
         <?php submit_button(null, 'primary', null, false, ''); ?>
+
+        <input type="button" class="button button-secondary" value="Reset settings to default" id="reset-button">
         
     </form>
 

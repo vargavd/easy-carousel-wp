@@ -168,8 +168,30 @@
     .gallery-image-template, .gallery-template {
         display: none;
     }
+}
 
-    #live-preview-panel #live-preview-carousel{
-        margin: 30px 30px 30px 0 !important;
+#easy-carousel-settings {
+    padding-top: 254px;
+    position: relative;
+
+    #live-preview-panel {
+        position: fixed;
+        top: 27px;
+        left: 160px;
+        z-index: 101;
+        width: 100%;
+        box-shadow: 0px 3px 6px 0px rgba(50, 50, 50, 0.75);
+
+        #live-preview-carousel {
+            margin: 20px 20px 20px 0 !important;
+        }
+    }
+
+    #reset-button {
+        font-size: 16px;
+        font-weight: bold;
+        border-bottom: none;
+        padding: 1px 10px;
+        margin-left: 10px;
     }
 }

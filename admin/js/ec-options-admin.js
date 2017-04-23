@@ -1,11 +1,14 @@
 'use strict';
 
-window.initEcOptionsPage = function ($, options, wrapperId) {
+window.initEcOptionsPage = function ($, wrapperId) {
     var
         // DOM
-        $livePreviewPanel = $('#live-preview-panel'),
-        $carouselWrapper  = $('#' + wrapperId),
-        $testImg          = $carouselWrapper.find('img'),
+        $carouselWrapper     = $('#' + wrapperId),
+        $testImg             = $carouselWrapper.find('img').remove(),
+        options              = {},
+        $visibleImgCount     = $('#visible-img-count'),
+        $secondsBetweenSlide = $('#seconds-between-slides'),
+        $modalBackground     = $('#modal-background'),
 
         // functions
         handlingTabs = function () {
@@ -25,9 +28,46 @@ window.initEcOptionsPage = function ($, options, wrapperId) {
                 event.preventDefault();
             });
 
-            $tabs.last().click();
+            $tabs.eq(0).click();
         },
-        initColorPickerInput = function ($input, value, defaultValue, changeEvent) {
+        createNewCarousel = function () {
+            var
+                // misc
+                i,
+                imgCount = options.visibleImgCount ? (options.visibleImgCount + 3) : 6,
+
+                // helper functions
+                getOptions = function () {
+                    var
+                        // misc
+                        modalBackground = $modalBackground.val();
+
+                    options.visibleImgCount     = $visibleImgCount.val();
+                    options.secondsBetweenSlide = $secondsBetweenSlide.val();
+
+                    if (modalBackground) {
+                        options.modalBackground = modalBackground;
+                    }
+                };
+
+            // remove the old carousel
+            $carouselWrapper.children().remove();
+
+            // build the new carousel initialization html
+            for (i = 0; i < imgCount; i++) {
+                $carouselWrapper.append(
+                    $testImg
+                        .clone()
+                        .attr('alt', 'Image ' + i));
+            }
+
+            // load options from html
+            getOptions();
+
+            // start carousel
+            $carouselWrapper.easyCarousel(options);
+        },
+        initColorPickerInput = function ($input, value, defaultValue) {
             $input.spectrum({
                 color: (value !== '' ? value : defaultValue),
                 showAlpha: true,
@@ -35,35 +75,18 @@ window.initEcOptionsPage = function ($, options, wrapperId) {
                 showInitial: true,
                 allowEmpty: false,
                 preferredFormat: 'rgb',
-                change: changeEvent,
+                change: createNewCarousel,
             });
-        },
-        createNewCarousel = function () {
-            var
-                // misc
-                i;
-
-            // // remove the old carousel
-            // $oldLivePreviewCar.remove();
-
-            // // build the new carousel initialization html
-            // $livePreviewCarousel.attr('id', carouselWrapperID);
-            // for (i = 0; i < options.visibleImgCount + 3; i++) {
-            //     $livePreviewCarousel.append(
-            //         $('<img>')
-            //             .attr('src', pluginDir + '../imgs/test_pic.jpg')
-            //             .attr('alt', 'Image ' + i));
-            // }
-            // $livePreviewPanel.append($livePreviewCarousel);
-
-            // start carousel
-            $carouselWrapper.easyCarousel(options);
         };
 
     handlingTabs();
 
     // init color pickers
-    initColorPickerInput($('#modal-background'), options.modalBackground, 'rgba(0, 0, 0, 0.8)', null);
+    initColorPickerInput($('#modal-background'), options.modalBackground, 'rgba(0, 0, 0, 0.8)');
+
+    // set change events
+    $visibleImgCount.change(createNewCarousel);
+    $secondsBetweenSlide.change(createNewCarousel);
 
     // start preview carousel
     createNewCarousel();

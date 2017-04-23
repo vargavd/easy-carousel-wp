@@ -2,7 +2,7 @@
 
 add_action('admin_init', 'ec_options_init');
 function ec_options_init() {
-    register_setting('ec-parameter-settings', 'ec_parameter_settings');
+    register_setting('ec-parameter-settings', 'ec_parameter_settings', 'reset_ec_settings');
 
     add_settings_section('ec_general_section', '', 'ec_general_section', 'easy-carousel-settings-general');
 
@@ -73,19 +73,39 @@ function ec_general_section() {
 // BEHAVIORAL OPTIONS (HTML FIELDS)
 function ec_visible_img_count() {
     $cssRules = get_option('ec_parameter_settings');
+    $default = 3;
+    $selected = isset($cssRules['ec_visible_img_count']) && $cssRules['ec_visible_img_count'] !== "" ? $cssRules['ec_visible_img_count'] : $default;
     ?>
 
-    <input type='number' id='visible-img-count' name='ec_parameter_settings[ec_visible_img_count]' value='<?php echo (isset($cssRules['ec_visible_img_count']) ? $cssRules['ec_visible_img_count'] : ''); ?>' />
-    <p class="description">Default: <strong>3</strong></p>
+    <select id='visible-img-count' name='ec_parameter_settings[ec_visible_img_count]'>
+        <?php for ($i = 1; $i < 20; $i++) {
+            if ($i == $selected) {
+                print "<option value='$i' selected='selected'>$i</option>";
+            } else {
+                print "<option value='$i'>$i</option>";
+            }
+        } ?>
+    </select>
+    <p class="description">Default: <strong><?php print $default; ?></strong></p>
 
     <?php
 }
 function ec_seconds_between_slide() {
     $cssRules = get_option('ec_parameter_settings');
+    $default = 3;
+    $selected = isset($cssRules['ec_seconds_between_slide']) && $cssRules['ec_seconds_between_slide'] !== "" ? $cssRules['ec_seconds_between_slide'] : $default;
     ?>
 
-    <input type='number' id='seconds-between-slide' name='ec_parameter_settings[ec_seconds_between_slide]' value='<?php echo (isset($cssRules['ec_seconds_between_slide']) ? $cssRules['ec_seconds_between_slide'] : ''); ?>' />
-    <p class="description">Default: <strong>3</strong></p>
+    <select id='seconds-between-slides' name='ec_parameter_settings[ec_seconds_between_slide]'>
+        <?php for ($i = 1; $i < 20; $i++) {
+            if ($i == $selected) {
+                print "<option value='$i' selected='selected'>$i</option>";
+            } else {
+                print "<option value='$i'>$i</option>";
+            }
+        } ?>
+    </select>
+    <p class="description">Default: <strong><?php print $default; ?></strong></p>
 
     <?php
 }
@@ -390,6 +410,10 @@ function ec_modal_button_font_weight() {
 
     <?php
 }
-function validate_ec_parameters($input) {
+function reset_ec_settings($input) {
+    if (in_array("ec_visible_img_count", $input)) {
+        $input["ec_visible_img_count"] = "10";
+    }
+
     return $input;
 }
