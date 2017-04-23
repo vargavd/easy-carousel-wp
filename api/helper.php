@@ -49,6 +49,45 @@ function ec_get_all_options() {
         'modalButtonFontWeight' => $options["ec_modal_button_font_weight"],
     );
 }
+function ec_get_default_options() {
+    return array(
+        'visibleImgCount'            => 3,
+        'secondsBetweenSlide'        => 3,
+        'wrapperBorder'              => "1px solid gray",
+        'wrapperPadding'             => "10px",
+        'wrapperBackground'          => "black",
+        'imgWidth'                   => "300px",
+        'imgMaxHeight'               => "150px",
+        'imgSpace'                   => "10px",
+        'imgBorder'                  => "5px solid white",
+        'buttonWidth'                => "50px",
+        'buttonHeight'               => "25px",
+        'buttonBorder'               => "1px solid #bbb",
+        'buttonBackground'           => "rgba(255, 255, 255, 0.6)",
+        'buttonHoverBackground'      => "white",
+        'buttonHoverBorder'          => "1px solid #bbb",
+        'buttonColor'                => "black",
+        'buttonFontWeight'           => "bold",
+        'modalBackground'            => "rgba(0, 0, 0, 0.8)",
+        'modalWindowBackground'      => "white",
+        'modalWindowBorder'          => "1px solid white",
+        'modalNumberFontSize'        => "24px",
+        'modalNumberColor'           => "#333",
+        'modalCaptionFontSize'       => "20px",
+        'modalCaptionColor'          => "#666",
+        'modalCaptionFontWeight'     => "bold",
+        'modalCaptionLineHeight'     => "30px",
+        'modalButtonBackground'      => "transparent",
+        'modalButtonHoverBackground' => "#666",
+        'modalButtonColor'           => "#333",
+        'modalButtonHoverColor'      => "white",
+        'modalButtonBorder'          => "1px solid #333",
+        'modalButtonHoverBorder'     => "1px solid #333",
+        'modalButtonPadding'         => "3px 7px",
+        'modalButtonMargin'          => "0 10px",
+        'modalButtonFontWeight'      => "bold",
+    );
+}
 function ec_get_gallery_html($options, $gallery_id, $wrapper_id) {
 
     $output =  "<script>\n";

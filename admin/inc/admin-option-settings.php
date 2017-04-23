@@ -72,8 +72,9 @@ function ec_general_section() {
 
 // BEHAVIORAL OPTIONS (HTML FIELDS)
 function ec_visible_img_count() {
+    $default = ec_get_default_options()['visibleImgCount'];
+
     $cssRules = get_option('ec_parameter_settings');
-    $default = 3;
     $selected = isset($cssRules['ec_visible_img_count']) && $cssRules['ec_visible_img_count'] !== "" ? $cssRules['ec_visible_img_count'] : $default;
     ?>
 
@@ -113,9 +114,42 @@ function ec_seconds_between_slide() {
 // SLIDER CSS OPTIONS (HTML FIELDS)
 function ec_wrapper_border() {
     $cssRules = get_option('ec_parameter_settings');
+
+    $wrapperBorder = $cssRules['ec_wrapper_border'];
+
+    if (is_string($wrapperBorder) && !empty($wrapperBorder)) {
+        $wrapperBorderParts = explode(" ", $wrapperBorder);
+
+        $wrapperBorderWidth = str_replace("px", "", $wrapperBorderParts[0]);
+        $wrapperBorderType  = $wrapperBorderParts[1];
+        $wrapperBorderColor = $wrapperBorderParts[2];
+    } else {
+        $wrapperBorderWidth = "1";
+        $wrapperBorderType  = "solid";
+        $wrapperBorderColor = "gray";
+    }
     ?>
 
-    <input type='text' id='wrapper-border' name='ec_parameter_settings[ec_wrapper_border]' value='<?php echo (isset($cssRules['ec_wrapper_border']) ? $cssRules['ec_wrapper_border'] : ''); ?>' />
+    <input type='hidden' id='wrapper-border' name='ec_parameter_settings[ec_wrapper_border]' value='<?php echo (isset($cssRules['ec_wrapper_border']) ? $cssRules['ec_wrapper_border'] : ''); ?>' />
+    <select id="wrapper-border-width" class="width">
+        <?php for ($i = 1; $i < 50; $i++) {
+            if ($i == $wrapperBorderWidth) {
+                print "<option selected='selected'>" . $i . "px</option>";
+            } else {
+                print "<option>" . $i . "px</option>";
+            }
+        } ?>
+    </select>
+    <select id="wrapper-border-type" class="type">
+        <option <?php print ($wrapperBorderType === "solid") ? "selected='selected'" : ""; ?>>solid</option>
+        <option <?php print ($wrapperBorderType === "none") ? "selected='selected'" : ""; ?>>none</option>
+        <option <?php print ($wrapperBorderType === "dashed") ? "selected='selected'" : ""; ?>>dashed</option>
+        <option <?php print ($wrapperBorderType === "dotted") ? "selected='selected'" : ""; ?>>dotted</option>
+        <option <?php print ($wrapperBorderType === "double") ? "selected='selected'" : ""; ?>>double</option>
+    </select>
+    
+    <input type="text" id="wrapper-border-color" class="color-text"/>
+
     <p class="description">Default: <strong>1px solid gray</strong></p>
 
     <?php
@@ -411,9 +445,9 @@ function ec_modal_button_font_weight() {
     <?php
 }
 function reset_ec_settings($input) {
-    if (in_array("ec_visible_img_count", $input)) {
-        $input["ec_visible_img_count"] = "10";
-    }
+    // if (in_array("ec_visible_img_count", $input)) {
+    //     $input["ec_visible_img_count"] = "10";
+    // }
 
     return $input;
 }
