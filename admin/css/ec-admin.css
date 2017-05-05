@@ -152,3 +152,7 @@
   padding: 1px 10px;
   margin-left: 10px;
 }
+#easy-carousel-settings .border-field .color-text {
+  top: 2px;
+  position: relative;
+}

@@ -8,8 +8,6 @@ window.initEcOptionsPage = function ($, wrapperId) {
         $resetButton         = $('#reset-button'),
         $visibleImgCount     = $('#visible-img-count'),
         $secondsBetweenSlide = $('#seconds-between-slides'),
-        $modalBackground     = $('#modal-background'),
-        $wrapperBorder       = $('#wrapper-border'),
 
         // misc
         options = {},
@@ -42,16 +40,10 @@ window.initEcOptionsPage = function ($, wrapperId) {
 
                 // helper functions
                 getOptions = function () {
-                    var
-                        // misc
-                        modalBackground = $modalBackground.val();
-
                     options.visibleImgCount     = $visibleImgCount.val();
                     options.secondsBetweenSlide = $secondsBetweenSlide.val();
 
-                    if (modalBackground) {
-                        options.modalBackground = modalBackground;
-                    }
+                    options.wrapperBorder = wrapperBorderFieldObj.getValue();
                 };
 
             // remove the old carousel
@@ -69,40 +61,74 @@ window.initEcOptionsPage = function ($, wrapperId) {
                         .attr('alt', 'Image ' + i));
             }
 
+            console.log(options);
+
             // start carousel
             $carouselWrapper.easyCarousel(options);
         },
         resetEverything = function () {
-            $visibleImgCount.val(3);
-            $secondsBetweenSlide.val(3);
-            $modalBackground.spectrum('set', 'rgba(0, 0, 0, 0.8)');
-
-            createNewCarousel();
+            // TODO: translable strings!
+            if (confirm('You will lost every cumstomization you made. Are you sure?')) {
+                location.href += '&reset=true';
+            }
         },
-        initColorPickerInput = function ($input, value, defaultValue) {
+        initColorPickerInput = function ($input, changed) {
             $input.spectrum({
-                color: (value !== '' ? value : defaultValue),
                 showAlpha: true,
                 showInput: true,
                 showInitial: true,
                 allowEmpty: false,
                 preferredFormat: 'rgb',
-                change: createNewCarousel,
+                change: changed,
             });
         },
-        handleBorder = function ($hiddenInput) {
+
+        // field constructors
+        borderField = function (fieldWrapperId) {
             var
-                // dom
-                $cell        = $hiddenInput.closest('td'),
-                $widthSelect = $cell.find('.width'),
-                $typeSelect  = $cell.find('.type'),
-                $colorText   = $cell.find('.color-text');
-        };
+                // DOM
+                $wrapper     = $('#' + fieldWrapperId),
+                $hiddenInput = $wrapper.find('input[type=hidden]'),
+                $widthSelect = $wrapper.find('select.width'),
+                $typeSelect  = $wrapper.find('select.type'),
+                $colorInput  = $wrapper.find('input[type=text]'),
+
+                // functions
+                getBorderString = function () {
+                    var
+                        colorObject = $colorInput.spectrum('get').toRgb(),
+                        colorString = 'rgba(' + colorObject.r + ', ' + colorObject.g + ', ' + colorObject.b + ', ' + parseFloat(colorObject.a) + ')';
+
+                    console.log($colorInput.spectrum('get'));
+
+                    return $widthSelect.val() + ' ' + $typeSelect.val() + ' ' + colorString;
+                },
+                changed = function () {
+                    var
+                        borderString = getBorderString();
+
+                    $hiddenInput.val(borderString);
+
+                    createNewCarousel();
+                };
+
+            $widthSelect.change(changed);
+            $typeSelect.change(changed);
+
+            initColorPickerInput($colorInput, changed);
+
+            $colorInput.spectrum('set', 'rgba(30, 30, 255, 0.6)');
+
+            return {
+                getValue: getBorderString,
+            };
+        },
+
+        // field objects
+        wrapperBorderFieldObj = borderField('wrapper-border', 'wrapperBorder');
 
     handlingTabs();
 
-    // init color pickers
-    initColorPickerInput($modalBackground, options.modalBackground, 'rgba(0, 0, 0, 0.8)');
 
     // set reset event
     $resetButton.click(resetEverything);

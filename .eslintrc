@@ -42,7 +42,9 @@
         "no-console": 0,
         "filenames/match-regex": 0,
         "lines-around-directive": ["error", { "before": "never", "after": "always" }],
-        "key-spacing": 0
+        "key-spacing": 0,
+        "no-alert": 0,
+        "no-use-before-define": 0
    }
 }
 

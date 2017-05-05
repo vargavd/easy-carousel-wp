@@ -53,7 +53,7 @@ function ec_get_default_options() {
     return array(
         'visibleImgCount'            => 3,
         'secondsBetweenSlide'        => 3,
-        'wrapperBorder'              => "1px solid gray",
+        'wrapperBorder'              => "1px solid rgba(0, 0, 0, 0.5)",
         'wrapperPadding'             => "10px",
         'wrapperBackground'          => "black",
         'imgWidth'                   => "300px",

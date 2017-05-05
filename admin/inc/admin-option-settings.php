@@ -111,9 +111,61 @@ function ec_seconds_between_slide() {
     <?php
 }
 
+// GENERAL FIELDS (USED LATER)
+function border_field($option_id, $default_border_string, $div_id) {
+    $css_rules = get_option('ec_parameter_settings');
+
+    
+    $border_string = $css_rules[$option_id];
+
+    
+    $border_parts = (is_string($border_string) && !empty($border_string)) ?
+                    explode(" ", $border_string) :
+                    explode(" ", $default_border_string);
+
+    
+    $border_width = str_replace("px", "", $border_parts[0]);
+    $border_type  = $border_parts[1];
+    $border_color = $border_parts[2];
+
+    
+    ?>
+
+    <div id='<?php print $div_id; ?>' class='border-field'>
+
+        <input type='hidden' name='ec_parameter_settings['<?php print $option_id; ?>']' value='<?php echo (isset($css_rules[$option_id]) ? $css_rules[$option_id] : ''); ?>' />
+
+        <select class="width">
+            <?php for ($i = 1; $i < 50; $i++) {
+                if ($i == $border_width) {
+                    print "<option selected='selected'>" . $i . "px</option>";
+                } else {
+                    print "<option>" . $i . "px</option>";
+                }
+            } ?>
+        </select>
+        <select class="type">
+            <option <?php print ($border_type === "solid") ? "selected='selected'" : ""; ?>>solid</option>
+            <option <?php print ($border_type === "none") ? "selected='selected'" : ""; ?>>none</option>
+            <option <?php print ($border_type === "dashed") ? "selected='selected'" : ""; ?>>dashed</option>
+            <option <?php print ($border_type === "dotted") ? "selected='selected'" : ""; ?>>dotted</option>
+            <option <?php print ($border_type === "double") ? "selected='selected'" : ""; ?>>double</option>
+        </select>
+        
+        <input type="text" class="color-text" value='<?php print $border_color; ?>'/>
+
+        <p class="description">Default: <strong><?php print "$default_width" . "px $default_type $default_color"; ?></strong></p>
+
+    </div>
+
+    <?php
+}
+
 // SLIDER CSS OPTIONS (HTML FIELDS)
 function ec_wrapper_border() {
-    $cssRules = get_option('ec_parameter_settings');
+    border_field('ec_wrapper_border', ec_get_default_options()['wrapperBorder'], 'wrapper-border');
+
+    /*$cssRules = get_option('ec_parameter_settings');
 
     $wrapperBorder = $cssRules['ec_wrapper_border'];
 
@@ -152,7 +204,7 @@ function ec_wrapper_border() {
 
     <p class="description">Default: <strong>1px solid gray</strong></p>
 
-    <?php
+    <?php*/
 }
 function ec_wrapper_padding() {
     $cssRules = get_option('ec_parameter_settings');
