@@ -61,8 +61,6 @@ window.initEcOptionsPage = function ($, wrapperId) {
                         .attr('alt', 'Image ' + i));
             }
 
-            console.log(options);
-
             // start carousel
             $carouselWrapper.easyCarousel(options);
         },
@@ -88,18 +86,19 @@ window.initEcOptionsPage = function ($, wrapperId) {
             var
                 // DOM
                 $wrapper     = $('#' + fieldWrapperId),
-                $hiddenInput = $wrapper.find('input[type=hidden]'),
+                $hiddenInput = $wrapper.find('input.db-value'),
                 $widthSelect = $wrapper.find('select.width'),
                 $typeSelect  = $wrapper.find('select.type'),
                 $colorInput  = $wrapper.find('input[type=text]'),
+
+                // misc,
+                initialColor = $colorInput.val(),
 
                 // functions
                 getBorderString = function () {
                     var
                         colorObject = $colorInput.spectrum('get').toRgb(),
                         colorString = 'rgba(' + colorObject.r + ', ' + colorObject.g + ', ' + colorObject.b + ', ' + parseFloat(colorObject.a) + ')';
-
-                    console.log($colorInput.spectrum('get'));
 
                     return $widthSelect.val() + ' ' + $typeSelect.val() + ' ' + colorString;
                 },
@@ -109,6 +108,8 @@ window.initEcOptionsPage = function ($, wrapperId) {
 
                     $hiddenInput.val(borderString);
 
+                    console.log(borderString);
+
                     createNewCarousel();
                 };
 
@@ -116,8 +117,6 @@ window.initEcOptionsPage = function ($, wrapperId) {
             $typeSelect.change(changed);
 
             initColorPickerInput($colorInput, changed);
-
-            $colorInput.spectrum('set', 'rgba(30, 30, 255, 0.6)');
 
             return {
                 getValue: getBorderString,

@@ -118,22 +118,22 @@ function border_field($option_id, $default_border_string, $div_id) {
     
     $border_string = $css_rules[$option_id];
 
-    
-    $border_parts = (is_string($border_string) && !empty($border_string)) ?
-                    explode(" ", $border_string) :
-                    explode(" ", $default_border_string);
 
+    if (!is_string($border_string) || empty($border_string)) {
+        $border_string = $default_border_string;
+    }
     
+    $border_parts = explode(" ", $border_string);
+
     $border_width = str_replace("px", "", $border_parts[0]);
     $border_type  = $border_parts[1];
-    $border_color = $border_parts[2];
-
+    $border_color = substr($border_string, strpos($border_string, "rgba"));
     
     ?>
 
     <div id='<?php print $div_id; ?>' class='border-field'>
 
-        <input type='hidden' name='ec_parameter_settings['<?php print $option_id; ?>']' value='<?php echo (isset($css_rules[$option_id]) ? $css_rules[$option_id] : ''); ?>' />
+        <input type="hidden" class="db-value" name='ec_parameter_settings[<?php print $option_id; ?>]' value='<?php echo $border_string; ?>' />
 
         <select class="width">
             <?php for ($i = 1; $i < 50; $i++) {
@@ -154,7 +154,7 @@ function border_field($option_id, $default_border_string, $div_id) {
         
         <input type="text" class="color-text" value='<?php print $border_color; ?>'/>
 
-        <p class="description">Default: <strong><?php print "$default_width" . "px $default_type $default_color"; ?></strong></p>
+        <p class="description">Default: <strong><?php print $default_border_string; ?></strong></p>
 
     </div>
 
