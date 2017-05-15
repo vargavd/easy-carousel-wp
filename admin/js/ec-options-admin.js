@@ -8,6 +8,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
         $resetButton         = $('#reset-button'),
         $visibleImgCount     = $('#visible-img-count'),
         $secondsBetweenSlide = $('#seconds-between-slides'),
+        $downArrow           = $('#ec-settings-down-arrow'),
 
         // misc
         options = {},
@@ -80,6 +81,19 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 change: changed,
             });
         },
+        clickDownArrow = function () {
+            var
+                currentTop = $('body').scrollTop();
+
+            $('html, body').animate({ scrollTop: currentTop + 100 }, 300);
+        },
+        scrollEvent = function () {
+            if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                $downArrow.hide();
+            } else {
+                $downArrow.show();
+            }
+        },
 
         // field constructors
         borderField = function (fieldWrapperId) {
@@ -90,9 +104,6 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 $widthSelect = $wrapper.find('select.width'),
                 $typeSelect  = $wrapper.find('select.type'),
                 $colorInput  = $wrapper.find('input[type=text]'),
-
-                // misc,
-                initialColor = $colorInput.val(),
 
                 // functions
                 getBorderString = function () {
@@ -128,13 +139,16 @@ window.initEcOptionsPage = function ($, wrapperId) {
 
     handlingTabs();
 
-
     // set reset event
     $resetButton.click(resetEverything);
 
     // set change events
     $visibleImgCount.change(createNewCarousel);
     $secondsBetweenSlide.change(createNewCarousel);
+
+    // handle scroll arrow
+    $downArrow.click(clickDownArrow);
+    $(window).scroll(scrollEvent);
 
     // start preview carousel
     createNewCarousel();
