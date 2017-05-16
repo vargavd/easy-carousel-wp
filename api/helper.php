@@ -54,7 +54,7 @@ function ec_get_default_options() {
         'visibleImgCount'            => 3,
         'secondsBetweenSlide'        => 3,
         'wrapperBorder'              => "1px solid rgba(0, 0, 0, 0.5)",
-        'wrapperPadding'             => "10px",
+        'wrapperPadding'             => "10px 10px 10px 10px",
         'wrapperBackground'          => "black",
         'imgWidth'                   => "300px",
         'imgMaxHeight'               => "150px",
@@ -83,7 +83,7 @@ function ec_get_default_options() {
         'modalButtonHoverColor'      => "white",
         'modalButtonBorder'          => "1px solid #333",
         'modalButtonHoverBorder'     => "1px solid #333",
-        'modalButtonPadding'         => "3px 7px",
+        'modalButtonPadding'         => "3px 7px 3px 7px",
         'modalButtonMargin'          => "0 10px",
         'modalButtonFontWeight'      => "bold",
     );

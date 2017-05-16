@@ -38,15 +38,15 @@ function ec_options_init() {
     add_settings_field('ec_modal_caption_color', 'Modal Caption Color', 'ec_modal_caption_color', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
     add_settings_field('ec_modal_caption_font_weight', 'Modal Caption Font Weight', 'ec_modal_caption_font_weight', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
     add_settings_field('ec_modal_caption_line_height', 'Modal Caption Line Height', 'ec_modal_caption_line_height', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
-    add_settings_field('ec_modal_button_background', 'Button Background', 'ec_modal_button_background', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
-    add_settings_field('ec_modal_button_hover_background', 'Button Hover Background', 'ec_modal_button_hover_background', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
-    add_settings_field('ec_modal_button_color', 'Button Color', 'ec_modal_button_color', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
-    add_settings_field('ec_modal_button_hover_color', 'Button Hover Color', 'ec_modal_button_hover_color', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
-    add_settings_field('ec_modal_button_border', 'Button Border', 'ec_modal_button_border', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
-    add_settings_field('ec_modal_button_hover_border', 'Button Hover Border', 'ec_modal_button_hover_border', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
-    add_settings_field('ec_modal_button_padding', 'Button Padding', 'ec_modal_button_padding', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
-    add_settings_field('ec_modal_button_margin', 'Button Margin', 'ec_modal_button_margin', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
-    add_settings_field('ec_modal_button_font_weight', 'Button Font Weight', 'ec_modal_button_font_weight', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
+    add_settings_field('ec_modal_button_background', 'Modal Button Background', 'ec_modal_button_background', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
+    add_settings_field('ec_modal_button_hover_background', 'Modal Button Hover Background', 'ec_modal_button_hover_background', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
+    add_settings_field('ec_modal_button_color', 'Modal Button Color', 'ec_modal_button_color', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
+    add_settings_field('ec_modal_button_hover_color', 'Modal Button Hover Color', 'ec_modal_button_hover_color', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
+    add_settings_field('ec_modal_button_border', 'Modal Button Border', 'ec_modal_button_border', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
+    add_settings_field('ec_modal_button_hover_border', 'Modal Button Hover Border', 'ec_modal_button_hover_border', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
+    add_settings_field('ec_modal_button_padding', 'Modal Button Padding', 'ec_modal_button_padding', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
+    add_settings_field('ec_modal_button_margin', 'Modal Button Margin', 'ec_modal_button_margin', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
+    add_settings_field('ec_modal_button_font_weight', 'Modal Button Font Weight', 'ec_modal_button_font_weight', 'easy-carousel-settings-modal', 'ec_modal_styles_section');
 }
 
 // SECTION DESCRIPTIONS
@@ -161,59 +161,76 @@ function border_field($option_id, $default_border_string, $div_id) {
     <?php
 }
 
+function padding_field($option_id, $default_padding_string, $div_id) {
+    $css_rules = get_option('ec_parameter_settings');
+
+    $padding_string = $css_rules[$option_id];
+
+    if (!is_string($padding_string) || empty($padding_string)) {
+        $padding_string = $default_padding_string;
+    }
+    
+    $padding_parts = explode(" ", $padding_string);
+    
+    ?>
+
+    <div id='<?php print $div_id; ?>' class='padding-field'>
+
+        <input type="hidden" class="db-value" name='ec_parameter_settings[<?php print $option_id; ?>]' value='<?php echo $padding_string; ?>' />
+
+        <select>
+            <?php for ($i = 1; $i < 50; $i++) {
+                if ($i == $padding_parts[0]) {
+                    print "<option selected='selected'>" . $i . "px</option>";
+                } else {
+                    print "<option>" . $i . "px</option>";
+                }
+            } ?>
+        </select>
+
+        <select>
+            <?php for ($i = 1; $i < 50; $i++) {
+                if ($i == $padding_parts[1]) {
+                    print "<option selected='selected'>" . $i . "px</option>";
+                } else {
+                    print "<option>" . $i . "px</option>";
+                }
+            } ?>
+        </select>
+
+        <select>
+            <?php for ($i = 1; $i < 50; $i++) {
+                if ($i == $padding_parts[2]) {
+                    print "<option selected='selected'>" . $i . "px</option>";
+                } else {
+                    print "<option>" . $i . "px</option>";
+                }
+            } ?>
+        </select>
+
+        <select>
+            <?php for ($i = 1; $i < 50; $i++) {
+                if ($i == $padding_parts[3]) {
+                    print "<option selected='selected'>" . $i . "px</option>";
+                } else {
+                    print "<option>" . $i . "px</option>";
+                }
+            } ?>
+        </select>
+
+        <p class="description">Default: <strong><?php print $default_padding_string; ?></strong></p>
+
+    </div>
+
+    <?php
+}
+
 // SLIDER CSS OPTIONS (HTML FIELDS)
 function ec_wrapper_border() {
     border_field('ec_wrapper_border', ec_get_default_options()['wrapperBorder'], 'wrapper-border');
-
-    /*$cssRules = get_option('ec_parameter_settings');
-
-    $wrapperBorder = $cssRules['ec_wrapper_border'];
-
-    if (is_string($wrapperBorder) && !empty($wrapperBorder)) {
-        $wrapperBorderParts = explode(" ", $wrapperBorder);
-
-        $wrapperBorderWidth = str_replace("px", "", $wrapperBorderParts[0]);
-        $wrapperBorderType  = $wrapperBorderParts[1];
-        $wrapperBorderColor = $wrapperBorderParts[2];
-    } else {
-        $wrapperBorderWidth = "1";
-        $wrapperBorderType  = "solid";
-        $wrapperBorderColor = "gray";
-    }
-    ?>
-
-    <input type='hidden' id='wrapper-border' name='ec_parameter_settings[ec_wrapper_border]' value='<?php echo (isset($cssRules['ec_wrapper_border']) ? $cssRules['ec_wrapper_border'] : ''); ?>' />
-    <select id="wrapper-border-width" class="width">
-        <?php for ($i = 1; $i < 50; $i++) {
-            if ($i == $wrapperBorderWidth) {
-                print "<option selected='selected'>" . $i . "px</option>";
-            } else {
-                print "<option>" . $i . "px</option>";
-            }
-        } ?>
-    </select>
-    <select id="wrapper-border-type" class="type">
-        <option <?php print ($wrapperBorderType === "solid") ? "selected='selected'" : ""; ?>>solid</option>
-        <option <?php print ($wrapperBorderType === "none") ? "selected='selected'" : ""; ?>>none</option>
-        <option <?php print ($wrapperBorderType === "dashed") ? "selected='selected'" : ""; ?>>dashed</option>
-        <option <?php print ($wrapperBorderType === "dotted") ? "selected='selected'" : ""; ?>>dotted</option>
-        <option <?php print ($wrapperBorderType === "double") ? "selected='selected'" : ""; ?>>double</option>
-    </select>
-    
-    <input type="text" id="wrapper-border-color" class="color-text"/>
-
-    <p class="description">Default: <strong>1px solid gray</strong></p>
-
-    <?php*/
 }
 function ec_wrapper_padding() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='wrapper-padding' name='ec_parameter_settings[ec_wrapper_padding]' value='<?php echo (isset($cssRules['ec_wrapper_padding']) ? $cssRules['ec_wrapper_padding'] : ''); ?>' />
-    <p class="description">Default: <strong>10px</strong></p>
-
-    <?php
+    padding_field('ec_wrapper_padding', ec_get_default_options()['wrapperPadding'], 'wrapper-padding');
 }
 function ec_wrapper_background() {
     $cssRules = get_option('ec_parameter_settings');
@@ -252,13 +269,7 @@ function ec_img_space() {
     <?php
 }
 function ec_img_border() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='img-border' name='ec_parameter_settings[ec_img_border]' value='<?php echo (isset($cssRules['ec_img_border']) ? $cssRules['ec_img_border'] : ''); ?>' />
-    <p class="description">Default: <strong>5px solid white</strong></p>
-
-    <?php
+    border_field('ec_img_border', ec_get_default_options()['imgBorder'], 'img-border');
 }
 function ec_button_width() {
     $cssRules = get_option('ec_parameter_settings');
@@ -279,13 +290,7 @@ function ec_button_height() {
     <?php
 }
 function ec_button_border() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='button-border' name='ec_parameter_settings[ec_button_border]' value='<?php echo (isset($cssRules['ec_button_border']) ? $cssRules['ec_button_border'] : ''); ?>' />
-    <p class="description">Default: <strong>1px solid #bbb</strong></p>
-
-    <?php
+    border_field('ec_button_border', ec_get_default_options()['buttonBorder'], 'button-border');
 }
 function ec_button_background() {
     $cssRules = get_option('ec_parameter_settings');
@@ -324,13 +329,7 @@ function ec_button_hover_background() {
     <?php
 }
 function ec_button_hover_border() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='button-hover-border' name='ec_parameter_settings[ec_button_hover_border]' value='<?php echo (isset($cssRules['ec_button_hover_border']) ? $cssRules['ec_button_hover_border'] : ''); ?>' />
-    <p class="description">Default: <strong>1px solid #bbb</strong></p>
-
-    <?php
+    border_field('ec_button_hover_border', ec_get_default_options()['buttonHoverBorder'], 'button-hover-border');
 }
 
 // MODAL CSS OPTIONS (HTML FIELDS)
@@ -353,13 +352,7 @@ function ec_modal_window_background() {
     <?php
 }
 function ec_modal_window_border() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-background' name='ec_parameter_settings[ec_modal_window_background]' value='<?php echo (isset($cssRules['ec_modal_window_background']) ? $cssRules['ec_modal_window_background'] : ''); ?>' />
-    <p class="description">Default: <strong>1px solid white</strong></p>
-
-    <?php
+    border_field('ec_modal_window_border', ec_get_default_options()['modalWindowBorder'], 'modal-window-border');
 }
 function ec_modal_number_font_size() {
     $cssRules = get_option('ec_parameter_settings');
@@ -452,31 +445,13 @@ function ec_modal_button_hover_color() {
     <?php
 }
 function ec_modal_button_border() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-button-border' name='ec_parameter_settings[ec_modal_button_border]' value='<?php echo (isset($cssRules['ec_modal_button_border']) ? $cssRules['ec_modal_button_border'] : ''); ?>' />
-    <p class="description">Default: <strong>#1px solid #333</strong></p>
-
-    <?php
+    border_field('ec_modal_button_border', ec_get_default_options()['modalButtonBorder'], 'modal-button-border');
 }
 function ec_modal_button_hover_border() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-button-hover-border' name='ec_parameter_settings[ec_modal_button_hover_border]' value='<?php echo (isset($cssRules['ec_modal_button_hover_border']) ? $cssRules['ec_modal_button_hover_border'] : ''); ?>' />
-    <p class="description">Default: <strong>1px solid #333</strong></p>
-
-    <?php
+    border_field('ec_modal_button_hover_border', ec_get_default_options()['modalButtonHoverBorder'], 'modal-button-hover-border');
 }
 function ec_modal_button_padding() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-button-padding' name='ec_parameter_settings[ec_modal_button_padding]' value='<?php echo (isset($cssRules['ec_modal_button_padding']) ? $cssRules['ec_modal_button_padding'] : ''); ?>' />
-    <p class="description">Default: <strong>3px 7px</strong></p>
-
-    <?php
+    padding_field('ec_modal_button_padding', ec_get_default_options()['modalButtonPadding'], 'modal-button-padding');
 }
 function ec_modal_button_margin() {
     $cssRules = get_option('ec_parameter_settings');

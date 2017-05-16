@@ -4,7 +4,6 @@ window.initEcOptionsPage = function ($, wrapperId) {
     var
         // DOM
         $carouselWrapper     = $('#' + wrapperId),
-        $carouselPanel       = $('#live-preview-panel'),
         $testImg             = $carouselWrapper.find('img').remove(),
         $resetButton         = $('#reset-button'),
         $visibleImgCount     = $('#visible-img-count'),
@@ -38,14 +37,12 @@ window.initEcOptionsPage = function ($, wrapperId) {
             var
                 // DOM
                 $ecCarSettingsWrapper = $('#easy-carousel-settings'),
-                $buttonsPanel = $('#ec-settings-buttons'),
                 $carouselPanel = $('#live-preview-panel'),
 
                 // misc
                 carPanelHeight = $carouselPanel.height();
 
             $ecCarSettingsWrapper.css('margin-top', carPanelHeight);
-            $buttonsPanel.css('top', carPanelHeight + 85);
         },
         createNewCarousel = function () {
             var
@@ -58,7 +55,15 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     options.visibleImgCount     = $visibleImgCount.val();
                     options.secondsBetweenSlide = $secondsBetweenSlide.val();
 
-                    options.wrapperBorder = wrapperBorderFieldObj.getValue();
+                    options.wrapperBorder          = wrapperBorderFieldObj.getValue();
+                    options.imgBorder              = imgBorderFieldObj.getValue();
+                    options.buttonBorder           = buttonBorderFieldObj.getValue();
+                    options.buttonHoverBorder      = buttonHoverBorderFieldObj.getValue();
+                    options.modalWindowBorder      = modalWindowBorderFieldObj.getValue();
+                    options.modalButtonBorder      = modalButtonBorderFieldObj.getValue();
+                    options.modalButtonHoverBorder = modalButtonHoverBorderFieldObj.getValue();
+                    options.wrapperPadding         = wrapperPaddingFieldObj.getValue();
+                    options.modalButtonPadding     = modalButtonPaddingFieldObj.getValue();
 
                     options.carouselLoaded = rearrangeLayout;
                 };
@@ -104,7 +109,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
             $('html, body').animate({ scrollTop: currentTop + 100 }, 300);
         },
         scrollEvent = function () {
-            if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            if ($(window).scrollTop() + $(window).height() === $(document).height()) {
                 $downArrow.hide();
             } else {
                 $downArrow.show();
@@ -135,8 +140,6 @@ window.initEcOptionsPage = function ($, wrapperId) {
 
                     $hiddenInput.val(borderString);
 
-                    console.log(borderString);
-
                     createNewCarousel();
                 };
 
@@ -149,9 +152,43 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 getValue: getBorderString,
             };
         },
+        paddingField = function (fieldWrapperId) {
+            var
+                // DOM
+                $fieldWrapper = $('#' + fieldWrapperId),
+                $hiddenInput  = $fieldWrapper.find('input[type=hidden]'),
+                $selects      = $fieldWrapper.find('select'),
+
+                // events
+                getPaddingString = function () {
+                    return $selects.first().val() + ' ' +
+                            $selects.eq(1).val() + ' ' +
+                            $selects.eq(2).val() + ' ' +
+                            $selects.last().val();
+                },
+                changed = function () {
+                    $hiddenInput.val(getPaddingString());
+
+                    createNewCarousel();
+                };
+
+            $selects.change(changed);
+
+            return {
+                getValue: getPaddingString,
+            };
+        },
 
         // field objects
-        wrapperBorderFieldObj = borderField('wrapper-border', 'wrapperBorder');
+        wrapperBorderFieldObj          = borderField('wrapper-border'),
+        imgBorderFieldObj              = borderField('img-border'),
+        buttonBorderFieldObj           = borderField('button-border'),
+        buttonHoverBorderFieldObj      = borderField('button-hover-border'),
+        modalWindowBorderFieldObj      = borderField('modal-window-border'),
+        modalButtonBorderFieldObj      = borderField('modal-button-border'),
+        modalButtonHoverBorderFieldObj = borderField('modal-button-hover-border'),
+        wrapperPaddingFieldObj         = paddingField('wrapper-padding'),
+        modalButtonPaddingFieldObj     = paddingField('modal-button-padding');
 
     handlingTabs();
 

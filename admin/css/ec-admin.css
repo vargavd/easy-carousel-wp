@@ -165,23 +165,21 @@
 #easy-carousel-settings #ec-settings-header-panel {
   position: fixed;
   background: #f1f1f1;
-  z-index: 101;
+  z-index: 80;
   width: 100%;
   padding-bottom: 10px;
 }
 #easy-carousel-settings #ec-settings-header-panel a.nav-tab:focus {
   box-shadow: none;
 }
+#easy-carousel-settings #ec-settings-header-panel #ec-settings-buttons {
+  position: absolute;
+  left: 356px;
+  top: 54px;
+}
 #easy-carousel-settings #easy-carousel-settings-tab-content-scroll {
   margin-top: 100px;
   margin-left: 9px;
-}
-#easy-carousel-settings #easy-carousel-settings-tab-content-scroll #ec-settings-buttons {
-  float: right;
-  position: fixed;
-  right: 0;
-  z-index: 102;
-  top: 344px;
 }
 #easy-carousel-settings .tab-content {
   padding-top: 90px;
