@@ -308,22 +308,10 @@ function ec_button_border() {
     border_field('ec_button_border', ec_get_default_options()['buttonBorder'], 'button-border');
 }
 function ec_button_background() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='button-background' name='ec_parameter_settings[ec_button_background]' value='<?php echo (isset($cssRules['ec_button_background']) ? $cssRules['ec_button_background'] : ''); ?>' />
-    <p class="description">Default: <strong>rgba(255, 255, 255, 0.6)</strong></p>
-
-    <?php
+    color_field('ec_button_background', ec_get_default_options()['buttonBackground'], 'button-background');
 }
 function ec_button_color() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='button-color' name='ec_parameter_settings[ec_button_color]' value='<?php echo (isset($cssRules['ec_button_color']) ? $cssRules['ec_button_color'] : ''); ?>' />
-    <p class="description">Default: <strong>rgba(255, 255, 255, 0.6)</strong></p>
-
-    <?php
+    color_field('ec_button_color', ec_get_default_options()['buttonColor'], 'button-color');
 }
 function ec_button_font_weight() {
     $cssRules = get_option('ec_parameter_settings');
@@ -335,13 +323,7 @@ function ec_button_font_weight() {
     <?php
 }
 function ec_button_hover_background() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='button-hover-background' name='ec_parameter_settings[ec_button_hover_background]' value='<?php echo (isset($cssRules['ec_button_hover_background']) ? $cssRules['ec_button_hover_background'] : ''); ?>' />
-    <p class="description">Default: <strong>white</strong></p>
-
-    <?php
+    color_field('ec_button_hover_background', ec_get_default_options()['buttonHoverBackground'], 'button-hover-background');
 }
 function ec_button_hover_border() {
     border_field('ec_button_hover_border', ec_get_default_options()['buttonHoverBorder'], 'button-hover-border');

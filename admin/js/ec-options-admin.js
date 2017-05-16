@@ -65,6 +65,9 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     options.wrapperPadding         = wrapperPaddingFieldObj.getValue();
                     options.modalButtonPadding     = modalButtonPaddingFieldObj.getValue();
                     options.wrapperBackground      = wrapperBackgroundFieldObj.getValue();
+                    options.buttonBackground       = buttonBackgroundFieldObj.getValue();
+                    options.buttonColor            = buttonColorFieldObj.getValue();
+                    options.buttonHoverBackground  = buttonHoverBackgroundFieldObj.getValue();
 
                     options.carouselLoaded = rearrangeLayout;
                 };
@@ -218,7 +221,10 @@ window.initEcOptionsPage = function ($, wrapperId) {
         modalButtonHoverBorderFieldObj = borderField('modal-button-hover-border'),
         wrapperPaddingFieldObj         = paddingField('wrapper-padding'),
         modalButtonPaddingFieldObj     = paddingField('modal-button-padding'),
-        wrapperBackgroundFieldObj      = colorField('wrapper-background');
+        wrapperBackgroundFieldObj      = colorField('wrapper-background'),
+        buttonBackgroundFieldObj       = colorField('button-background'),
+        buttonColorFieldObj            = colorField('button-color'),
+        buttonHoverBackgroundFieldObj  = colorField('button-hover-background');
 
     handlingTabs();
 
