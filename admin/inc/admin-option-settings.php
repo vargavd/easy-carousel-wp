@@ -160,7 +160,6 @@ function border_field($option_id, $default_border_string, $div_id) {
 
     <?php
 }
-
 function padding_field($option_id, $default_padding_string, $div_id) {
     $css_rules = get_option('ec_parameter_settings');
 
@@ -224,6 +223,28 @@ function padding_field($option_id, $default_padding_string, $div_id) {
 
     <?php
 }
+function color_field($option_id, $default_color_string, $div_id) {
+    $cssRules = get_option('ec_parameter_settings');
+
+    $color_string = $cssRules[$option_id];
+
+    if (!is_string($color_string) || empty($color_string)) {
+        $color_string = $default_color_string;
+    }
+
+    ?>
+
+    <div id='<?php print $div_id; ?>' class='color-field'>
+
+        <input type="hidden" class="db-value" name='ec_parameter_settings[<?php print $option_id; ?>]' value='<?php echo $color_string; ?>' />
+
+        <p class="description">Default: <strong><?php print $default_color_string; ?></strong></p>
+
+    </div>
+
+    <?php
+}
+
 
 // SLIDER CSS OPTIONS (HTML FIELDS)
 function ec_wrapper_border() {
@@ -233,13 +254,7 @@ function ec_wrapper_padding() {
     padding_field('ec_wrapper_padding', ec_get_default_options()['wrapperPadding'], 'wrapper-padding');
 }
 function ec_wrapper_background() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='wrapper-background' name='ec_parameter_settings[ec_wrapper_background]' value='<?php echo (isset($cssRules['ec_wrapper_background']) ? $cssRules['ec_wrapper_background'] : ''); ?>' />
-    <p class="description">Default: <strong>black</strong></p>
-
-    <?php
+    color_field('ec_wrapper_background', ec_get_default_options()['wrapperBackground'], 'wrapper-background');
 }
 function ec_img_width() {
     $cssRules = get_option('ec_parameter_settings');

@@ -805,7 +805,7 @@
 
             setUpSliderAndModal();
 
-            if (typeof settings.carouselLoaded !== "undefined") {
+            if (typeof settings.carouselLoaded !== 'undefined') {
                 settings.carouselLoaded();
             }
         });

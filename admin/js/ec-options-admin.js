@@ -64,6 +64,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     options.modalButtonHoverBorder = modalButtonHoverBorderFieldObj.getValue();
                     options.wrapperPadding         = wrapperPaddingFieldObj.getValue();
                     options.modalButtonPadding     = modalButtonPaddingFieldObj.getValue();
+                    options.wrapperBackground      = wrapperBackgroundFieldObj.getValue();
 
                     options.carouselLoaded = rearrangeLayout;
                 };
@@ -178,6 +179,34 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 getValue: getPaddingString,
             };
         },
+        colorField = function (fieldWrapperId) {
+            var
+                // DOM
+                $fieldWrapper = $('#' + fieldWrapperId),
+                $input        = $fieldWrapper.find('input'),
+
+                // events
+                getColorString = function () {
+                    var
+                        colorObject = $input.spectrum('get').toRgb(),
+                        colorString = 'rgba(' + colorObject.r + ', ' + colorObject.g + ', ' + colorObject.b + ', ' + parseFloat(colorObject.a) + ')';
+
+                    return colorString;
+                },
+                changed = function () {
+                    $input.val(getColorString());
+
+                    console.log(getColorString());
+
+                    createNewCarousel();
+                };
+
+            initColorPickerInput($input, changed);
+
+            return {
+                getValue: getColorString,
+            };
+        },
 
         // field objects
         wrapperBorderFieldObj          = borderField('wrapper-border'),
@@ -188,7 +217,8 @@ window.initEcOptionsPage = function ($, wrapperId) {
         modalButtonBorderFieldObj      = borderField('modal-button-border'),
         modalButtonHoverBorderFieldObj = borderField('modal-button-hover-border'),
         wrapperPaddingFieldObj         = paddingField('wrapper-padding'),
-        modalButtonPaddingFieldObj     = paddingField('modal-button-padding');
+        modalButtonPaddingFieldObj     = paddingField('modal-button-padding'),
+        wrapperBackgroundFieldObj      = colorField('wrapper-background');
 
     handlingTabs();
 
