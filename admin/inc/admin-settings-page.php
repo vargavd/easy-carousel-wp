@@ -7,6 +7,7 @@
     $options = ec_get_all_options();
 
     $test_img_src = plugin_dir_url(__FILE__) . "../imgs/test_pic.jpg";
+    $loading_img_src = plugin_dir_url(__FILE__) . "../imgs/loading.gif";
 
     $carousel_wrapper_id = "live-preview-carousel";
 ?>
@@ -28,6 +29,14 @@
     });
 </script>
 
+<div id="live-preview-panel" class="notice notice-info">
+    <h2>Live style preview </h2>
+
+    <div id="<?php print $carousel_wrapper_id; ?>">
+        <img src="<?php print $test_img_src; ?>" alt="Image">
+    </div>
+</div>
+
 <div class="wrap gallery-admin" id="easy-carousel-settings">
     <div id="ec-settings-header-panel">
         <h1>Easy Carousel settings</h1>
@@ -37,14 +46,6 @@
             <a href="#slider-styles-tab" class="nav-tab">Slider Styles</a>
             <a href="#modal-styles-tab" class="nav-tab">Modal Styles</a>
         </h2>
-    </div>
-
-    <div id="live-preview-panel" class="notice notice-info">
-        <h2>Live style preview </h2>
-
-        <div id="<?php print $carousel_wrapper_id; ?>">
-            <img src="<?php print $test_img_src; ?>" alt="Image">
-        </div>
     </div>
 
     <form method="post" action="options.php">

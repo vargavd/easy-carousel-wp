@@ -4,6 +4,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
     var
         // DOM
         $carouselWrapper     = $('#' + wrapperId),
+        $carouselPanel       = $('#live-preview-panel'),
         $testImg             = $carouselWrapper.find('img').remove(),
         $resetButton         = $('#reset-button'),
         $visibleImgCount     = $('#visible-img-count'),
@@ -33,6 +34,19 @@ window.initEcOptionsPage = function ($, wrapperId) {
 
             $tabs.eq(1).click();
         },
+        rearrangeLayout = function () {
+            var
+                // DOM
+                $ecCarSettingsWrapper = $('#easy-carousel-settings'),
+                $buttonsPanel = $('#ec-settings-buttons'),
+                $carouselPanel = $('#live-preview-panel'),
+
+                // misc
+                carPanelHeight = $carouselPanel.height();
+
+            $ecCarSettingsWrapper.css('margin-top', carPanelHeight);
+            $buttonsPanel.css('top', carPanelHeight + 85);
+        },
         createNewCarousel = function () {
             var
                 // misc
@@ -45,6 +59,8 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     options.secondsBetweenSlide = $secondsBetweenSlide.val();
 
                     options.wrapperBorder = wrapperBorderFieldObj.getValue();
+
+                    options.carouselLoaded = rearrangeLayout;
                 };
 
             // remove the old carousel

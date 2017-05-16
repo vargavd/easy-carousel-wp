@@ -130,11 +130,7 @@
 .gallery-admin .gallery-template {
   display: none;
 }
-#easy-carousel-settings {
-  padding-top: 254px;
-  position: relative;
-}
-#easy-carousel-settings #live-preview-panel {
+#live-preview-panel {
   position: fixed;
   top: 27px;
   left: 160px;
@@ -142,8 +138,18 @@
   width: 100%;
   margin-left: 20px;
 }
-#easy-carousel-settings #live-preview-panel #live-preview-carousel {
+#live-preview-panel #live-preview-carousel {
   margin: 20px 20px 20px 0 !important;
+}
+#loading-gif {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 1000;
+  margin-left: 66px;
+}
+#easy-carousel-settings {
+  position: relative;
 }
 #easy-carousel-settings #reset-button {
   font-size: 16px;
@@ -176,6 +182,9 @@
   right: 0;
   z-index: 102;
   top: 344px;
+}
+#easy-carousel-settings .tab-content {
+  padding-top: 90px;
 }
 #easy-carousel-settings #ec-settings-down-arrow {
   position: fixed;

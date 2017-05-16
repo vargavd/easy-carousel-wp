@@ -804,6 +804,10 @@
             domCreation();
 
             setUpSliderAndModal();
+
+            if (typeof settings.carouselLoaded !== "undefined") {
+                settings.carouselLoaded();
+            }
         });
 
         return $wrapper;
