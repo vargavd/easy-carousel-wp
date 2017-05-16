@@ -331,22 +331,10 @@ function ec_button_hover_border() {
 
 // MODAL CSS OPTIONS (HTML FIELDS)
 function ec_modal_background() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-background' name='ec_parameter_settings[ec_modal_background]' value='<?php echo (isset($cssRules['ec_modal_background']) ? $cssRules['ec_modal_background'] : ''); ?>' />
-    <p class="description">Default: <strong>rgba(0, 0, 0, 0.8)</strong></p>
-
-    <?php
+    color_field('ec_modal_background', ec_get_default_options()['modalBackground'], 'modal-background');
 }
 function ec_modal_window_background() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-window-background' name='ec_parameter_settings[ec_modal_window_background]' value='<?php echo (isset($cssRules['ec_modal_window_background']) ? $cssRules['ec_modal_window_background'] : ''); ?>' />
-    <p class="description">Default: <strong>white</strong></p>
-
-    <?php
+    color_field('ec_modal_window_background', ec_get_default_options()['modalWindowBackground'], 'modal-window-background');
 }
 function ec_modal_window_border() {
     border_field('ec_modal_window_border', ec_get_default_options()['modalWindowBorder'], 'modal-window-border');
@@ -361,13 +349,7 @@ function ec_modal_number_font_size() {
     <?php
 }
 function ec_modal_number_color() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='img-border' name='ec_parameter_settings[ec_modal_number_color]' value='<?php echo (isset($cssRules['ec_modal_number_color']) ? $cssRules['ec_modal_number_color'] : ''); ?>' />
-    <p class="description">Default: <strong>#333</strong></p>
-
-    <?php
+    color_field('ec_modal_number_color', ec_get_default_options()['modalNumberColor'], 'modal-number-color');
 }
 function ec_modal_caption_font_size() {
     $cssRules = get_option('ec_parameter_settings');
@@ -379,13 +361,7 @@ function ec_modal_caption_font_size() {
     <?php
 }
 function ec_modal_caption_color() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-caption-color' name='ec_parameter_settings[ec_modal_caption_color]' value='<?php echo (isset($cssRules['ec_modal_caption_color']) ? $cssRules['ec_modal_caption_color'] : ''); ?>' />
-    <p class="description">Default: <strong>#666</strong></p>
-
-    <?php
+    color_field('ec_modal_caption_color', ec_get_default_options()['modalCaptionColor'], 'modal-caption-color');
 }
 function ec_modal_caption_font_weight() {
     $cssRules = get_option('ec_parameter_settings');
@@ -406,40 +382,16 @@ function ec_modal_caption_line_height() {
     <?php
 }
 function ec_modal_button_background() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-button-background' name='ec_parameter_settings[ec_modal_button_background]' value='<?php echo (isset($cssRules['ec_modal_button_background']) ? $cssRules['ec_modal_button_background'] : ''); ?>' />
-    <p class="description">Default: <strong>transparent</strong></p>
-
-    <?php
+    color_field('ec_modal_button_background', ec_get_default_options()['modalButtonBackground'], 'modal-button-background');
 }
 function ec_modal_button_hover_background() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-button-hover-background' name='ec_parameter_settings[ec_modal_button_hover_background]' value='<?php echo (isset($cssRules['ec_modal_button_hover_background']) ? $cssRules['ec_modal_button_hover_background'] : ''); ?>' />
-    <p class="description">Default: <strong>#666</strong></p>
-
-    <?php
+    color_field('ec_modal_button_hover_background', ec_get_default_options()['modalButtonHoverBackground'], 'modal-button-hover-background');
 }
 function ec_modal_button_color() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-button-color' name='ec_parameter_settings[ec_modal_button_color]' value='<?php echo (isset($cssRules['ec_modal_button_color']) ? $cssRules['ec_modal_button_color'] : ''); ?>' />
-    <p class="description">Default: <strong>#333</strong></p>
-
-    <?php
+    color_field('ec_modal_button_color', ec_get_default_options()['modalButtonColor'], 'modal-button-color');
 }
 function ec_modal_button_hover_color() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-button-hover-color' name='ec_parameter_settings[ec_moda_button_hover_color]' value='<?php echo (isset($cssRules['ec_moda_button_hover_color']) ? $cssRules['ec_moda_button_hover_color'] : ''); ?>' />
-    <p class="description">Default: <strong>white</strong></p>
-
-    <?php
+    color_field('ec_modal_button_hover_color', ec_get_default_options()['modalButtonHoverColor'], 'modal-button-hover-color');
 }
 function ec_modal_button_border() {
     border_field('ec_modal_button_border', ec_get_default_options()['modalButtonBorder'], 'modal-button-border');

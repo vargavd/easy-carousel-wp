@@ -31,7 +31,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 event.preventDefault();
             });
 
-            $tabs.eq(1).click();
+            $tabs.eq(2).click();
         },
         rearrangeLayout = function () {
             var
@@ -68,6 +68,14 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     options.buttonBackground       = buttonBackgroundFieldObj.getValue();
                     options.buttonColor            = buttonColorFieldObj.getValue();
                     options.buttonHoverBackground  = buttonHoverBackgroundFieldObj.getValue();
+                    options.modalBackground        = modalBackgroundFieldObj.getValue();
+                    options.modalWindowBackground  = modalWindowBackgroundFieldObj.getValue();
+                    options.modalNumberColor       = modalNumberColorFieldObj.getValue();
+                    options.modalCaptionColor      = modalCaptionColorFieldObj.getValue();
+                    options.modalButtonBackground  = modalButtonBackgroundFieldObj.getValue();
+                    options.modalButtonHoverBackground = modalButtonHBackgroundFieldObj.getValue();
+                    options.modalButtonColor           = modalButtonColorFieldObj.getValue();
+                    options.modalButtonHoverColor      = modalButtonHColorFieldObj.getValue(); 
 
                     options.carouselLoaded = rearrangeLayout;
                 };
@@ -224,7 +232,15 @@ window.initEcOptionsPage = function ($, wrapperId) {
         wrapperBackgroundFieldObj      = colorField('wrapper-background'),
         buttonBackgroundFieldObj       = colorField('button-background'),
         buttonColorFieldObj            = colorField('button-color'),
-        buttonHoverBackgroundFieldObj  = colorField('button-hover-background');
+        buttonHoverBackgroundFieldObj  = colorField('button-hover-background'),
+        modalBackgroundFieldObj        = colorField('modal-background'),
+        modalWindowBackgroundFieldObj  = colorField('modal-window-background'),
+        modalNumberColorFieldObj       = colorField('modal-number-color'),
+        modalCaptionColorFieldObj      = colorField('modal-caption-color'),
+        modalButtonBackgroundFieldObj  = colorField('modal-button-background'),
+        modalButtonHBackgroundFieldObj = colorField('modal-button-hover-background'),
+        modalButtonColorFieldObj       = colorField('modal-button-color'),
+        modalButtonHColorFieldObj      = colorField('modal-button-hover-color');
 
     handlingTabs();
 

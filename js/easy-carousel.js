@@ -176,9 +176,9 @@
             $modalNumber      = $('<div>'),
             $modalCaption     = $('<div>'),
             $modalButtons     = $('<div>'),
-            $modalButtonLeft  = $('<button>'),
-            $modalButtonClose = $('<button>'),
-            $modalButtonRight = $('<button>'),
+            $modalButtonLeft  = $('<button type="button">'),
+            $modalButtonClose = $('<button type="button">'),
+            $modalButtonRight = $('<button type="button">'),
             $loaderImg        = $('<img>'),
 
             // imgs
