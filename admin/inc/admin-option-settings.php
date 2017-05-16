@@ -160,7 +160,7 @@ function border_field($option_id, $default_border_string, $div_id) {
 
     <?php
 }
-function padding_field($option_id, $default_padding_string, $div_id) {
+function margin_padding_field($option_id, $default_padding_string, $div_id) {
     $css_rules = get_option('ec_parameter_settings');
 
     $padding_string = $css_rules[$option_id];
@@ -169,7 +169,16 @@ function padding_field($option_id, $default_padding_string, $div_id) {
         $padding_string = $default_padding_string;
     }
     
-    $padding_parts = explode(" ", $padding_string);
+    if (!strpos($padding_string, " ")) {
+        $padding_parts = array($padding_string, $padding_string, $padding_string, $padding_string);
+    } else {
+        $padding_parts = explode(" ", $padding_string);
+
+        if (sizeof($padding_parts) == 2) {
+            $padding_parts[2] = $padding_parts[0];
+            $padding_parts[3] = $padding_parts[1];
+        }
+    }
     
     ?>
 
@@ -178,7 +187,7 @@ function padding_field($option_id, $default_padding_string, $div_id) {
         <input type="hidden" class="db-value" name='ec_parameter_settings[<?php print $option_id; ?>]' value='<?php echo $padding_string; ?>' />
 
         <select>
-            <?php for ($i = 1; $i < 50; $i++) {
+            <?php for ($i = 0; $i < 50; $i++) {
                 if ($i == $padding_parts[0]) {
                     print "<option selected='selected'>" . $i . "px</option>";
                 } else {
@@ -188,7 +197,7 @@ function padding_field($option_id, $default_padding_string, $div_id) {
         </select>
 
         <select>
-            <?php for ($i = 1; $i < 50; $i++) {
+            <?php for ($i = 0; $i < 50; $i++) {
                 if ($i == $padding_parts[1]) {
                     print "<option selected='selected'>" . $i . "px</option>";
                 } else {
@@ -198,7 +207,7 @@ function padding_field($option_id, $default_padding_string, $div_id) {
         </select>
 
         <select>
-            <?php for ($i = 1; $i < 50; $i++) {
+            <?php for ($i = 0; $i < 50; $i++) {
                 if ($i == $padding_parts[2]) {
                     print "<option selected='selected'>" . $i . "px</option>";
                 } else {
@@ -208,7 +217,7 @@ function padding_field($option_id, $default_padding_string, $div_id) {
         </select>
 
         <select>
-            <?php for ($i = 1; $i < 50; $i++) {
+            <?php for ($i = 0; $i < 50; $i++) {
                 if ($i == $padding_parts[3]) {
                     print "<option selected='selected'>" . $i . "px</option>";
                 } else {
@@ -244,6 +253,46 @@ function color_field($option_id, $default_color_string, $div_id) {
 
     <?php
 }
+function font_weight_field($option_id, $default_font_weight_string, $div_id) {
+    $cssRules = get_option('ec_parameter_settings');
+
+    $font_weight_string = $cssRules[$option_id];
+
+    if (!is_string($font_weight_string) || empty($font_weight_string)) {
+        $font_weight_string = $default_font_weight_string;
+    }
+
+    $weights = array(
+        [100, '100'],
+        [200, '200'],
+        [300, '300'],
+        [400, '400 (normal)'],
+        [500, '500'],
+        [600, '600'],
+        [700, '700 (bold)'],
+        [800, '800'],
+        [900, '900'],
+    );
+    ?>
+
+    <div id='<?php print $div_id; ?>' class='font-weight-field'>
+
+        <select name='ec_parameter_settings[<?php print $option_id; ?>]'>
+            <?php 
+                foreach($weights as $weight) {
+                    $selectedString = ($weight[0] == $font_weight_string) ? "selected='selected'" : "";                
+
+                    print "<option $selectedString value='" . $weight[0] . "'>" . $weight[1] . "</option>";
+                }
+            ?>
+        </select>
+
+        <p class="description">Default: <strong><?php print $default_font_weight_string; ?></strong></p>
+
+    </div>
+
+    <?php
+}
 
 
 // SLIDER CSS OPTIONS (HTML FIELDS)
@@ -251,7 +300,7 @@ function ec_wrapper_border() {
     border_field('ec_wrapper_border', ec_get_default_options()['wrapperBorder'], 'wrapper-border');
 }
 function ec_wrapper_padding() {
-    padding_field('ec_wrapper_padding', ec_get_default_options()['wrapperPadding'], 'wrapper-padding');
+    margin_padding_field('ec_wrapper_padding', ec_get_default_options()['wrapperPadding'], 'wrapper-padding');
 }
 function ec_wrapper_background() {
     color_field('ec_wrapper_background', ec_get_default_options()['wrapperBackground'], 'wrapper-background');
@@ -314,13 +363,7 @@ function ec_button_color() {
     color_field('ec_button_color', ec_get_default_options()['buttonColor'], 'button-color');
 }
 function ec_button_font_weight() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='button-font-weight' name='ec_parameter_settings[ec_button_font_weight]' value='<?php echo (isset($cssRules['ec_button_font_weight']) ? $cssRules['ec_button_font_weight'] : ''); ?>' />
-    <p class="description">Default: <strong>rgba(255, 255, 255, 0.6)</strong></p>
-
-    <?php
+    font_weight_field('ec_button_font_weight', ec_get_default_options()['buttonFontWeight'], 'button-font-weight');
 }
 function ec_button_hover_background() {
     color_field('ec_button_hover_background', ec_get_default_options()['buttonHoverBackground'], 'button-hover-background');
@@ -400,16 +443,10 @@ function ec_modal_button_hover_border() {
     border_field('ec_modal_button_hover_border', ec_get_default_options()['modalButtonHoverBorder'], 'modal-button-hover-border');
 }
 function ec_modal_button_padding() {
-    padding_field('ec_modal_button_padding', ec_get_default_options()['modalButtonPadding'], 'modal-button-padding');
+    margin_padding_field('ec_modal_button_padding', ec_get_default_options()['modalButtonPadding'], 'modal-button-padding');
 }
 function ec_modal_button_margin() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
-
-    <input type='text' id='modal-button-margin' name='ec_parameter_settings[ec_modal_button_margin]' value='<?php echo (isset($cssRules['ec_modal_button_margin']) ? $cssRules['ec_modal_button_margin'] : ''); ?>' />
-    <p class="description">Default: <strong>0 10px</strong></p>
-
-    <?php
+    margin_padding_field('ec_modal_button_margin', ec_get_default_options()['modalButtonMargin'], 'modal-button-margin');
 }
 function ec_modal_button_font_weight() {
     $cssRules = get_option('ec_parameter_settings');

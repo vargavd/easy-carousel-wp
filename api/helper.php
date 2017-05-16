@@ -67,7 +67,7 @@ function ec_get_default_options() {
         'buttonHoverBackground'      => "white",
         'buttonHoverBorder'          => "1px solid #bbb",
         'buttonColor'                => "black",
-        'buttonFontWeight'           => "bold",
+        'buttonFontWeight'           => "700",
         'modalBackground'            => "rgba(0, 0, 0, 0.8)",
         'modalWindowBackground'      => "white",
         'modalWindowBorder'          => "1px solid white",

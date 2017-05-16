@@ -31,7 +31,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 event.preventDefault();
             });
 
-            $tabs.eq(2).click();
+            $tabs.eq(1).click();
         },
         rearrangeLayout = function () {
             var
@@ -75,7 +75,9 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     options.modalButtonBackground  = modalButtonBackgroundFieldObj.getValue();
                     options.modalButtonHoverBackground = modalButtonHBackgroundFieldObj.getValue();
                     options.modalButtonColor           = modalButtonColorFieldObj.getValue();
-                    options.modalButtonHoverColor      = modalButtonHColorFieldObj.getValue(); 
+                    options.modalButtonHoverColor      = modalButtonHColorFieldObj.getValue();
+                    options.modalButtonMargin          = modalButtonMarginFieldObj.getValue();
+                    options.buttonFontWeight           = buttonFontWeightFieldObj.getValue();
 
                     options.carouselLoaded = rearrangeLayout;
                 };
@@ -164,7 +166,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 getValue: getBorderString,
             };
         },
-        paddingField = function (fieldWrapperId) {
+        marginPaddingField = function (fieldWrapperId) {
             var
                 // DOM
                 $fieldWrapper = $('#' + fieldWrapperId),
@@ -218,6 +220,23 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 getValue: getColorString,
             };
         },
+        fontWeightField = function (fieldWrapperId) {
+            var
+                // DOM
+                $fieldWrapper = $('#' + fieldWrapperId),
+                $select       = $fieldWrapper.find('select'),
+
+                // events
+                getFontWeight = function () {
+                    return $select.val();
+                };
+
+            $select.change(createNewCarousel);
+
+            return {
+                getValue: getFontWeight,
+            };
+        },
 
         // field objects
         wrapperBorderFieldObj          = borderField('wrapper-border'),
@@ -227,8 +246,8 @@ window.initEcOptionsPage = function ($, wrapperId) {
         modalWindowBorderFieldObj      = borderField('modal-window-border'),
         modalButtonBorderFieldObj      = borderField('modal-button-border'),
         modalButtonHoverBorderFieldObj = borderField('modal-button-hover-border'),
-        wrapperPaddingFieldObj         = paddingField('wrapper-padding'),
-        modalButtonPaddingFieldObj     = paddingField('modal-button-padding'),
+        wrapperPaddingFieldObj         = marginPaddingField('wrapper-padding'),
+        modalButtonPaddingFieldObj     = marginPaddingField('modal-button-padding'),
         wrapperBackgroundFieldObj      = colorField('wrapper-background'),
         buttonBackgroundFieldObj       = colorField('button-background'),
         buttonColorFieldObj            = colorField('button-color'),
@@ -240,7 +259,9 @@ window.initEcOptionsPage = function ($, wrapperId) {
         modalButtonBackgroundFieldObj  = colorField('modal-button-background'),
         modalButtonHBackgroundFieldObj = colorField('modal-button-hover-background'),
         modalButtonColorFieldObj       = colorField('modal-button-color'),
-        modalButtonHColorFieldObj      = colorField('modal-button-hover-color');
+        modalButtonHColorFieldObj      = colorField('modal-button-hover-color'),
+        modalButtonMarginFieldObj      = marginPaddingField('modal-button-margin'),
+        buttonFontWeightFieldObj       = fontWeightField('button-font-weight');
 
     handlingTabs();
 
