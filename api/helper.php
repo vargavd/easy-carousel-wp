@@ -84,7 +84,7 @@ function ec_get_default_options() {
         'modalButtonBorder'          => "1px solid #333",
         'modalButtonHoverBorder'     => "1px solid #333",
         'modalButtonPadding'         => "3px 7px 3px 7px",
-        'modalButtonMargin'          => "0 10px",
+        'modalButtonMargin'          => "0px 10px",
         'modalButtonFontWeight'      => "700",
     );
 }

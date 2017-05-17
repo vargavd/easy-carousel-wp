@@ -70,47 +70,6 @@ function ec_general_section() {
     echo '';
 }
 
-// BEHAVIORAL OPTIONS (HTML FIELDS)
-function ec_visible_img_count() {
-    $default = ec_get_default_options()['visibleImgCount'];
-
-    $cssRules = get_option('ec_parameter_settings');
-    $selected = isset($cssRules['ec_visible_img_count']) && $cssRules['ec_visible_img_count'] !== "" ? $cssRules['ec_visible_img_count'] : $default;
-    ?>
-
-    <select id='visible-img-count' name='ec_parameter_settings[ec_visible_img_count]'>
-        <?php for ($i = 1; $i < 20; $i++) {
-            if ($i == $selected) {
-                print "<option value='$i' selected='selected'>$i</option>";
-            } else {
-                print "<option value='$i'>$i</option>";
-            }
-        } ?>
-    </select>
-    <p class="description">Default: <strong><?php print $default; ?></strong></p>
-
-    <?php
-}
-function ec_seconds_between_slide() {
-    $cssRules = get_option('ec_parameter_settings');
-    $default = 3;
-    $selected = isset($cssRules['ec_seconds_between_slide']) && $cssRules['ec_seconds_between_slide'] !== "" ? $cssRules['ec_seconds_between_slide'] : $default;
-    ?>
-
-    <select id='seconds-between-slides' name='ec_parameter_settings[ec_seconds_between_slide]'>
-        <?php for ($i = 1; $i < 20; $i++) {
-            if ($i == $selected) {
-                print "<option value='$i' selected='selected'>$i</option>";
-            } else {
-                print "<option value='$i'>$i</option>";
-            }
-        } ?>
-    </select>
-    <p class="description">Default: <strong><?php print $default; ?></strong></p>
-
-    <?php
-}
-
 // GENERAL FIELDS (USED LATER)
 function border_field($option_id, $default_border_string, $div_id) {
     $css_rules = get_option('ec_parameter_settings');
@@ -154,7 +113,9 @@ function border_field($option_id, $default_border_string, $div_id) {
         
         <input type="text" class="color-text" value='<?php print $border_color; ?>'/>
 
-        <p class="description">Default: <strong><?php print $default_border_string; ?></strong></p>
+        <p class="description">Default: 
+            <strong class="default-string"><?php print $default_border_string; ?></strong>
+        </p>
 
     </div>
 
@@ -226,7 +187,9 @@ function margin_padding_field($option_id, $default_padding_string, $div_id) {
             } ?>
         </select>
 
-        <p class="description">Default: <strong><?php print $default_padding_string; ?></strong></p>
+        <p class="description">Default: 
+            <strong class="default-string"><?php print $default_padding_string; ?></strong>
+        </p>
 
     </div>
 
@@ -247,7 +210,9 @@ function color_field($option_id, $default_color_string, $div_id) {
 
         <input type="hidden" class="db-value" name='ec_parameter_settings[<?php print $option_id; ?>]' value='<?php echo $color_string; ?>' />
 
-        <p class="description">Default: <strong><?php print $default_color_string; ?></strong></p>
+        <p class="description">Default: 
+            <strong class="default-string"><?php print $default_color_string; ?></strong>
+        </p>
 
     </div>
 
@@ -275,13 +240,35 @@ function select_field($option_id, $default_select_string, $div_id, $options, $co
             ?>
         </select>
 
-        <p class="description">Default: <strong><?php print $default_select_string; ?></strong></p>
+        <p class="description">Default: 
+            <strong class="default-string"><?php print $default_select_string; ?></strong>
+        </p>
 
     </div>
 
     <?php
 
     print $comment;
+}
+
+// BEHAVIORAL OPTIONS (HTML FIELDS)
+function ec_visible_img_count() {
+    $options = array();
+
+    for ($i = 1; $i <= 20; $i++) {
+        array_push($options, [$i, $i]);
+    }
+
+    select_field('ec_visible_img_count', ec_get_default_options()['visibleImgCount'], 'visible-img-count', $options);
+}
+function ec_seconds_between_slide() {
+    $options = array();
+
+    for ($i = 1; $i <= 20; $i++) {
+        array_push($options, [$i, $i]);
+    }
+
+    select_field('ec_seconds_between_slide', ec_get_default_options()['secondsBetweenSlide'], 'seconds-between-slide', $options);
 }
 
 

@@ -45,7 +45,7 @@
             <div id="ec-settings-buttons">
                 <input type="button" class="button button-secondary" value="Reset settings to default" id="reset-button">
                 
-                <?php submit_button(null, 'primary', null, false, ''); ?>
+                <?php submit_button(null, 'primary', null, false, array( 'disabled' => 'disabled' )); ?>
             </div>
 
             <h1>Easy Carousel settings</h1>

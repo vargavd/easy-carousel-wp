@@ -1,19 +1,23 @@
 'use strict';
 
+// TODO: translable strings!
+
 window.initEcOptionsPage = function ($, wrapperId) {
     var
         // DOM
         $carouselWrapper     = $('#' + wrapperId),
         $testImg             = $carouselWrapper.find('img').remove(),
         $resetButton         = $('#reset-button'),
-        $visibleImgCount     = $('#visible-img-count'),
-        $secondsBetweenSlide = $('#seconds-between-slides'),
         $downArrow           = $('#ec-settings-down-arrow'),
 
         // misc
         options = {},
+        resetIsInProgress = false,
 
         // functions
+        enableSubmitButton = function () {
+            $('input[type=submit]').removeAttr('disabled');
+        },
         handlingTabs = function () {
             var $tabs = $('.nav-tab'),
                 $tabContents = $('.tab-content');
@@ -29,9 +33,15 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 $tab.addClass('nav-tab-active');
 
                 event.preventDefault();
+
+                if (tabContentId.indexOf('general') !== -1) {
+                    $downArrow.hide();
+                } else {
+                    $downArrow.show();
+                }
             });
 
-            $tabs.eq(2).click();
+            $tabs.eq(0).click();
         },
         rearrangeLayout = function () {
             var
@@ -52,9 +62,6 @@ window.initEcOptionsPage = function ($, wrapperId) {
 
                 // helper functions
                 getOptions = function () {
-                    options.visibleImgCount     = $visibleImgCount.val();
-                    options.secondsBetweenSlide = $secondsBetweenSlide.val();
-
                     options.wrapperBorder              = wrapperBorderFieldObj.getValue();
                     options.imgBorder                  = imgBorderFieldObj.getValue();
                     options.buttonBorder               = buttonBorderFieldObj.getValue();
@@ -88,9 +95,15 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     options.modalCaptionFontWeight     = modalCaptionFontWeightFieldObj.getValue();
                     options.modalCaptionLineHeight     = modalCaptionLineHeightFieldObj.getValue();
                     options.modalButtonFontWeight      = modalButtonFontWeightFieldObj.getValue();
+                    options.visibleImgCount            = visibleImgCountFieldObj.getValue();
+                    options.secondsBetweenSlide        = secondsBetweenSlideFieldObj.getValue();
 
                     options.carouselLoaded = rearrangeLayout;
                 };
+
+            if (resetIsInProgress) {
+                return;
+            }
 
             // remove the old carousel
             $carouselWrapper.children().remove();
@@ -111,9 +124,45 @@ window.initEcOptionsPage = function ($, wrapperId) {
             $carouselWrapper.easyCarousel(options);
         },
         resetEverything = function () {
-            // TODO: translable strings!
             if (confirm('You will lost every cumstomization you made. Are you sure?')) {
-                location.href += '&reset=true';
+                wrapperBorderFieldObj.reset();
+                imgBorderFieldObj.reset();
+                buttonBorderFieldObj.reset();
+                buttonHoverBorderFieldObj.reset();
+                modalWindowBorderFieldObj.reset();
+                modalButtonBorderFieldObj.reset();
+                modalButtonHoverBorderFieldObj.reset();
+                wrapperPaddingFieldObj.reset();
+                modalButtonPaddingFieldObj.reset();
+                wrapperBackgroundFieldObj.reset();
+                buttonBackgroundFieldObj.reset();
+                buttonColorFieldObj.reset();
+                buttonHoverBackgroundFieldObj.reset();
+                modalBackgroundFieldObj.reset();
+                modalWindowBackgroundFieldObj.reset();
+                modalNumberColorFieldObj.reset();
+                modalCaptionColorFieldObj.reset();
+                modalButtonBackgroundFieldObj.reset();
+                modalButtonHBackgroundFieldObj.reset();
+                modalButtonColorFieldObj.reset();
+                modalButtonHColorFieldObj.reset();
+                modalButtonMarginFieldObj.reset();
+                buttonFontWeightFieldObj.reset();
+                imgWidthFieldObj.reset();
+                imgMaxHeightFieldObj.reset();
+                imgSpaceFieldObj.reset();
+                buttonWidthFieldObj.reset();
+                buttonHeightFieldObj.reset();
+                modalNumberFontSizeFieldObj.reset();
+                modalCaptionFontSizeFieldObj.reset();
+                modalCaptionFontWeightFieldObj.reset();
+                modalCaptionLineHeightFieldObj.reset();
+                modalButtonFontWeightFieldObj.reset();
+                visibleImgCountFieldObj.reset();
+                secondsBetweenSlideFieldObj.reset();
+
+                createNewCarousel();
+                enableSubmitButton();
             }
         },
         initColorPickerInput = function ($input, changed) {
@@ -165,6 +214,21 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     $hiddenInput.val(borderString);
 
                     createNewCarousel();
+
+                    enableSubmitButton();
+                },
+                reset = function () {
+                    var
+                        // DOM
+                        $defaultString = $wrapper.find('.default-string'),
+
+                        // misc
+                        defaultString = $defaultString.text(),
+                        defaultValues = defaultString.split(' ');
+
+                    $widthSelect.val(defaultValues[0]);
+                    $typeSelect.val(defaultValues[1]);
+                    $colorInput.spectrum('set', defaultValues[2]);
                 };
 
             $widthSelect.change(changed);
@@ -174,6 +238,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
 
             return {
                 getValue: getBorderString,
+                reset: reset,
             };
         },
         marginPaddingField = function (fieldWrapperId) {
@@ -194,12 +259,36 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     $hiddenInput.val(getPaddingString());
 
                     createNewCarousel();
+                },
+                reset = function () {
+                    var
+                        // DOM
+                        $defaultString = $fieldWrapper.find('.default-string'),
+
+                        // misc
+                        i,
+                        defaultString = $defaultString.text(),
+                        defaultValues = defaultString.split(' ');
+
+                    if (defaultValues.length === 1) {
+                        defaultValues[1] = defaultValues[0];
+                    }
+
+                    if (defaultValues.length < 4) {
+                        defaultValues[2] = defaultValues[0];
+                        defaultValues[3] = defaultValues[1];
+                    }
+
+                    for (i = 0; i < 4; i++) {
+                        $selects.eq(i).val(defaultValues[i]);
+                    }
                 };
 
             $selects.change(changed);
 
             return {
                 getValue: getPaddingString,
+                reset: reset,
             };
         },
         colorField = function (fieldWrapperId) {
@@ -222,12 +311,23 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     console.log(getColorString());
 
                     createNewCarousel();
+                },
+                reset = function () {
+                    var
+                        // DOM
+                        $defaultString = $fieldWrapper.find('.default-string'),
+
+                        // misc
+                        defaultString = $defaultString.text();
+
+                    $input.spectrum('set', defaultString);
                 };
 
             initColorPickerInput($input, changed);
 
             return {
                 getValue: getColorString,
+                reset: reset,
             };
         },
         selectField = function (fieldWrapperId) {
@@ -239,12 +339,23 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 // events
                 getSelectVal = function () {
                     return $select.val();
+                },
+                reset = function () {
+                    var
+                        // DOM
+                        $defaultString = $fieldWrapper.find('.default-string'),
+
+                        // misc
+                        defaultString = $defaultString.text();
+
+                    $select.val(defaultString);
                 };
 
             $select.change(createNewCarousel);
 
             return {
                 getValue: getSelectVal,
+                reset: reset,
             };
         },
 
@@ -281,16 +392,14 @@ window.initEcOptionsPage = function ($, wrapperId) {
         modalCaptionFontSizeFieldObj   = selectField('modal-caption-font-size'),
         modalCaptionFontWeightFieldObj = selectField('modal-caption-font-weight'),
         modalCaptionLineHeightFieldObj = selectField('modal-caption-line-height'),
-        modalButtonFontWeightFieldObj  = selectField('modal-button-font-weight');
+        modalButtonFontWeightFieldObj  = selectField('modal-button-font-weight'),
+        visibleImgCountFieldObj        = selectField('visible-img-count'),
+        secondsBetweenSlideFieldObj    = selectField('seconds-between-slide');
 
     handlingTabs();
 
     // set reset event
     $resetButton.click(resetEverything);
-
-    // set change events
-    $visibleImgCount.change(createNewCarousel);
-    $secondsBetweenSlide.change(createNewCarousel);
 
     // handle scroll arrow
     $downArrow.click(clickDownArrow);
