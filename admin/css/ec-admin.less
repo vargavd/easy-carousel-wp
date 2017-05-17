@@ -175,7 +175,6 @@
     top: 27px;
     left: 160px;
     z-index: 101;
-    width: 100%;
     margin-left: 20px;
 
     #live-preview-carousel {
@@ -192,7 +191,8 @@
 }
 
 #easy-carousel-settings {
-    position: relative;
+    position: absolute;
+    min-width: 710px;
 
     #reset-button {
         font-size: 16px;
@@ -214,7 +214,7 @@
         background: rgba(241, 241, 241, 1);
         z-index: 80;
         width: 100%;
-        padding-bottom: 10px;
+        padding: 10px 0;
 
         a.nav-tab {
             &:focus {
@@ -225,12 +225,11 @@
         #ec-settings-buttons {
             position: absolute;
             left: 356px;
-            top: 54px;
+            top: 63px;
         }
     }
 
     #easy-carousel-settings-tab-content-scroll {
-        margin-top: 100px;
         margin-left: 9px;
     }
 
@@ -259,4 +258,8 @@
             cursor: pointer;
         }
     }
+}
+
+#footer-thankyou, #footer-upgrade {
+    display: none;
 }

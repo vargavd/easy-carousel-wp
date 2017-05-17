@@ -75,7 +75,7 @@ function ec_get_default_options() {
         'modalNumberColor'           => "#333",
         'modalCaptionFontSize'       => "20px",
         'modalCaptionColor'          => "#666",
-        'modalCaptionFontWeight'     => "bold",
+        'modalCaptionFontWeight'     => "700",
         'modalCaptionLineHeight'     => "30px",
         'modalButtonBackground'      => "transparent",
         'modalButtonHoverBackground' => "#666",
@@ -85,7 +85,7 @@ function ec_get_default_options() {
         'modalButtonHoverBorder'     => "1px solid #333",
         'modalButtonPadding'         => "3px 7px 3px 7px",
         'modalButtonMargin'          => "0 10px",
-        'modalButtonFontWeight'      => "bold",
+        'modalButtonFontWeight'      => "700",
     );
 }
 function ec_get_gallery_html($options, $gallery_id, $wrapper_id) {

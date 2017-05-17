@@ -31,7 +31,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 event.preventDefault();
             });
 
-            $tabs.eq(1).click();
+            $tabs.eq(2).click();
         },
         rearrangeLayout = function () {
             var
@@ -42,7 +42,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 // misc
                 carPanelHeight = $carouselPanel.height();
 
-            $ecCarSettingsWrapper.css('margin-top', carPanelHeight);
+            $ecCarSettingsWrapper.css('top', carPanelHeight - 20);
         },
         createNewCarousel = function () {
             var
@@ -55,29 +55,39 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     options.visibleImgCount     = $visibleImgCount.val();
                     options.secondsBetweenSlide = $secondsBetweenSlide.val();
 
-                    options.wrapperBorder          = wrapperBorderFieldObj.getValue();
-                    options.imgBorder              = imgBorderFieldObj.getValue();
-                    options.buttonBorder           = buttonBorderFieldObj.getValue();
-                    options.buttonHoverBorder      = buttonHoverBorderFieldObj.getValue();
-                    options.modalWindowBorder      = modalWindowBorderFieldObj.getValue();
-                    options.modalButtonBorder      = modalButtonBorderFieldObj.getValue();
-                    options.modalButtonHoverBorder = modalButtonHoverBorderFieldObj.getValue();
-                    options.wrapperPadding         = wrapperPaddingFieldObj.getValue();
-                    options.modalButtonPadding     = modalButtonPaddingFieldObj.getValue();
-                    options.wrapperBackground      = wrapperBackgroundFieldObj.getValue();
-                    options.buttonBackground       = buttonBackgroundFieldObj.getValue();
-                    options.buttonColor            = buttonColorFieldObj.getValue();
-                    options.buttonHoverBackground  = buttonHoverBackgroundFieldObj.getValue();
-                    options.modalBackground        = modalBackgroundFieldObj.getValue();
-                    options.modalWindowBackground  = modalWindowBackgroundFieldObj.getValue();
-                    options.modalNumberColor       = modalNumberColorFieldObj.getValue();
-                    options.modalCaptionColor      = modalCaptionColorFieldObj.getValue();
-                    options.modalButtonBackground  = modalButtonBackgroundFieldObj.getValue();
+                    options.wrapperBorder              = wrapperBorderFieldObj.getValue();
+                    options.imgBorder                  = imgBorderFieldObj.getValue();
+                    options.buttonBorder               = buttonBorderFieldObj.getValue();
+                    options.buttonHoverBorder          = buttonHoverBorderFieldObj.getValue();
+                    options.modalWindowBorder          = modalWindowBorderFieldObj.getValue();
+                    options.modalButtonBorder          = modalButtonBorderFieldObj.getValue();
+                    options.modalButtonHoverBorder     = modalButtonHoverBorderFieldObj.getValue();
+                    options.wrapperPadding             = wrapperPaddingFieldObj.getValue();
+                    options.modalButtonPadding         = modalButtonPaddingFieldObj.getValue();
+                    options.wrapperBackground          = wrapperBackgroundFieldObj.getValue();
+                    options.buttonBackground           = buttonBackgroundFieldObj.getValue();
+                    options.buttonColor                = buttonColorFieldObj.getValue();
+                    options.buttonHoverBackground      = buttonHoverBackgroundFieldObj.getValue();
+                    options.modalBackground            = modalBackgroundFieldObj.getValue();
+                    options.modalWindowBackground      = modalWindowBackgroundFieldObj.getValue();
+                    options.modalNumberColor           = modalNumberColorFieldObj.getValue();
+                    options.modalCaptionColor          = modalCaptionColorFieldObj.getValue();
+                    options.modalButtonBackground      = modalButtonBackgroundFieldObj.getValue();
                     options.modalButtonHoverBackground = modalButtonHBackgroundFieldObj.getValue();
                     options.modalButtonColor           = modalButtonColorFieldObj.getValue();
                     options.modalButtonHoverColor      = modalButtonHColorFieldObj.getValue();
                     options.modalButtonMargin          = modalButtonMarginFieldObj.getValue();
                     options.buttonFontWeight           = buttonFontWeightFieldObj.getValue();
+                    options.imgWidth                   = imgWidthFieldObj.getValue();
+                    options.imgMaxHeight               = imgMaxHeightFieldObj.getValue();
+                    options.imgSpace                   = imgSpaceFieldObj.getValue();
+                    options.buttonWidth                = buttonWidthFieldObj.getValue();
+                    options.buttonHeight               = buttonHeightFieldObj.getValue();
+                    options.modalNumberFontSize        = modalNumberFontSizeFieldObj.getValue();
+                    options.modalCaptionFontSize       = modalCaptionFontSizeFieldObj.getValue();
+                    options.modalCaptionFontWeight     = modalCaptionFontWeightFieldObj.getValue();
+                    options.modalCaptionLineHeight     = modalCaptionLineHeightFieldObj.getValue();
+                    options.modalButtonFontWeight      = modalButtonFontWeightFieldObj.getValue();
 
                     options.carouselLoaded = rearrangeLayout;
                 };
@@ -220,21 +230,21 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 getValue: getColorString,
             };
         },
-        fontWeightField = function (fieldWrapperId) {
+        selectField = function (fieldWrapperId) {
             var
                 // DOM
                 $fieldWrapper = $('#' + fieldWrapperId),
                 $select       = $fieldWrapper.find('select'),
 
                 // events
-                getFontWeight = function () {
+                getSelectVal = function () {
                     return $select.val();
                 };
 
             $select.change(createNewCarousel);
 
             return {
-                getValue: getFontWeight,
+                getValue: getSelectVal,
             };
         },
 
@@ -261,7 +271,17 @@ window.initEcOptionsPage = function ($, wrapperId) {
         modalButtonColorFieldObj       = colorField('modal-button-color'),
         modalButtonHColorFieldObj      = colorField('modal-button-hover-color'),
         modalButtonMarginFieldObj      = marginPaddingField('modal-button-margin'),
-        buttonFontWeightFieldObj       = fontWeightField('button-font-weight');
+        buttonFontWeightFieldObj       = selectField('button-font-weight'),
+        imgWidthFieldObj               = selectField('img-width'),
+        imgMaxHeightFieldObj           = selectField('img-max-height'),
+        imgSpaceFieldObj               = selectField('img-space'),
+        buttonWidthFieldObj            = selectField('button-width'),
+        buttonHeightFieldObj           = selectField('button-height'),
+        modalNumberFontSizeFieldObj    = selectField('modal-number-font-size'),
+        modalCaptionFontSizeFieldObj   = selectField('modal-caption-font-size'),
+        modalCaptionFontWeightFieldObj = selectField('modal-caption-font-weight'),
+        modalCaptionLineHeightFieldObj = selectField('modal-caption-line-height'),
+        modalButtonFontWeightFieldObj  = selectField('modal-button-font-weight');
 
     handlingTabs();
 

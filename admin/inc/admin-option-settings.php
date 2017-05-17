@@ -253,45 +253,35 @@ function color_field($option_id, $default_color_string, $div_id) {
 
     <?php
 }
-function font_weight_field($option_id, $default_font_weight_string, $div_id) {
+function select_field($option_id, $default_select_string, $div_id, $options, $comment = "") {
     $cssRules = get_option('ec_parameter_settings');
 
-    $font_weight_string = $cssRules[$option_id];
+    $select_string = $cssRules[$option_id];
 
-    if (!is_string($font_weight_string) || empty($font_weight_string)) {
-        $font_weight_string = $default_font_weight_string;
+    if (!is_string($select_string) || empty($select_string)) {
+        $select_string = $default_select_string;
     }
-
-    $weights = array(
-        [100, '100'],
-        [200, '200'],
-        [300, '300'],
-        [400, '400 (normal)'],
-        [500, '500'],
-        [600, '600'],
-        [700, '700 (bold)'],
-        [800, '800'],
-        [900, '900'],
-    );
     ?>
 
-    <div id='<?php print $div_id; ?>' class='font-weight-field'>
+    <div id='<?php print $div_id; ?>' class='select-field'>
 
         <select name='ec_parameter_settings[<?php print $option_id; ?>]'>
             <?php 
-                foreach($weights as $weight) {
-                    $selectedString = ($weight[0] == $font_weight_string) ? "selected='selected'" : "";                
+                foreach($options as $option) {
+                    $selectedString = ($option[0] == $select_string) ? "selected='selected'" : "";                
 
-                    print "<option $selectedString value='" . $weight[0] . "'>" . $weight[1] . "</option>";
+                    print "<option $selectedString value='" . $option[0] . "'>" . $option[1] . "</option>";
                 }
             ?>
         </select>
 
-        <p class="description">Default: <strong><?php print $default_font_weight_string; ?></strong></p>
+        <p class="description">Default: <strong><?php print $default_select_string; ?></strong></p>
 
     </div>
 
     <?php
+
+    print $comment;
 }
 
 
@@ -306,52 +296,59 @@ function ec_wrapper_background() {
     color_field('ec_wrapper_background', ec_get_default_options()['wrapperBackground'], 'wrapper-background');
 }
 function ec_img_width() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+    $options = array();
 
-    <input type='text' id='img-width' name='ec_parameter_settings[ec_img_width]' value='<?php echo (isset($cssRules['ec_img_width']) ? $cssRules['ec_img_width'] : ''); ?>' />
-    <p class="description">Default: <strong>300px</strong></p>
+    for ($i = 60; $i <= 500; $i += 10) {
+        $px_string = $i . "px";
+        array_push($options, [$px_string, $px_string]);
+    }
 
-    <?php
+    $comment = "<p><strong>Note:</strong> this can be overwritten if the selected max height needs smaller width. So the Max Height option has greater priority.";
+
+    select_field('ec_img_width', ec_get_default_options()['imgWidth'], 'img-width', $options, $comment);
 }
 function ec_img_max_height() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+    $options = array();
 
-    <input type='text' id='img-max-height' name='ec_parameter_settings[ec_img_max_height]' value='<?php echo (isset($cssRules['ec_img_max_height']) ? $cssRules['ec_img_max_height'] : ''); ?>' />
-    <p class="description">Default: <strong>300px</strong></p>
+    for ($i = 60; $i <= 500; $i += 10) {
+        $px_string = $i . "px";
+        array_push($options, [$px_string, $px_string]);
+    }
 
-    <?php
+    select_field('ec_img_max_height', ec_get_default_options()['imgMaxHeight'], 'img-max-height', $options);
 }
 function ec_img_space() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+    $options = array();
 
-    <input type='text' id='img-space' name='ec_parameter_settings[ec_img_space]' value='<?php echo (isset($cssRules['ec_img_space']) ? $cssRules['ec_img_space'] : ''); ?>' />
-    <p class="description">Default: <strong>300px</strong></p>
+    for ($i = 5; $i <= 100; $i += 5) {
+        $px_string = $i . "px";
+        array_push($options, [$px_string, $px_string]);
+    }
 
-    <?php
+    select_field('ec_img_space', ec_get_default_options()['imgSpace'], 'img-space', $options);
 }
 function ec_img_border() {
     border_field('ec_img_border', ec_get_default_options()['imgBorder'], 'img-border');
 }
 function ec_button_width() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+    $options = array();
 
-    <input type='text' id='button-width' name='ec_parameter_settings[ec_button_width]' value='<?php echo (isset($cssRules['ec_button_width']) ? $cssRules['ec_button_width'] : ''); ?>' />
-    <p class="description">Default: <strong>50px</strong></p>
+    for ($i = 20; $i <= 200; $i += 5) {
+        $px_string = $i . "px";
+        array_push($options, [$px_string, $px_string]);
+    }
 
-    <?php
+    select_field('ec_button_width', ec_get_default_options()['buttonWidth'], 'button-width', $options);
 }
 function ec_button_height() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+    $options = array();
 
-    <input type='text' id='button-height' name='ec_parameter_settings[ec_button_height]' value='<?php echo (isset($cssRules['ec_button_height']) ? $cssRules['ec_button_height'] : ''); ?>' />
-    <p class="description">Default: <strong>25px</strong></p>
+    for ($i = 10; $i <= 150; $i += 5) {
+        $px_string = $i . "px";
+        array_push($options, [$px_string, $px_string]);
+    }
 
-    <?php
+    select_field('ec_button_height', ec_get_default_options()['buttonHeight'], 'button-height', $options);
 }
 function ec_button_border() {
     border_field('ec_button_border', ec_get_default_options()['buttonBorder'], 'button-border');
@@ -363,7 +360,19 @@ function ec_button_color() {
     color_field('ec_button_color', ec_get_default_options()['buttonColor'], 'button-color');
 }
 function ec_button_font_weight() {
-    font_weight_field('ec_button_font_weight', ec_get_default_options()['buttonFontWeight'], 'button-font-weight');
+    $options = array(
+        [100, '100'],
+        [200, '200'],
+        [300, '300'],
+        [400, '400 (normal)'],
+        [500, '500'],
+        [600, '600'],
+        [700, '700 (bold)'],
+        [800, '800'],
+        [900, '900'],
+    );
+
+    select_field('ec_button_font_weight', ec_get_default_options()['buttonFontWeight'], 'button-font-weight', $options);
 }
 function ec_button_hover_background() {
     color_field('ec_button_hover_background', ec_get_default_options()['buttonHoverBackground'], 'button-hover-background');
@@ -383,46 +392,55 @@ function ec_modal_window_border() {
     border_field('ec_modal_window_border', ec_get_default_options()['modalWindowBorder'], 'modal-window-border');
 }
 function ec_modal_number_font_size() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+    $options = array();
 
-    <input type='text' id='modal-number-font-size' name='ec_parameter_settings[ec_modal_number_font_size]' value='<?php echo (isset($cssRules['ec_modal_number_font_size']) ? $cssRules['ec_modal_number_font_size'] : ''); ?>' />
-    <p class="description">Default: <strong>24px</strong></p>
+    for ($i = 8; $i <= 128; $i += 2) {
+        $px_string = $i . "px";
+        array_push($options, [$px_string, $px_string]);
+    }
 
-    <?php
+    select_field('ec_modal_number_font_size', ec_get_default_options()['modalNumberFontSize'], 'modal-number-font-size', $options);
 }
 function ec_modal_number_color() {
     color_field('ec_modal_number_color', ec_get_default_options()['modalNumberColor'], 'modal-number-color');
 }
 function ec_modal_caption_font_size() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+    $options = array();
 
-    <input type='text' id='modal-width' name='ec_parameter_settings[ec_modal_caption_font_size]' value='<?php echo (isset($cssRules['ec_modal_caption_font_size']) ? $cssRules['ec_modal_caption_font_size'] : ''); ?>' />
-    <p class="description">Default: <strong>20px</strong></p>
+    for ($i = 8; $i <= 128; $i += 2) {
+        $px_string = $i . "px";
+        array_push($options, [$px_string, $px_string]);
+    }
 
-    <?php
+    select_field('ec_modal_caption_font_size', ec_get_default_options()['modalCaptionFontSize'], 'modal-caption-font-size', $options);
 }
 function ec_modal_caption_color() {
     color_field('ec_modal_caption_color', ec_get_default_options()['modalCaptionColor'], 'modal-caption-color');
 }
 function ec_modal_caption_font_weight() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+    $options = array(
+        [100, '100'],
+        [200, '200'],
+        [300, '300'],
+        [400, '400 (normal)'],
+        [500, '500'],
+        [600, '600'],
+        [700, '700 (bold)'],
+        [800, '800'],
+        [900, '900'],
+    );
 
-    <input type='text' id='modal-border' name='ec_parameter_settings[ec_modal_caption_font_weight]' value='<?php echo (isset($cssRules['ec_modal_caption_font_weight']) ? $cssRules['ec_modal_caption_font_weight'] : ''); ?>' />
-    <p class="description">Default: <strong>bold</strong></p>
-
-    <?php
+    select_field('ec_modal_caption_font_weight', ec_get_default_options()['modalCaptionFontWeight'], 'modal-caption-font-weight', $options);
 }
 function ec_modal_caption_line_height() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+    $options = array();
 
-    <input type='text' id='modal-caption-line-height' name='ec_parameter_settings[ec_modal_caption_line_height]' value='<?php echo (isset($cssRules['ec_modal_caption_line_height']) ? $cssRules['ec_modal_caption_line_height'] : ''); ?>' />
-    <p class="description">Default: <strong>rgba(255, 255, 255, 0.6)</strong></p>
+    for ($i = 8; $i <= 128; $i += 2) {
+        $px_string = $i . "px";
+        array_push($options, [$px_string, $px_string]);
+    }
 
-    <?php
+    select_field('ec_modal_caption_line_height', ec_get_default_options()['modalCaptionFontSize'], 'modal-caption-line-height', $options);
 }
 function ec_modal_button_background() {
     color_field('ec_modal_button_background', ec_get_default_options()['modalButtonBackground'], 'modal-button-background');
@@ -449,13 +467,19 @@ function ec_modal_button_margin() {
     margin_padding_field('ec_modal_button_margin', ec_get_default_options()['modalButtonMargin'], 'modal-button-margin');
 }
 function ec_modal_button_font_weight() {
-    $cssRules = get_option('ec_parameter_settings');
-    ?>
+        $options = array(
+            [100, '100'],
+            [200, '200'],
+            [300, '300'],
+            [400, '400 (normal)'],
+            [500, '500'],
+            [600, '600'],
+            [700, '700 (bold)'],
+            [800, '800'],
+            [900, '900'],
+        );
 
-    <input type='text' id='modal-button-font-weight' name='ec_parameter_settings[ec_modal_button_font_weight]' value='<?php echo (isset($cssRules['ec_modal_button_font_weight']) ? $cssRules['ec_modal_button_font_weight'] : ''); ?>' />
-    <p class="description">Default: <strong>bold</strong></p>
-
-    <?php
+    select_field('ec_modal_button_font_weight', ec_get_default_options()['modalButtonFontWeight'], 'modal-button-font-weight', $options);
 }
 function reset_ec_settings($input) {
     // if (in_array("ec_visible_img_count", $input)) {
