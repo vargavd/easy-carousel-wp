@@ -427,7 +427,7 @@ function ec_modal_caption_line_height() {
         array_push($options, [$px_string, $px_string]);
     }
 
-    select_field('ec_modal_caption_line_height', ec_get_default_options()['modalCaptionFontSize'], 'modal-caption-line-height', $options);
+    select_field('ec_modal_caption_line_height', ec_get_default_options()['modalCaptionLineHeight'], 'modal-caption-line-height', $options);
 }
 function ec_modal_button_background() {
     color_field('ec_modal_button_background', ec_get_default_options()['modalButtonBackground'], 'modal-button-background');

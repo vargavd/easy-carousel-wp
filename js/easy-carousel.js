@@ -369,7 +369,7 @@
                 sm.reset();
                 sm.addStyle('position',         'absolute');
                 sm.addStyle('left',             '50%');
-                sm.addStyle('bottom',           '-14px');
+                sm.addStyle('bottom',            -1*parseInt(settings.buttonHeight.replace('px', ''))/2 + 'px');
                 sm.addStyle('border',           settings.buttonBorder);
                 sm.addStyle('background-color', settings.buttonBackground);
                 sm.addStyle('color',            settings.buttonColor);
@@ -378,7 +378,7 @@
                 sm.addStyle('width',            settings.buttonWidth);
                 sm.addStyle('height',           settings.buttonHeight);
                 sm.addStyle('padding',          '0');
-                sm.addStyle('margin-left',      '-59px');
+                sm.addStyle('margin-left',      (- 10 - settings.buttonWidth.replaceAll('px', '')) + 'px');
                 $buttonLeft.attr('style', sm.getStyle());
 
                 sm.addStyle('margin-left', '10px');
@@ -452,6 +452,7 @@
                     ['border',     settings.modalWindowBorder],
                     ['margin',     '0 auto'],
                     ['display',    'inline-block'],
+                    ['font-family', 'Helvetica'],
                 ]);
 
                 // style modal info
@@ -461,6 +462,7 @@
                 style($modalNumber, [
                     ['font-size', settings.modalNumberFontSize],
                     ['color',     settings.modalNumberColor],
+                    ['line-height',   settings.modalCaptionLineHeight],
                     ['float',     'left'],
                     ['margin', '0 5px'],
                 ]);
@@ -480,8 +482,7 @@
 
                 // style modal buttons
                 style($modalButtons, [
-                    ['position', 'absolute'],
-                    ['right',    '0'],
+                    ['float', 'right'],
                 ]);
 
                 style($buttons, [

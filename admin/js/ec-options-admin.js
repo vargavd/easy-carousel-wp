@@ -46,13 +46,15 @@ window.initEcOptionsPage = function ($, wrapperId) {
         rearrangeLayout = function () {
             var
                 // DOM
-                $ecCarSettingsWrapper = $('#easy-carousel-settings'),
+                $headerPanel = $('#ec-settings-header-panel'),
+                $tabContents = $('#easy-carousel-settings-tab-content-scroll'),
                 $carouselPanel = $('#live-preview-panel'),
 
                 // misc
                 carPanelHeight = $carouselPanel.height();
 
-            $ecCarSettingsWrapper.css('top', carPanelHeight - 20);
+            $headerPanel.css('padding-top', carPanelHeight - 20);
+            $tabContents.css('padding-top', carPanelHeight);
         },
         createNewCarousel = function () {
             var
@@ -208,10 +210,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     return $widthSelect.val() + ' ' + $typeSelect.val() + ' ' + colorString;
                 },
                 changed = function () {
-                    var
-                        borderString = getBorderString();
-
-                    $hiddenInput.val(borderString);
+                    $hiddenInput.val(getBorderString());
 
                     createNewCarousel();
 
@@ -229,6 +228,8 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     $widthSelect.val(defaultValues[0]);
                     $typeSelect.val(defaultValues[1]);
                     $colorInput.spectrum('set', defaultValues[2]);
+
+                    $hiddenInput.val(getBorderString());
                 };
 
             $widthSelect.change(changed);
@@ -282,6 +283,8 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     for (i = 0; i < 4; i++) {
                         $selects.eq(i).val(defaultValues[i]);
                     }
+
+                    $hiddenInput.val(getPaddingString());
                 };
 
             $selects.change(changed);
@@ -308,8 +311,6 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 changed = function () {
                     $input.val(getColorString());
 
-                    console.log(getColorString());
-
                     createNewCarousel();
                 },
                 reset = function () {
@@ -321,6 +322,8 @@ window.initEcOptionsPage = function ($, wrapperId) {
                         defaultString = $defaultString.text();
 
                     $input.spectrum('set', defaultString);
+
+                    $input.val(getColorString());
                 };
 
             initColorPickerInput($input, changed);
@@ -340,6 +343,11 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 getSelectVal = function () {
                     return $select.val();
                 },
+                changed = function () {
+                    enableSubmitButton();
+
+                    createNewCarousel();
+                },
                 reset = function () {
                     var
                         // DOM
@@ -351,7 +359,7 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     $select.val(defaultString);
                 };
 
-            $select.change(createNewCarousel);
+            $select.change(changed);
 
             return {
                 getValue: getSelectVal,
