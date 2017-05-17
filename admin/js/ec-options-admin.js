@@ -9,10 +9,32 @@ window.initEcOptionsPage = function ($, wrapperId) {
         $testImg             = $carouselWrapper.find('img').remove(),
         $resetButton         = $('#reset-button'),
         $downArrow           = $('#ec-settings-down-arrow'),
+        $adminMenuWrap       = $('#adminmenuwrap'),
 
         // misc
         options = {},
         resetIsInProgress = false,
+
+        // events
+        modalOpened = function () {
+            $adminMenuWrap.hide();
+        },
+        modalClosed = function () {
+            $adminMenuWrap.show();
+        },
+        clickDownArrow = function () {
+            var
+                currentTop = $('body').scrollTop();
+
+            $('html, body').animate({ scrollTop: currentTop + 100 }, 300);
+        },
+        scrollEvent = function () {
+            if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+                $downArrow.hide();
+            } else {
+                $downArrow.show();
+            }
+        },
 
         // functions
         enableSubmitButton = function () {
@@ -100,7 +122,10 @@ window.initEcOptionsPage = function ($, wrapperId) {
                     options.visibleImgCount            = visibleImgCountFieldObj.getValue();
                     options.secondsBetweenSlide        = secondsBetweenSlideFieldObj.getValue();
 
+                    // setting up events
                     options.carouselLoaded = rearrangeLayout;
+                    options.modalOpened = modalOpened;
+                    options.modalClosed = modalClosed;
                 };
 
             if (resetIsInProgress) {
@@ -177,19 +202,6 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 change: changed,
             });
         },
-        clickDownArrow = function () {
-            var
-                currentTop = $('body').scrollTop();
-
-            $('html, body').animate({ scrollTop: currentTop + 100 }, 300);
-        },
-        scrollEvent = function () {
-            if ($(window).scrollTop() + $(window).height() === $(document).height()) {
-                $downArrow.hide();
-            } else {
-                $downArrow.show();
-            }
-        },
 
         // field constructors
         borderField = function (fieldWrapperId) {
@@ -259,6 +271,8 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 changed = function () {
                     $hiddenInput.val(getPaddingString());
 
+                    enableSubmitButton();
+
                     createNewCarousel();
                 },
                 reset = function () {
@@ -310,6 +324,8 @@ window.initEcOptionsPage = function ($, wrapperId) {
                 },
                 changed = function () {
                     $input.val(getColorString());
+
+                    enableSubmitButton();
 
                     createNewCarousel();
                 },

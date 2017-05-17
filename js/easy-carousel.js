@@ -369,7 +369,7 @@
                 sm.reset();
                 sm.addStyle('position',         'absolute');
                 sm.addStyle('left',             '50%');
-                sm.addStyle('bottom',            -1*parseInt(settings.buttonHeight.replace('px', ''))/2 + 'px');
+                sm.addStyle('bottom',            -1 * parseInt(settings.buttonHeight.replace('px', '')) / 2 + 'px');
                 sm.addStyle('border',           settings.buttonBorder);
                 sm.addStyle('background-color', settings.buttonBackground);
                 sm.addStyle('color',            settings.buttonColor);
@@ -378,7 +378,7 @@
                 sm.addStyle('width',            settings.buttonWidth);
                 sm.addStyle('height',           settings.buttonHeight);
                 sm.addStyle('padding',          '0');
-                sm.addStyle('margin-left',      (- 10 - settings.buttonWidth.replaceAll('px', '')) + 'px');
+                sm.addStyle('margin-left',      (-10 - settings.buttonWidth.replaceAll('px', '')) + 'px');
                 $buttonLeft.attr('style', sm.getStyle());
 
                 sm.addStyle('margin-left', '10px');
@@ -430,7 +430,7 @@
                 style($modalBg, [
                     ['background', settings.modalBackground],
                     ['position',   'fixed'],
-                    ['z-index',    '100'],
+                    ['z-index',    '100000'],
                     ['height',     '100%'],
                     ['width',      '100%'],
                     ['top',        '0'],
@@ -753,6 +753,10 @@
 
                     clearInterval(intervalId);
 
+                    if (typeof (settings.modalOpened) !== 'undefined') {
+                        settings.modalOpened();
+                    }
+
                     showImage();
                 },
                 leftModalButtonClicked = function (event) {
@@ -777,6 +781,10 @@
                     $modalBg.attr('style', sm.getStyle());
 
                     intervalId = setInterval(slideEvent, msBetweenSlides);
+
+                    if (typeof (settings.modalOpened) !== 'undefined') {
+                        settings.modalClosed();
+                    }
                 },
                 modalWindowClicked = function (event) {
                     event.stopPropagation();
